@@ -84,7 +84,47 @@ const iconBytes = unzipEntry(packed, iconEntry.replace(/\\/g, '/'));
 const outName = `site-locale-control-${version}.zip`;
 writeFileSync(join(downloadsDir, outName), zipBuf);
 writeFileSync(join(downloadsDir, 'icon-128.png'), iconBytes);
+assertZipDownloadHeader(outName);
 console.log(`\nbuild-extension-zip: wrote public/downloads/${outName} (${zipBuf.length} bytes)`);
+
+/**
+ * vercel.json names the attachment with :file. @vercel/routing-utils rewrites
+ * that token to $1 before the deployment, and the router substitutes the
+ * capture. Assert the built zip still matches the source pattern so a version
+ * bump cannot ship a file the header does not cover. Content-Type stays the
+ * platform default for .zip (application/zip); this rule does not set it.
+ */
+function assertZipDownloadHeader(outName) {
+  const configPath = join(root, 'vercel.json');
+  let config;
+  try {
+    config = JSON.parse(readFileSync(configPath, 'utf8'));
+  } catch {
+    fail('vercel.json is missing or invalid; the zip download header is not declared');
+  }
+  const rules = Array.isArray(config.headers) ? config.headers : [];
+  const rule = rules.find((entry) =>
+    (entry.headers || []).some((item) => String(item.key).toLowerCase() === 'content-disposition'),
+  );
+  if (!rule) fail('vercel.json has no Content-Disposition header for the extension zip');
+  const disposition = rule.headers.find(
+    (item) => String(item.key).toLowerCase() === 'content-disposition',
+  ).value;
+  if (disposition !== 'attachment; filename=":file"') {
+    fail(`Content-Disposition must be attachment; filename=":file" (got ${JSON.stringify(disposition)})`);
+  }
+  const match = String(rule.source || '').match(/:file\((.*)\)\s*$/);
+  if (!match) fail(`vercel.json header source has no :file() group: ${rule.source}`);
+  let pattern;
+  try {
+    pattern = new RegExp(`^${match[1]}$`);
+  } catch {
+    fail(`vercel.json :file() pattern is not a regex: ${match[1]}`);
+  }
+  if (!pattern.test(outName)) {
+    fail(`public/downloads/${outName} does not match vercel.json header source ${rule.source}`);
+  }
+}
 
 function findZip(dir) {
   let names;
