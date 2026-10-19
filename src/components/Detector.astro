@@ -21,6 +21,7 @@ const t = useTranslations(lang);
 const home = lang === 'zh' ? '/zh/' : '/';
 const guidesHub = lang === 'zh' ? '/zh/guides/' : '/guides/';
 const newsHub = lang === 'zh' ? '/zh/news/' : '/news/';
+const extensionPage = lang === 'zh' ? '/zh/extension/' : '/extension/';
 const guideUrl = (slug: string) => (lang === 'zh' ? `/zh/guides/${slug}/` : `/guides/${slug}/`);
 const FEATURED_GUIDE_SLUGS = [
   'antiban-essentials',
@@ -73,6 +74,7 @@ const apiExamples = [
         </svg>
         <span>{t('nav.news')}</span>
       </a>
+      <a class="nav__link" href={extensionPage}>{t('nav.extension')}</a>
       <LangToggle lang={lang} />
       <SocialLinks lang={lang} />
       <a

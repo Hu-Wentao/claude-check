@@ -1,5 +1,7 @@
 # build output
 dist/
+# Site Locale Control zip and icon, written by scripts/build-extension-zip.mjs
+public/downloads/
 # vercel adapter build output
 .vercel/
 # generated types

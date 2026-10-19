@@ -20,6 +20,7 @@ const t = useTranslations(lang);
 const home = lang === 'zh' ? '/zh/' : '/';
 const guidesHub = lang === 'zh' ? '/zh/guides/' : '/guides/';
 const newsHub = lang === 'zh' ? '/zh/news/' : '/news/';
+const extensionPage = lang === 'zh' ? '/zh/extension/' : '/extension/';
 const prefix = lang === 'zh' ? '/zh' : '';
 
 const site = Astro.site ?? new URL('https://fuck-claude.vercel.app');
@@ -74,6 +75,7 @@ const breadcrumbJsonLd = {
         <a class="nav__link" href={home}>{t('nav.home')}</a>
         <a class="nav__link" href={guidesHub}>{t('nav.guides')}</a>
         <a class="nav__link" href={newsHub}>{t('nav.news')}</a>
+        <a class="nav__link" href={extensionPage}>{t('nav.extension')}</a>
         <LangToggle lang={lang} />
         <SocialLinks lang={lang} />
       </nav>

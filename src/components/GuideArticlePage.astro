@@ -28,6 +28,7 @@ const prefix = lang === 'zh' ? '/zh' : '';
 const home = `${prefix}/`;
 const guidesHub = `${prefix}/guides/`;
 const newsHub = `${prefix}/news/`;
+const extensionPage = `${prefix}/extension/`;
 const articlePath = `${guidesHub}${slug}/`;
 
 const title = guide.title[lang];
@@ -105,6 +106,7 @@ const jsonLdExtra = [
         <a class="nav__link" href={home}>{t('nav.home')}</a>
         <a class="nav__link" href={guidesHub}>{t('nav.guides')}</a>
         <a class="nav__link" href={newsHub}>{t('nav.news')}</a>
+        <a class="nav__link" href={extensionPage}>{t('nav.extension')}</a>
         <LangToggle lang={lang} />
         <SocialLinks lang={lang} />
       </nav>
