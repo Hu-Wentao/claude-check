@@ -1,0 +1,244 @@
+---
+import { copyFileSync, existsSync, mkdirSync, readFileSync, statSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LangToggle from './LangToggle.astro';
+import SocialLinks from './SocialLinks.astro';
+import Footer from './Footer.astro';
+import { useTranslations, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const prefix = lang === 'zh' ? '/zh' : '';
+const home = `${prefix}/`;
+const guidesHub = `${prefix}/guides/`;
+const newsHub = `${prefix}/news/`;
+const extensionPage = `${prefix}/extension/`;
+
+const extPkg = JSON.parse(readFileSync(join(process.cwd(), 'extension/package.json'), 'utf8')) as {
+  version?: string;
+};
+const version = extPkg.version ?? '';
+if (!/^\d+\.\d+\.\d+/.test(version)) {
+  throw new Error(`extension/package.json version is not usable: ${JSON.stringify(version)}`);
+}
+
+const filename = `site-locale-control-${version}.zip`;
+const zipFs = join(process.cwd(), 'public', 'downloads', filename);
+const iconFs = join(process.cwd(), 'public', 'downloads', 'icon-128.png');
+const iconSrc = join(process.cwd(), 'extension/public/icons/icon-128.png');
+if (!existsSync(zipFs)) {
+  if (import.meta.env.PROD) {
+    throw new Error(
+      `Missing public/downloads/${filename}. scripts/build-extension-zip.mjs must succeed before astro build.`,
+    );
+  }
+}
+if (!existsSync(iconFs)) {
+  if (import.meta.env.PROD) {
+    throw new Error(
+      'Missing public/downloads/icon-128.png. scripts/build-extension-zip.mjs must succeed before astro build.',
+    );
+  }
+  mkdirSync(dirname(iconFs), { recursive: true });
+  copyFileSync(iconSrc, iconFs);
+}
+const zipBytes = existsSync(zipFs) ? statSync(zipFs).size : 0;
+if (import.meta.env.PROD && zipBytes <= 0) {
+  throw new Error(`public/downloads/${filename} is empty.`);
+}
+const downloadLabel = zipBytes
+  ? t('ext.downloadWithSize').replace('{size}', formatBytes(zipBytes))
+  : t('ext.download');
+const steps = [1, 2, 3, 4, 5, 6].map((i) => t(`ext.step${i}`));
+
+const site = Astro.site ?? new URL('https://fuck-claude.vercel.app');
+const currentUrl = new URL(extensionPage, site).href;
+const homeUrl = new URL(home, site).href;
+const breadcrumbJsonLd = {
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: t('nav.home'), item: homeUrl },
+    { '@type': 'ListItem', position: 2, name: t('ext.title'), item: currentUrl },
+  ],
+};
+
+function formatBytes(bytes: number): string {
+  if (bytes < 1024 * 1024) return `${Math.max(1, Math.round(bytes / 1024))} KB`;
+  const mb = bytes / (1024 * 1024);
+  return `${mb >= 10 ? mb.toFixed(0) : mb.toFixed(1)} MB`;
+}
+---
+
+<BaseLayout
+  lang={lang}
+  path={extensionPage}
+  title={`${t('ext.title')} | Fuck Claude`}
+  description={t('ext.description')}
+  enPath="/extension/"
+  zhPath="/zh/extension/"
+  omitFaq
+  jsonLdExtra={breadcrumbJsonLd}
+>
+  <header class="nav">
+    <div class="wrap nav__inner">
+      <a class="brand" href={home}>
+        <svg viewBox="0 0 64 64" aria-hidden="true">
+          <rect width="64" height="64" rx="14" fill="currentColor"></rect>
+          <g fill="#FAF9F5">
+            <rect x="26.9" y="8" width="7.6" height="29" rx="3.8"></rect>
+            <rect x="18.9" y="24.5" width="6.4" height="11" rx="3.2"></rect>
+            <rect x="36.1" y="24.5" width="6.4" height="11" rx="3.2"></rect>
+            <rect x="16.9" y="30" width="27.6" height="24" rx="9"></rect>
+            <rect x="40.6" y="32.5" width="7.6" height="16" rx="3.8" transform="rotate(-24 44.4 40.5)"></rect>
+          </g>
+        </svg>
+        <span class="brand__text">{t('nav.title')}</span>
+      </a>
+      <nav class="nav__actions">
+        <a class="nav__link" href={home}>{t('nav.home')}</a>
+        <a class="nav__link" href={guidesHub}>{t('nav.guides')}</a>
+        <a class="nav__link" href={newsHub}>{t('nav.news')}</a>
+        <a class="nav__link" href={extensionPage} aria-current="page">{t('nav.extension')}</a>
+        <LangToggle lang={lang} />
+        <SocialLinks lang={lang} />
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <article class="ext">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <ol>
+          <li><a href={home}>{t('nav.home')}</a></li>
+          <li aria-hidden="true">/</li>
+          <li aria-current="page">{t('ext.title')}</li>
+        </ol>
+      </nav>
+
+      <div class="ext-head">
+        <img class="ext-icon" src="/downloads/icon-128.png" width="64" height="64" alt={t('ext.title')} />
+        <div>
+          <h1>{t('ext.title')}</h1>
+          <p class="ext-version">{t('ext.versionLabel')} {version}</p>
+        </div>
+      </div>
+
+      <p class="ext-lead">{t('ext.description')}</p>
+
+      <p class="ext-actions">
+        <a class="scan-btn ext-download" href={`/downloads/${filename}`} download={filename}>
+          {downloadLabel}
+        </a>
+      </p>
+
+      <h2>{t('ext.installTitle')}</h2>
+      <ol class="ext-steps">
+        {steps.map((step) => <li>{step}</li>)}
+      </ol>
+      <p class="ext-check-row">
+        <a class="ext-check" href={home}>{t('ext.checkCta')}</a>
+      </p>
+
+      <h2>{t('ext.updateTitle')}</h2>
+      <p class="ext-update">{t('ext.update')}</p>
+    </article>
+  </main>
+
+  <Footer lang={lang} />
+</BaseLayout>
+
+<style>
+  .breadcrumb {
+    margin-bottom: 18px;
+    font-size: 0.86rem;
+  }
+  .breadcrumb ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    color: var(--muted-2);
+  }
+  .breadcrumb a {
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .breadcrumb a:hover {
+    color: var(--accent-strong);
+  }
+  .ext {
+    padding: 36px 0 64px;
+  }
+  .ext-head {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin: 0 0 18px;
+  }
+  .ext-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 14px;
+    flex: none;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .ext h1 {
+    font-family: var(--serif);
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    line-height: 1.15;
+    margin: 0;
+  }
+  .ext-version {
+    margin: 6px 0 0;
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 0.9rem;
+  }
+  .ext-lead,
+  .ext-update {
+    margin: 0;
+    max-width: 68ch;
+    font-size: 1.02rem;
+  }
+  .ext-lead {
+    margin-bottom: 22px;
+  }
+  .ext-actions {
+    margin: 0 0 32px;
+  }
+  .ext-download {
+    text-decoration: none;
+  }
+  .ext-download:hover {
+    text-decoration: none;
+  }
+  .ext h2 {
+    font-family: var(--serif);
+    font-size: 1.35rem;
+    margin: 0 0 10px;
+  }
+  .ext-steps {
+    margin: 0 0 14px;
+    padding-left: 1.25rem;
+    max-width: 68ch;
+  }
+  .ext-steps li + li {
+    margin-top: 8px;
+  }
+  .ext-check-row {
+    margin: 0 0 28px;
+  }
+  .ext-check {
+    font-weight: 650;
+  }
+</style>

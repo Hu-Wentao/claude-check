@@ -18,6 +18,7 @@ const prefix = lang === 'zh' ? '/zh' : '';
 const home = `${prefix}/`;
 const newsHub = `${prefix}/news/`;
 const guidesHub = `${prefix}/guides/`;
+const extensionPage = `${prefix}/extension/`;
 
 const readingPaths = [
   { slug: 'antiban-essentials', key: 'path0' },
@@ -80,6 +81,7 @@ const breadcrumbJsonLd = {
         <a class="nav__link" href={home}>{t('nav.home')}</a>
         <a class="nav__link" href={guidesHub} aria-current="page">{t('nav.guides')}</a>
         <a class="nav__link" href={newsHub}>{t('nav.news')}</a>
+        <a class="nav__link" href={extensionPage}>{t('nav.extension')}</a>
         <LangToggle lang={lang} />
         <SocialLinks lang={lang} />
       </nav>

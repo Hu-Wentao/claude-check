@@ -338,12 +338,34 @@ const jsonLd = {
       .icon-link:active {
         transform: scale(0.95);
       }
+      /* Full-size pills plus the extension link overflow around 768–820px.
+         Wrap onto a second row there; wide desktops stay a single 60px bar. */
+      @media (max-width: 900px) {
+        .nav__inner {
+          height: auto;
+          min-height: 60px;
+          padding-block: 8px;
+        }
+        .nav__actions {
+          flex: 1;
+          min-width: 0;
+          flex-wrap: wrap;
+          justify-content: flex-end;
+          row-gap: 6px;
+        }
+        .nav__link,
+        .lang-toggle,
+        .icon-link,
+        .nav__actions .socials {
+          flex-shrink: 0;
+        }
+      }
       @media (max-width: 560px) {
         .nav__inner {
           height: auto;
           min-height: 60px;
           gap: 8px;
-          padding: 8px 14px;
+          padding: 9px 14px;
         }
         .brand {
           flex: none;
@@ -357,10 +379,26 @@ const jsonLd = {
           min-width: 0;
           flex-wrap: wrap;
           justify-content: flex-end;
-          gap: 6px;
+          gap: 6px 5px;
+        }
+        /* Keep each control intact so a narrow row wraps instead of clipping. */
+        .nav__link,
+        .lang-toggle,
+        .icon-link,
+        .nav__actions .socials {
+          flex-shrink: 0;
+        }
+        .nav__link {
+          padding: 6px 7px;
+          gap: 4px;
+          font-size: 0.78rem;
+          white-space: nowrap;
+        }
+        .lang-toggle {
+          font-size: 0.78rem;
         }
         .lang-toggle a {
-          padding: 4px 7px;
+          padding: 4px 6px;
         }
         .icon-link {
           min-width: 28px;

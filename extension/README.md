@@ -47,6 +47,10 @@ node e2e/run.mjs
 
 端到端脚本用 new headless，通过 Puppeteer 的 `enableExtensions` 和 `browser.installExtension()` 加载 `/usr/bin/google-chrome`。扩展目录和网站目录都相对这个脚本解析：扩展根是 `e2e/` 的上一级，仓库根是扩展根的上一级。网站读取 `<仓库根>/.vercel/output/static`，没有则读 `<仓库根>/dist`。结果写到 `/workspace/fc-ext-e2e2/`。网站构建需要 Node >= 22.12（Astro 7）；`e2e/run.mjs` 不会构建网站。
 
+## 网站上的下载包
+
+正式 zip 不进仓库。仓库根目录的 `pnpm build` 会先运行 `scripts/build-extension-zip.mjs`：在 `extension/` 里执行 `pnpm install --frozen-lockfile`（`PUPPETEER_SKIP_DOWNLOAD=1`），做一次不带 `SLC_E2E` 的生产构建，再用 `wxt zip` 打包。成品写到 `public/downloads/site-locale-control-<version>.zip`，根目录直接是 `manifest.json`，由网站 `/extension/` 提供下载。`public/downloads/` 已在 `.gitignore` 里。
+
 可选的 WebRTC 子测试不替换上面的浏览器。先准备好 `SLC_E2E=1` 的构建，再执行 `node e2e/webrtc-cft.mjs`（或 `SLC_E2E_CFT=1 node e2e/run.mjs`）。它先看 `free -m`，用 `npx @puppeteer/browsers install chrome@<本机大版本> --path /workspace/.fc-e2e-tmp/cft` 下载 Chrome for Testing，加上 `--disable-features=WebRtcHideLocalIpsWithMdns`，跑 off、phase-2，以及浏览器级 `set('disable_non_proxied_udp')` / `clear()`。结果合并进同一份 `results.json` 和 `results.md` 的「WebRTC（Chrome for Testing）」一节。结束后只关掉这次启动的浏览器，并删除 `/workspace/.fc-e2e-tmp`。之后的 `pnpm e2e` 仍用 `/usr/bin/google-chrome`，重写结果时保留这一节。
 
 ## 配置怎么进页面

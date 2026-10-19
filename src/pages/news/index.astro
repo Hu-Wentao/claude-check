@@ -12,6 +12,7 @@ const t = useTranslations(lang);
 const home = '/';
 const guidesHub = '/guides/';
 const newsHub = '/news/';
+const extensionPage = '/extension/';
 
 const site = Astro.site ?? new URL('https://fuck-claude.vercel.app');
 const currentUrl = new URL(newsHub, site).href;
@@ -65,6 +66,7 @@ const breadcrumbJsonLd = {
         <a class="nav__link" href={home}>{t('nav.home')}</a>
         <a class="nav__link" href={guidesHub}>{t('nav.guides')}</a>
         <a class="nav__link" href={newsHub} aria-current="page">{t('nav.news')}</a>
+        <a class="nav__link" href={extensionPage}>{t('nav.extension')}</a>
         <LangToggle lang={lang} />
         <SocialLinks lang={lang} />
       </nav>

@@ -20,6 +20,7 @@ export const ui = {
     'nav.title': 'Fuck Claude',
     'nav.guides': 'Anti-Ban Guides',
     'nav.news': 'News',
+    'nav.extension': 'Extension',
     'nav.about': 'About',
     'nav.home': 'Home',
 
@@ -278,6 +279,24 @@ export const ui = {
     'ui.retest': 'Scan again',
     'ui.start': 'Start scan',
 
+    'ext.title': 'Site Locale Control',
+    'ext.description':
+      'On sites you choose, this extension presents the time zone, language, Intl locale, user agent, font measurements, and WebRTC candidates as the region you select. It does not change your IP address, does not upload data, and has no analytics. It is not listed on the Chrome Web Store yet, so load the unpacked folder in developer mode.',
+    'ext.versionLabel': 'Version',
+    'ext.download': 'Download',
+    'ext.downloadWithSize': 'Download ({size})',
+    'ext.installTitle': 'Install',
+    'ext.step1': 'Download the zip and unzip it. The folder should contain manifest.json directly.',
+    'ext.step2': 'Open chrome://extensions.',
+    'ext.step3': 'Turn on Developer mode in the top-right corner.',
+    'ext.step4': 'Click Load unpacked and select the unzipped folder.',
+    'ext.step5': 'Click the toolbar icon, allow the site in the popup, and choose Apply recommended.',
+    'ext.step6': 'Return to this site’s check page and run the check.',
+    'ext.checkCta': 'Open the check page',
+    'ext.updateTitle': 'Update',
+    'ext.update':
+      'After downloading a new version, replace the unpacked folder, then open chrome://extensions and click Reload.',
+
     'banner.prompt': 'Choose another language to browse content adapted for your browser language preference.',
     'banner.continue': 'Continue',
     'banner.dismiss': 'Close',
@@ -291,6 +310,7 @@ export const ui = {
     'nav.title': 'Fuck Claude',
     'nav.guides': '防封指南',
     'nav.news': '最新动态',
+    'nav.extension': '浏览器扩展',
     'nav.about': '关于本站',
     'nav.home': '首页',
 
@@ -539,6 +559,23 @@ export const ui = {
     'ui.claudeBadge': 'Claude 同款',
     'ui.retest': '重新扫描',
     'ui.start': '开始检测',
+
+    'ext.title': '站点区域控制',
+    'ext.description':
+      '在你选择的网站上，这个扩展把时区、语言、Intl 区域、UA、字体测量和 WebRTC 候选呈现为所选地区。它不修改 IP，不上传数据，也没有统计。扩展尚未上架 Chrome 网上应用店，需要在开发者模式下加载解压后的文件夹。',
+    'ext.versionLabel': '版本',
+    'ext.download': '下载',
+    'ext.downloadWithSize': '下载（{size}）',
+    'ext.installTitle': '安装',
+    'ext.step1': '下载压缩包并解压。解压后的文件夹里应直接有 manifest.json。',
+    'ext.step2': '打开 chrome://extensions。',
+    'ext.step3': '打开右上角的“开发者模式”。',
+    'ext.step4': '点击“加载已解压的扩展程序”，选择解压后的文件夹。',
+    'ext.step5': '点击工具栏图标，在弹窗里授权站点，并点击“应用推荐”。',
+    'ext.step6': '回到本站检测页，运行检测。',
+    'ext.checkCta': '打开检测页',
+    'ext.updateTitle': '更新',
+    'ext.update': '下载新版本后，用新文件夹替换原来的文件夹，再在 chrome://extensions 中点击“重新加载”。',
 
     'banner.prompt': '选择另一语言以浏览适用于你浏览器语言偏好的内容。',
     'banner.continue': '继续',
