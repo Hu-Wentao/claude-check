@@ -7,12 +7,12 @@
 * { box-sizing: border-box; }
 
 body {
-  width: 360px;
+  width: 400px;
   margin: 0;
 }
 
 main {
-  max-height: 560px;
+  max-height: 640px;
   overflow: auto;
   padding: 12px;
 }
@@ -87,6 +87,24 @@ button:focus-visible, select:focus-visible, input:focus-visible {
   border-radius: 6px;
   background: #fff6dc;
   color: #6d5200;
+}
+
+.mono {
+  margin: 6px 0 0;
+  padding: 6px;
+  background: #f6f7f9;
+  border-radius: 6px;
+  font-family: ui-monospace, monospace;
+  font-size: 11px;
+  word-break: break-all;
+  white-space: pre-wrap;
+}
+
+.confirm {
+  margin-top: 8px;
+  padding: 8px;
+  border-radius: 6px;
+  background: #fff6dc;
 }
 
 .hint, .status, .perm, .error {

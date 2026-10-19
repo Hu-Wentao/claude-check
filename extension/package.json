@@ -5,21 +5,23 @@
   "type": "module",
   "description": "Site Locale Control, a Manifest V3 extension that sets the time zone and language selected sites see.",
   "scripts": {
-    "gen": "node scripts/gen-snippets.mjs",
-    "build": "node scripts/gen-snippets.mjs && node scripts/build-patch.mjs && wxt build",
-    "typecheck": "node scripts/gen-snippets.mjs && node scripts/build-patch.mjs && wxt prepare && tsc --noEmit",
-    "test": "node scripts/gen-snippets.mjs && node scripts/build-patch.mjs && wxt prepare && vitest run",
-    "e2e": "node scripts/gen-snippets.mjs && node scripts/build-patch.mjs && node e2e/run.mjs"
+    "gen": "node scripts/gen-snippets.mjs && node scripts/gen-icons.mjs",
+    "build": "node scripts/gen-snippets.mjs && node scripts/gen-icons.mjs && node scripts/build-patch.mjs && wxt build",
+    "typecheck": "node scripts/gen-snippets.mjs && node scripts/gen-icons.mjs && node scripts/build-patch.mjs && wxt prepare && tsc --noEmit",
+    "test": "node scripts/gen-snippets.mjs && node scripts/gen-icons.mjs && node scripts/build-patch.mjs && wxt prepare && vitest run",
+    "e2e": "node scripts/gen-snippets.mjs && node scripts/gen-icons.mjs && node scripts/build-patch.mjs && node e2e/run.mjs",
+    "e2e:webrtc": "node e2e/webrtc-cft.mjs"
   },
   "devDependencies": {
     "@types/chrome": "^0.3.5",
     "esbuild": "^0.28.0",
     "puppeteer": "^24.15.0",
+    "sharp": "^0.34.4",
     "typescript": "^5.8.3",
     "vitest": "^3.2.4",
     "wxt": "^0.20.11"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["esbuild", "puppeteer"]
+    "onlyBuiltDependencies": ["esbuild", "puppeteer", "sharp"]
   }
 }

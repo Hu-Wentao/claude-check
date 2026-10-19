@@ -42,5 +42,46 @@
   "permOk": { "message": "站点权限已更新。" },
   "badgeOn": { "message": "开" },
   "badgeOff": { "message": "关" },
-  "badgeUnknown": { "message": "？" }
+  "badgeUnknown": { "message": "？" },
+  "sigFonts": { "message": "字体测量" },
+  "sigWebrtc": { "message": "过滤网页 WebRTC 候选" },
+  "uaLabel": { "message": "UA 预设" },
+  "uaNative": { "message": "保持真实 UA" },
+  "uaDesktop": { "message": "桌面 Chrome（与本机同一操作系统、同一 Chrome 大版本）" },
+  "uaActive": {
+    "message": "将生效的 UA：$UA$",
+    "placeholders": { "ua": { "content": "$1" } }
+  },
+  "uaPlatformLine": {
+    "message": "将生效的平台：$PLATFORM$",
+    "placeholders": { "platform": { "content": "$1" } }
+  },
+  "cnBrowserHit": {
+    "message": "检测到国产浏览器：$NAME$。",
+    "placeholders": { "name": { "content": "$1" } }
+  },
+  "cnBrowserClear": { "message": "未检测到国产浏览器。" },
+  "cnDeviceHit": {
+    "message": "检测到国产设备：$NAME$。",
+    "placeholders": { "name": { "content": "$1" } }
+  },
+  "cnDeviceClear": { "message": "未检测到国产设备。" },
+  "uaSuggestOn": { "message": "应用推荐会改用桌面 Chrome 预设。" },
+  "uaSuggestOff": { "message": "应用推荐会保持真实 UA。" },
+  "fontHint": { "message": "只影响画布 measureText 与字体 check。页面尺寸和像素比对不受影响，系统字体仍会用来绘制。" },
+  "webrtcHint": { "message": "只在已启用的网站上丢掉带有 IP 地址的 host、srflx、prflx 候选。中继候选和 mDNS 名字会保留。不伪造地址。" },
+  "emojiHint": { "message": "表情符号跟随 UA 与平台。按站点公式，最低仍有 1 到 2 分。" },
+  "policyTitle": { "message": "整个浏览器的 WebRTC 策略" },
+  "policyBody": { "message": "这会让此浏览器里所有网站都不再使用不经代理的 UDP，而不只是已启用的网站。可以撤销。" },
+  "policyOpen": { "message": "设置浏览器策略" },
+  "policyConfirm": { "message": "确认：所有网站都改为禁用非代理 UDP" },
+  "policyRevoke": { "message": "撤销" },
+  "policyNow": {
+    "message": "当前策略：$VALUE$",
+    "placeholders": { "value": { "content": "$1" } }
+  },
+  "policyNone": { "message": "未授予" },
+  "policyDenied": { "message": "未获得权限，策略未改变。" },
+  "policyBlocked": { "message": "当前策略不受本扩展控制，没有修改。" },
+  "policyNeedConfirm": { "message": "请先确认。此操作影响所有网站，可以撤销。" }
 }
