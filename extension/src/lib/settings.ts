@@ -1,12 +1,17 @@
 import { STORAGE_KEY } from '../shared/constants';
 import type { SiteEntry } from './sites';
 
+export type UaPreset = 'native' | 'desktop-chrome';
+
 export interface Settings {
   enabled: boolean;
   timezone: boolean;
   timezoneOffset: boolean;
   language: boolean;
   intlLocale: boolean;
+  fonts: boolean;
+  webrtc: boolean;
+  uaPreset: UaPreset;
   timeZoneId: string;
   languageTag: string;
   sites: SiteEntry[];
@@ -35,6 +40,9 @@ export function defaultSettings(): Settings {
     timezoneOffset: false,
     language: false,
     intlLocale: false,
+    fonts: false,
+    webrtc: false,
+    uaPreset: 'native',
     timeZoneId: DEFAULT_TIME_ZONE,
     languageTag: DEFAULT_LANGUAGE,
     sites: suggestedSites(),
@@ -67,13 +75,17 @@ export function normalizeSettings(value: unknown): Settings {
     timezoneOffset: asBool(raw.timezoneOffset, false),
     language: asBool(raw.language, false),
     intlLocale: asBool(raw.intlLocale, false),
+    fonts: asBool(raw.fonts, false),
+    webrtc: asBool(raw.webrtc, false),
+    uaPreset: raw.uaPreset === 'desktop-chrome' ? 'desktop-chrome' : 'native',
     timeZoneId: typeof raw.timeZoneId === 'string' && raw.timeZoneId ? raw.timeZoneId : base.timeZoneId,
     languageTag: typeof raw.languageTag === 'string' && raw.languageTag ? raw.languageTag : base.languageTag,
     sites,
   };
 }
 
-export function recommendedSettings(current?: Settings): Settings {
+/** Recommended profile. The desktop Chrome preset is selected only when the real UA hits a domestic rule. */
+export function recommendedSettings(current?: Settings, suggestDesktop = false): Settings {
   const sites = mergeSites(current?.sites ?? [], suggestedSites());
   return {
     enabled: true,
@@ -81,6 +93,9 @@ export function recommendedSettings(current?: Settings): Settings {
     timezoneOffset: true,
     language: true,
     intlLocale: true,
+    fonts: true,
+    webrtc: true,
+    uaPreset: suggestDesktop ? 'desktop-chrome' : 'native',
     timeZoneId: DEFAULT_TIME_ZONE,
     languageTag: DEFAULT_LANGUAGE,
     sites,

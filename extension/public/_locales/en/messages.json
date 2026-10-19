@@ -42,5 +42,46 @@
   "permOk": { "message": "Site access was updated." },
   "badgeOn": { "message": "ON" },
   "badgeOff": { "message": "OFF" },
-  "badgeUnknown": { "message": "?" }
+  "badgeUnknown": { "message": "?" },
+  "sigFonts": { "message": "Font measurement" },
+  "sigWebrtc": { "message": "Filter WebRTC candidates" },
+  "uaLabel": { "message": "User-agent preset" },
+  "uaNative": { "message": "Keep the real user agent" },
+  "uaDesktop": { "message": "Desktop Chrome (same operating system and Chrome major version)" },
+  "uaActive": {
+    "message": "User agent that will apply: $UA$",
+    "placeholders": { "ua": { "content": "$1" } }
+  },
+  "uaPlatformLine": {
+    "message": "Platform that will apply: $PLATFORM$",
+    "placeholders": { "platform": { "content": "$1" } }
+  },
+  "cnBrowserHit": {
+    "message": "Domestic browser name detected: $NAME$.",
+    "placeholders": { "name": { "content": "$1" } }
+  },
+  "cnBrowserClear": { "message": "No domestic browser name detected." },
+  "cnDeviceHit": {
+    "message": "Domestic device name detected: $NAME$.",
+    "placeholders": { "name": { "content": "$1" } }
+  },
+  "cnDeviceClear": { "message": "No domestic device name detected." },
+  "uaSuggestOn": { "message": "Apply recommended will select Desktop Chrome." },
+  "uaSuggestOff": { "message": "Apply recommended will keep the real user agent." },
+  "fontHint": { "message": "Only canvas measureText and fonts.check are affected. Layout size and pixel comparison stay as they are. The fonts remain installed." },
+  "webrtcHint": { "message": "On enabled sites, host, srflx, and prflx candidates that expose an IP address are dropped. Relay candidates and mDNS names stay. No address is invented." },
+  "emojiHint": { "message": "Emoji follows the user agent and platform. The site formula still scores at least 1 or 2." },
+  "policyTitle": { "message": "Browser-wide WebRTC policy" },
+  "policyBody": { "message": "This disables non-proxied UDP for every site in this browser, not only enabled sites. You can revoke it." },
+  "policyOpen": { "message": "Set browser policy" },
+  "policyConfirm": { "message": "Confirm: disable non-proxied UDP for all sites" },
+  "policyRevoke": { "message": "Revoke" },
+  "policyNow": {
+    "message": "Current policy: $VALUE$",
+    "placeholders": { "value": { "content": "$1" } }
+  },
+  "policyNone": { "message": "not granted" },
+  "policyDenied": { "message": "Permission was not granted. The policy was not changed." },
+  "policyBlocked": { "message": "This policy is controlled elsewhere, so it was not changed." },
+  "policyNeedConfirm": { "message": "Confirm first. This affects every site and can be revoked." }
 }

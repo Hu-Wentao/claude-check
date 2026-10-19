@@ -1,3 +1,4 @@
+import { installFonts, type FontScope } from './fonts';
 import {
   formatChromeDate,
   getOffsetMinutes,
@@ -7,8 +8,10 @@ import {
   type TimeDeps,
   type Wall,
 } from './time';
+import { installUserAgent, type UaPatchConfig } from './ua';
+import { installWebrtc, type WebrtcScope } from './webrtc';
 
-export interface PatchConfig {
+export interface PatchConfig extends UaPatchConfig {
   tz?: string;
   lang?: string;
   langs?: string[];
@@ -16,6 +19,8 @@ export interface PatchConfig {
   timezoneOffset?: number | boolean;
   language?: number | boolean;
   intlLocale?: number | boolean;
+  fonts?: number | boolean;
+  webrtc?: number | boolean;
 }
 
 type AnyFn = (...args: any[]) => any;
@@ -31,6 +36,12 @@ export interface PatchScope {
   String: StringConstructor;
   Symbol: typeof Symbol;
   Reflect: typeof Reflect;
+  CanvasRenderingContext2D?: FontScope['CanvasRenderingContext2D'];
+  OffscreenCanvasRenderingContext2D?: FontScope['OffscreenCanvasRenderingContext2D'];
+  FontFaceSet?: FontScope['FontFaceSet'];
+  RTCPeerConnection?: WebrtcScope['RTCPeerConnection'];
+  webkitRTCPeerConnection?: WebrtcScope['webkitRTCPeerConnection'];
+  RTCSessionDescription?: WebrtcScope['RTCSessionDescription'];
 }
 
 const INSTALLED = Symbol.for('slc.installed.9f3e2a7c');
@@ -85,6 +96,9 @@ export function install(scope: PatchScope, cfg: PatchConfig | null | undefined):
   if (intlOn) guard(() => wrapOtherToLocale(scope, locale));
   if (langOn) guard(() => wrapNavigator(scope, locale, langs));
   if (tzOn) guard(() => wrapTemporal(scope, timeZone));
+  if (enabled(cfg.fonts)) guard(() => installFonts(scope));
+  if (enabled(cfg.webrtc)) guard(() => installWebrtc(scope));
+  if (cfg.ua) guard(() => installUserAgent(scope, cfg));
 }
 
 function guard(fn: () => void): void {

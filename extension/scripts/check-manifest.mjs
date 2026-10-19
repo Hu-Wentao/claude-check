@@ -29,13 +29,34 @@ const optional = [
   'https://fuck-claude.vercel.app/*',
   'https://*/*',
 ];
-const bannedPerms = ['tabs', 'webRequest', 'cookies', 'privacy', 'debugger', 'proxy', 'userScripts', '<all_urls>'];
+const icons = {
+  16: 'icons/icon-16.png',
+  32: 'icons/icon-32.png',
+  48: 'icons/icon-48.png',
+  128: 'icons/icon-128.png',
+};
+const bannedPerms = ['tabs', 'webRequest', 'cookies', 'debugger', 'proxy', 'userScripts', '<all_urls>'];
 
-if (JSON.stringify(manifest.permissions) !== JSON.stringify(permissions)) {
+const expectedPermissions = mode === 'e2e' ? [...permissions, 'privacy'] : permissions;
+if (JSON.stringify(manifest.permissions) !== JSON.stringify(expectedPermissions)) {
   throw new Error(`permissions ${JSON.stringify(manifest.permissions)}`);
+}
+if (JSON.stringify(manifest.optional_permissions) !== JSON.stringify(['privacy'])) {
+  throw new Error(`optional_permissions ${JSON.stringify(manifest.optional_permissions)}`);
+}
+if (mode === 'prod' && (manifest.permissions || []).includes('privacy')) {
+  throw new Error('prod manifest grants privacy');
 }
 if (JSON.stringify(manifest.optional_host_permissions) !== JSON.stringify(optional)) {
   throw new Error(`optional_host_permissions ${JSON.stringify(manifest.optional_host_permissions)}`);
+}
+if (JSON.stringify(manifest.icons) !== JSON.stringify(icons)) throw new Error(`icons ${JSON.stringify(manifest.icons)}`);
+if (JSON.stringify(manifest.action?.default_icon) !== JSON.stringify({ 16: icons[16], 32: icons[32], 48: icons[48] })) {
+  throw new Error(`default_icon ${JSON.stringify(manifest.action?.default_icon)}`);
+}
+for (const file of Object.values(icons)) {
+  const abs = join(hits[0], '..', file);
+  if (!statSync(abs).isFile()) throw new Error(`missing icon ${file}`);
 }
 if (manifest.default_locale !== 'en') throw new Error('default_locale');
 if (manifest.name !== '__MSG_extName__' || manifest.description !== '__MSG_extDesc__') {

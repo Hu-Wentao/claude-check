@@ -1,5 +1,7 @@
 import { LANGUAGES, TIME_ZONES } from '../../src/generated/catalog';
 import { formatUtcOffsetLabel, getOffsetMinutes } from '../../src/patch/time';
+import { readWebrtcPolicy, setWebrtcPolicy, clearWebrtcPolicy } from '../../src/lib/webrtc-policy';
+import type { RealEnv } from '../../src/lib/real-env';
 import {
   normalizeSettings,
   recommendedSettings,
@@ -8,6 +10,7 @@ import {
   type Settings,
 } from '../../src/lib/settings';
 import { originPatterns, parseSiteInput, requestablePatterns, urlMatchesSite, type SiteEntry } from '../../src/lib/sites';
+import { buildUaProfile } from '../../src/lib/ua-profile.js';
 import './style.css';
 
 let current: Settings = {
@@ -16,10 +19,15 @@ let current: Settings = {
   timezoneOffset: false,
   language: false,
   intlLocale: false,
+  fonts: false,
+  webrtc: false,
+  uaPreset: 'native',
   timeZoneId: 'America/Los_Angeles',
   languageTag: 'en-US',
   sites: [],
 };
+
+let env: RealEnv | null = null;
 
 function t(key: string, subs?: string[]): string {
   const value = subs ? chrome.i18n.getMessage(key, subs) : chrome.i18n.getMessage(key);
@@ -87,6 +95,30 @@ async function persist(next: Settings): Promise<void> {
     document.body.dataset.applied = 'error';
     console.error('slc', err);
   }
+}
+
+async function loadEnv(): Promise<RealEnv | null> {
+  try {
+    const value = (await chrome.runtime.sendMessage({ type: 'slc-real-env' })) as RealEnv | { error?: string };
+    if (value && typeof value === 'object' && 'ua' in value && value.ua) return value;
+  } catch (err) {
+    console.error('slc', err);
+  }
+  return null;
+}
+
+function effectiveIdentity(): { ua: string; platform: string } {
+  if (current.uaPreset === 'desktop-chrome' && env?.os && env.major != null) {
+    try {
+      const profile = buildUaProfile(env.os, env.major);
+      return { ua: profile.userAgent, platform: `${profile.navPlatform} / ${profile.uaPlatform}` };
+    } catch (err) {
+      console.error('slc', err);
+    }
+  }
+  const platform = env?.navPlatform || navigator.platform;
+  const uaPlatform = env?.platform ? ` / ${env.platform}` : '';
+  return { ua: env?.ua || navigator.userAgent, platform: `${platform}${uaPlatform}` };
 }
 
 function zoneLabel(id: string): string {
@@ -177,16 +209,39 @@ function sync(): void {
   const offset = document.querySelector<HTMLInputElement>('[data-field="timezone-offset"]');
   const language = document.querySelector<HTMLInputElement>('[data-field="language"]');
   const intl = document.querySelector<HTMLInputElement>('[data-field="intl"]');
+  const fonts = document.querySelector<HTMLInputElement>('[data-field="fonts"]');
+  const webrtc = document.querySelector<HTMLInputElement>('[data-field="webrtc"]');
   const tz = document.querySelector<HTMLSelectElement>('[data-field="tz"]');
   const lang = document.querySelector<HTMLSelectElement>('[data-field="lang"]');
+  const ua = document.querySelector<HTMLSelectElement>('[data-field="ua"]');
   const warning = document.querySelector('[data-field="warning"]');
   if (master) master.checked = current.enabled;
   if (timezone) timezone.checked = current.timezone;
   if (offset) offset.checked = current.timezoneOffset;
   if (language) language.checked = current.language;
   if (intl) intl.checked = current.intlLocale;
+  if (fonts) fonts.checked = current.fonts;
+  if (webrtc) webrtc.checked = current.webrtc;
   if (tz) tz.value = current.timeZoneId;
   if (lang) lang.value = current.languageTag;
+  if (ua) ua.value = current.uaPreset;
+  const identity = effectiveIdentity();
+  const uaLine = document.querySelector('[data-field="ua-preview"]');
+  const platformLine = document.querySelector('[data-field="ua-platform"]');
+  const browserLine = document.querySelector('[data-field="cn-browser"]');
+  const deviceLine = document.querySelector('[data-field="cn-device"]');
+  const suggestLine = document.querySelector('[data-field="ua-suggest"]');
+  if (uaLine) uaLine.textContent = t('uaActive', [identity.ua]);
+  if (platformLine) platformLine.textContent = t('uaPlatformLine', [identity.platform]);
+  if (browserLine) {
+    browserLine.textContent = env?.cnBrowserName ? t('cnBrowserHit', [env.cnBrowserName]) : t('cnBrowserClear');
+  }
+  if (deviceLine) {
+    deviceLine.textContent = env?.cnDeviceName ? t('cnDeviceHit', [env.cnDeviceName]) : t('cnDeviceClear');
+  }
+  if (suggestLine) suggestLine.textContent = env?.suggestDesktop ? t('uaSuggestOn') : t('uaSuggestOff');
+  document.body.dataset.uaPreset = current.uaPreset;
+  document.body.dataset.suggestDesktop = env?.suggestDesktop ? '1' : '0';
   if (warning) {
     warning.textContent = warningText();
     warning.toggleAttribute('hidden', warning.textContent.length === 0);
@@ -232,6 +287,12 @@ function build(): void {
     checkbox('intl', t('sigIntl'), (checked) => {
       void persist({ ...current, intlLocale: checked });
     }),
+    checkbox('fonts', t('sigFonts'), (checked) => {
+      void persist({ ...current, fonts: checked });
+    }),
+    checkbox('webrtc', t('sigWebrtc'), (checked) => {
+      void persist({ ...current, webrtc: checked });
+    }),
   );
   const warning = el('p', 'warning');
   warning.dataset.field = 'warning';
@@ -267,7 +328,34 @@ function build(): void {
     void persist({ ...current, languageTag: lang.value });
   });
   langLabel.append(lang);
-  picks.append(tzLabel, langLabel);
+
+  const uaLabel = el('label', 'field', t('uaLabel'));
+  const ua = document.createElement('select');
+  ua.dataset.field = 'ua';
+  for (const [value, label] of [
+    ['native', t('uaNative')],
+    ['desktop-chrome', t('uaDesktop')],
+  ] as const) {
+    const option = document.createElement('option');
+    option.value = value;
+    option.textContent = label;
+    ua.append(option);
+  }
+  ua.addEventListener('change', () => {
+    void persist({ ...current, uaPreset: ua.value === 'desktop-chrome' ? 'desktop-chrome' : 'native' });
+  });
+  uaLabel.append(ua);
+  const uaLine = el('p', 'mono');
+  uaLine.dataset.field = 'ua-preview';
+  const platformLine = el('p', 'mono');
+  platformLine.dataset.field = 'ua-platform';
+  const browserLine = el('p', 'hint');
+  browserLine.dataset.field = 'cn-browser';
+  const deviceLine = el('p', 'hint');
+  deviceLine.dataset.field = 'cn-device';
+  const suggestLine = el('p', 'hint');
+  suggestLine.dataset.field = 'ua-suggest';
+  picks.append(tzLabel, langLabel, uaLabel, uaLine, platformLine, browserLine, deviceLine, suggestLine, el('p', 'hint', t('fontHint')), el('p', 'hint', t('webrtcHint')), el('p', 'hint', t('emojiHint')));
   app.append(picks);
 
   const actions = el('section');
@@ -276,7 +364,7 @@ function build(): void {
   apply.type = 'button';
   apply.dataset.action = 'apply-recommended';
   apply.addEventListener('click', () => {
-    const next = recommendedSettings(current);
+    const next = recommendedSettings(current, env?.suggestDesktop === true);
     requestOrigins(next.sites);
     void persist(next);
   });
@@ -304,6 +392,67 @@ function build(): void {
   perm.dataset.field = 'perm';
   actions.append(row, status, refresh, unchanged, perm);
   app.append(actions);
+
+  const policy = el('section');
+  policy.append(el('p', 'sites-title', t('policyTitle')));
+  policy.append(el('p', 'hint', t('policyBody')));
+  const policyNow = el('p', 'status');
+  policyNow.dataset.field = 'webrtc-state';
+  const policyError = el('p', 'error');
+  policyError.dataset.field = 'webrtc-error';
+  const confirmBox = el('div', 'confirm');
+  confirmBox.dataset.field = 'webrtc-confirm';
+  confirmBox.hidden = true;
+  confirmBox.append(el('p', 'hint', t('policyNeedConfirm')));
+  const confirm = el('button', 'primary', t('policyConfirm'));
+  confirm.type = 'button';
+  confirm.dataset.action = 'confirm-webrtc-policy';
+  confirm.addEventListener('click', () => {
+    void (async () => {
+      policyError.textContent = '';
+      let granted = false;
+      try {
+        granted = await chrome.permissions.contains({ permissions: ['privacy'] });
+        if (!granted) granted = await chrome.permissions.request({ permissions: ['privacy'] });
+      } catch {
+        granted = false;
+      }
+      if (!granted) {
+        policyError.textContent = t('policyDenied');
+        document.body.dataset.webrtcPolicy = 'denied';
+        return;
+      }
+      const result = await setWebrtcPolicy();
+      document.body.dataset.webrtcPolicy = result.value || 'error';
+      if (!result.ok && result.error === 'not-controllable') policyError.textContent = t('policyBlocked');
+      else if (!result.ok) policyError.textContent = t('policyDenied');
+      policyNow.textContent = t('policyNow', [result.value || t('policyNone')]);
+    })();
+  });
+  confirmBox.append(confirm);
+  const policyRow = el('div', 'actions');
+  const openPolicy = el('button', undefined, t('policyOpen'));
+  openPolicy.type = 'button';
+  openPolicy.dataset.action = 'webrtc-policy';
+  openPolicy.addEventListener('click', () => {
+    confirmBox.hidden = false;
+    policyError.textContent = '';
+  });
+  const revoke = el('button', undefined, t('policyRevoke'));
+  revoke.type = 'button';
+  revoke.dataset.action = 'revoke-webrtc-policy';
+  revoke.addEventListener('click', () => {
+    void (async () => {
+      policyError.textContent = '';
+      const result = await clearWebrtcPolicy();
+      document.body.dataset.webrtcPolicy = result.value || 'default';
+      policyNow.textContent = t('policyNow', [result.value || t('policyNone')]);
+      confirmBox.hidden = true;
+    })();
+  });
+  policyRow.append(openPolicy, revoke);
+  policy.append(policyRow, confirmBox, policyNow, policyError);
+  app.append(policy);
 
   const sites = el('section');
   sites.append(el('p', 'sites-title', t('sites')));
@@ -349,10 +498,29 @@ function build(): void {
   app.append(sites);
 }
 
+async function showPolicy(): Promise<void> {
+  const node = document.querySelector('[data-field="webrtc-state"]');
+  if (!node) return;
+  try {
+    const has = await chrome.permissions.contains({ permissions: ['privacy'] });
+    if (!has) {
+      node.textContent = t('policyNow', [t('policyNone')]);
+      return;
+    }
+    const got = await readWebrtcPolicy();
+    node.textContent = t('policyNow', [got.value || t('policyNone')]);
+    if (got.value) document.body.dataset.webrtcPolicy = got.value;
+  } catch {
+    node.textContent = t('policyNow', [t('policyNone')]);
+  }
+}
+
 async function main(): Promise<void> {
   current = await loadSettings();
+  env = await loadEnv();
   build();
   sync();
+  await showPolicy();
   document.body.dataset.ready = '1';
   chrome.storage.onChanged.addListener((changes, area) => {
     if (area !== 'local' || !changes['slc-settings']) return;

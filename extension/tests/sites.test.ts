@@ -46,13 +46,19 @@ describe('site parser', () => {
     const files = contentScriptFiles(recommendedSettings());
     expect(files[0]).toBe('snippets/tz/America__Los_Angeles.js');
     expect(files[1]).toBe('snippets/lang/en-US.js');
-    expect(files.slice(2, 6)).toEqual([
+    expect(files.slice(2, 8)).toEqual([
       'snippets/sw/timezone-on.js',
       'snippets/sw/offset-on.js',
       'snippets/sw/language-on.js',
       'snippets/sw/intl-on.js',
+      'snippets/sw/fonts-on.js',
+      'snippets/sw/webrtc-on.js',
     ]);
+    expect(files.some((file) => file.includes('/ua/'))).toBe(false);
     expect(files.at(-1)).toBe('injected/patch.js');
+    const desktop = contentScriptFiles({ ...recommendedSettings(undefined, true), uaPreset: 'desktop-chrome' }, 'snippets/ua/linux-131.js');
+    expect(desktop).toContain('snippets/ua/linux-131.js');
+    expect(desktop.at(-1)).toBe('injected/patch.js');
     const partial = contentScriptFiles({ ...recommendedSettings(), timezoneOffset: false, language: false });
     expect(partial).toContain('snippets/sw/offset-off.js');
     expect(partial).toContain('snippets/sw/language-off.js');
