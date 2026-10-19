@@ -1,0 +1,34 @@
+import { defineConfig } from 'wxt';
+
+const e2e = process.env.SLC_E2E === '1';
+
+export default defineConfig({
+  outDir: e2e ? '.output-e2e' : '.output',
+  vite: () => ({
+    define: {
+      __SLC_E2E__: JSON.stringify(e2e),
+    },
+    build: {
+      sourcemap: false,
+    },
+  }),
+  manifest: {
+    name: '__MSG_extName__',
+    description: '__MSG_extDesc__',
+    default_locale: 'en',
+    permissions: ['storage', 'scripting', 'declarativeNetRequestWithHostAccess'],
+    optional_host_permissions: [
+      'https://claude.ai/*',
+      'https://*.claude.ai/*',
+      'https://claude.com/*',
+      'https://*.claude.com/*',
+      'https://fuck-claude.vercel.app/*',
+      'https://*/*',
+    ],
+    ...(e2e ? { host_permissions: ['http://localhost/*', 'http://127.0.0.1/*'] } : {}),
+    action: {
+      default_title: '__MSG_extAction__',
+      default_popup: 'popup.html',
+    },
+  },
+});

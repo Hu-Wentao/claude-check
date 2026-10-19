@@ -1,0 +1,109 @@
+:root {
+  color: #1c1f24;
+  background: #f3f4f6;
+  font: 13px/1.45 system-ui, "Segoe UI", "Noto Sans", sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  width: 360px;
+  margin: 0;
+}
+
+main {
+  max-height: 560px;
+  overflow: auto;
+  padding: 12px;
+}
+
+h1, .sites-title {
+  margin: 0 0 10px;
+  font-size: 15px;
+  font-weight: 650;
+}
+
+section {
+  margin: 0 0 10px;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #d8dbe2;
+  border-radius: 8px;
+}
+
+label.row, .site {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0;
+}
+
+label.field {
+  display: block;
+  margin: 8px 0 0;
+}
+
+select, input[type="text"] {
+  width: 100%;
+  margin-top: 4px;
+  padding: 6px 8px;
+  border: 1px solid #c5cad3;
+  border-radius: 6px;
+  background: #fff;
+  color: inherit;
+  font: inherit;
+}
+
+.actions, .add {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+button {
+  padding: 6px 10px;
+  border: 1px solid #c5cad3;
+  border-radius: 6px;
+  background: #fff;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+button.primary {
+  border-color: #0c6a32;
+  background: #0f7b3a;
+  color: #fff;
+}
+
+button:focus-visible, select:focus-visible, input:focus-visible {
+  outline: 2px solid #0f7b3a;
+  outline-offset: 1px;
+}
+
+.warning {
+  margin: 8px 0 0;
+  padding: 8px;
+  border-radius: 6px;
+  background: #fff6dc;
+  color: #6d5200;
+}
+
+.hint, .status, .perm, .error {
+  margin: 6px 0 0;
+}
+
+.hint { color: #3c4450; }
+
+.error { color: #8d1d1d; }
+
+.tag {
+  margin-left: auto;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: #eef1f5;
+  color: #3c4450;
+  font-size: 11px;
+}
+
+.site button { margin-left: 4px; }
