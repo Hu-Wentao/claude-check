@@ -192,7 +192,15 @@ function normLangs(): string[] {
  * zh-TW is Taiwan — a region Anthropic fully supports — so it contributes
  * nothing (issue #11), including the bare "zh" fallback browsers append after
  * it ("zh-TW, zh, en"). zh-HK / zh-MO keep partial risk (restricted regions).
+ *
+ * Beyond Greater China, Anthropic also restricts/sanctions RU / BY / IR / VE,
+ * so their languages add partial risk at the same tier as zh-HK / zh-MO.
+ * Puerto Rico is a US territory and fully supported — es-PR / en-PR stay 0.
  */
+const RESTRICTED_REGION_LANGS = ['ru', 'be', 'fa', 'es-ve', 'pt-mo', 'en-hk'];
+const isRestrictedLang = (l: string) =>
+  RESTRICTED_REGION_LANGS.some((p) => l === p || l.startsWith(`${p}-`));
+
 export function scoreLanguages(langs: string[]): number {
   const list = langs.map((l) => (l || '').toLowerCase()).filter(Boolean);
   const isTW = (l: string) => l.startsWith('zh-tw') || (l.includes('hant') && l.includes('tw'));
@@ -216,6 +224,8 @@ export function scoreLanguages(langs: string[]): number {
   if (isHKMO(primary.l) || primary.l.includes('hant')) return 0.5;
   if (kept.some(({ l, i }) => isHansCN(l, i))) return 0.7;
   if (kept.some(({ l }) => l.startsWith('zh'))) return 0.4;
+  if (isRestrictedLang(primary.l)) return 0.5;
+  if (kept.some(({ l }) => isRestrictedLang(l))) return 0.25;
   return 0;
 }
 

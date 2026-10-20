@@ -119,7 +119,7 @@ export const ui = {
       'Intl.DateTimeFormat exposes the same OS timezone Claude Code reads; compared against Asia/Shanghai, Asia/Urumqi and other China zones.',
     'signal.language.name': 'Browser language',
     'signal.language.desc':
-      'navigator.languages — zh-CN / Simplified Chinese at the top of the list scores highest.',
+      'navigator.languages — zh-CN / Simplified Chinese at the top of the list scores highest; other Anthropic-restricted region languages (zh-HK/zh-MO, ru, be, fa, es-VE, pt-MO, en-HK) add partial risk.',
     'signal.fonts.name': 'Installed Chinese fonts',
     'signal.fonts.desc':
       'Canvas width-probing for Simplified / Traditional Chinese fonts such as Microsoft YaHei and PingFang SC.',
@@ -408,7 +408,7 @@ export const ui = {
     'signal.timezone.desc':
       'Intl.DateTimeFormat 读到的就是 Claude Code 读取的同一个系统时区，与 Asia/Shanghai、Asia/Urumqi 等中国时区比对。',
     'signal.language.name': '浏览器语言',
-    'signal.language.desc': '检查 navigator.languages；首选 zh-CN / 简体中文得分最高。',
+    'signal.language.desc': '检查 navigator.languages；首选 zh-CN / 简体中文得分最高,其他受限地区语言(zh-HK/zh-MO、ru、be、fa、es-VE、pt-MO、en-HK)计入部分风险。',
     'signal.fonts.name': '已安装中文字体',
     'signal.fonts.desc': '用 canvas 宽度探测微软雅黑、苹方等简繁中文字体。',
     'signal.vendorFonts.name': '国产厂商字体',
