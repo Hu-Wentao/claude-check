@@ -33,7 +33,8 @@ const featuredGuides = FEATURED_GUIDE_SLUGS.map(getGuide).filter(
 );
 const reduceSteps = [t('reduce.s1'), t('reduce.s2'), t('reduce.s3'), t('reduce.s4'), t('reduce.s5')];
 
-const API_BASE = 'https://fuck-claude.vercel.app/api/check';
+// fork 独立部署:curl 示例展示本站域名,不再依赖上游 vercel 项目存活
+const API_BASE = new URL('/api/check', Astro.site).href;
 const apiExamples = [
   { comment: t('api.ex1'), cmd: `curl ${API_BASE}` },
   { comment: t('api.ex2'), cmd: `curl -H "Accept-Language: zh" ${API_BASE}` },

@@ -23,3 +23,21 @@ export const SITE_AUTHOR: SiteAuthor = {
 
 export const ADSENSE_PUB_ID = 'ca-pub-1916766675410622';
 export const ADSENSE_PUBLISHER_NUMERIC = '1916766675410622';
+
+// SEO hreflang 扩展:站点仅实际构建 en(/) 与 zh(/zh/) 两种内容,下列区域市场码
+// 按语言就近映射到已构建页面,仅在页面 <head> 输出(@astrojs/sitemap 的 i18n
+// 映射每语言仅接受单码,sitemap 保持 en/zh-CN 两条主映射)。
+export const SEO_ALTERNATE_LOCALES: readonly { code: string; locale: 'en' | 'zh' }[] = [
+  { code: 'zh-CN', locale: 'zh' },
+  { code: 'ru-RU', locale: 'en' },
+  { code: 'zh-HK', locale: 'zh' },
+  { code: 'en-HK', locale: 'en' },
+  { code: 'fa-IR', locale: 'en' },
+  { code: 'es-PR', locale: 'en' },
+  { code: 'en-PR', locale: 'en' },
+  { code: 'es-VE', locale: 'en' },
+  { code: 'be-BY', locale: 'en' },
+  { code: 'ru-BY', locale: 'en' },
+  { code: 'zh-MO', locale: 'zh' },
+  { code: 'pt-MO', locale: 'en' },
+];

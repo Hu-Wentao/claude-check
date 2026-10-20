@@ -1,12 +1,12 @@
 /**
  * Build the production Site Locale Control zip before `astro build`.
  *
- * Vercel uses the default install (`pnpm install` at the repo root) and
- * `pnpm build`. extension/ is not a pnpm workspace and has its own lockfile,
- * so this script installs it here. extension/package.json already lists
- * esbuild, sharp, and puppeteer in pnpm.onlyBuiltDependencies, which pnpm 10
- * needs in order to run those install scripts. PUPPETEER_SKIP_DOWNLOAD skips
- * the Chrome download; the extension build does not need a browser.
+ * Vercel uses the default install (`bun install` at the repo root) and
+ * `bun run build`. extension/ is standalone (no workspaces) with its own
+ * bun.lock, so this script installs it here. trustedDependencies in
+ * extension/package.json covers the native postinstalls.
+ * PUPPETEER_SKIP_DOWNLOAD skips the Chrome download; the extension build
+ * does not need a browser.
  *
  * SLC_E2E must stay unset. A failure exits non-zero so Astro does not publish
  * a page whose download link points at a missing or test build.
@@ -36,22 +36,22 @@ function fail(message) {
 }
 
 function run(args) {
-  console.log(`\n> pnpm ${args.join(' ')}`);
+  console.log(`\n> bun ${args.join(' ')}`);
   try {
-    execFileSync('pnpm', args, { cwd: extensionDir, env, stdio: 'inherit' });
+    execFileSync('bun', args, { cwd: extensionDir, env, stdio: 'inherit' });
   } catch (err) {
     const status = typeof err.status === 'number' ? err.status : 1;
-    fail(`pnpm ${args.join(' ')} exited ${status}`);
+    fail(`bun ${args.join(' ')} exited ${status}`);
   }
 }
 
 rmSync(downloadsDir, { recursive: true, force: true });
 mkdirSync(downloadsDir, { recursive: true });
 
-run(['install', '--frozen-lockfile', '--ignore-workspace']);
-run(['build']);
-run(['exec', 'node', 'scripts/check-manifest.mjs', 'prod']);
-run(['exec', 'wxt', 'zip']);
+run(['install', '--frozen-lockfile']);
+run(['run', 'build']);
+run(['scripts/check-manifest.mjs', 'prod']);
+run(['x', 'wxt', 'zip']);
 
 const zipName = findZip(join(extensionDir, '.output'));
 const zipPath = join(extensionDir, '.output', zipName);
