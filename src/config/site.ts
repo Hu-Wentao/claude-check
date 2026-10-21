@@ -21,9 +21,6 @@ export const SITE_AUTHOR: SiteAuthor = {
   },
 };
 
-export const ADSENSE_PUB_ID = 'ca-pub-1916766675410622';
-export const ADSENSE_PUBLISHER_NUMERIC = '1916766675410622';
-
 export const CLARITY_PROJECT_ID = 'z0jc6o8jrt';
 
 // SEO hreflang 扩展:站点仅实际构建 en(/) 与 zh(/zh/) 两种内容,下列区域市场码

@@ -203,7 +203,7 @@ export const ui = {
       'Switch your OS timezone away from China zones such as Asia/Shanghai, move zh-CN off the top of your browser language list, block WebRTC leaks, and avoid routing Claude Code through proxies whose hostnames contain flagged domains or AI-lab keywords. The “How to lower your risk score” checklist above walks through it in order.',
     'faq.q4': 'Is any data uploaded?',
     'faq.a4':
-      'No. Every check runs locally in your browser and none of the detected signals are ever sent anywhere. The site loads Google Analytics for anonymous page-view stats and Google AdSense for advertising (ads may use cookies). WebRTC leak detection may briefly contact a public STUN server to gather ICE candidates.',
+      'No. Every check runs locally in your browser and none of the detected signals are ever sent anywhere. The site loads Google Analytics for anonymous page-view stats. WebRTC leak detection may briefly contact a public STUN server to gather ICE candidates.',
     'faq.q5': 'Will a low score guarantee I won’t get banned?',
     'faq.a5':
       'No guarantee. This tool only measures browser-visible fingerprints. Anthropic’s real risk model also weighs your IP reputation, payment-card BIN, account age and usage patterns — none of which a web page can see. A low score removes obvious local tells, but a datacenter IP or a high-risk virtual card can still get an account flagged.',
@@ -222,7 +222,7 @@ export const ui = {
 
     'privacy.title': 'Privacy',
     'privacy.body':
-      'Every check runs locally in your browser — your scan results never leave your device. The site loads Google Analytics for anonymous page-view stats and Google AdSense for ads; none of the detected signals are ever sent. WebRTC leak detection may briefly contact a public STUN server.',
+      'Every check runs locally in your browser — your scan results never leave your device. The site loads Google Analytics for anonymous page-view stats; none of the detected signals are ever sent. WebRTC leak detection may briefly contact a public STUN server.',
     'privacy.fullPolicy': 'Full privacy policy →',
 
     'author.by': 'Written by',
@@ -230,7 +230,7 @@ export const ui = {
 
     'trust.privacy.title': 'Privacy Policy',
     'trust.privacy.description':
-      'How Claude Check handles local scans, Google Analytics, Google AdSense, and WebRTC STUN probing.',
+      'How Claude Check handles local scans, Google Analytics, and WebRTC STUN probing.',
     'trust.terms.title': 'Terms of Service',
     'trust.terms.description':
       'Terms and conditions governing the educational and technical use of Claude Check.',
@@ -501,7 +501,7 @@ export const ui = {
       '把系统时区改出 Asia/Shanghai 等中国时区，把 zh-CN 从浏览器语言列表首位移除，禁用 WebRTC 泄露，并避免让 Claude Code 走 hostname 含敏感域名 / AI 实验室关键词的中转。上方「如何降低你的风险分」清单按顺序完整讲了一遍。',
     'faq.q4': '会上传我的数据吗？',
     'faq.a4':
-      '不会。所有检测都在浏览器本地完成，检测到的任何信号都不会被发送。网站加载 Google Analytics 统计匿名访问量，并通过 Google AdSense 展示广告(广告可能使用 Cookie)。WebRTC 泄露检测可能短暂连接公共 STUN 服务器以收集 ICE 候选。',
+      '不会。所有检测都在浏览器本地完成，检测到的任何信号都不会被发送。网站加载 Google Analytics 统计匿名访问量。WebRTC 泄露检测可能短暂连接公共 STUN 服务器以收集 ICE 候选。',
     'faq.q5': '分数低就一定不会被封吗？',
     'faq.a5':
       '不能保证。本工具只衡量浏览器可见的指纹。Anthropic 真实的风控模型还会权衡你的 IP 信誉、支付卡 BIN、账号资历与使用模式 —— 这些网页都看不到。低分能消除明显的本地破绽，但一个数据中心 IP 或高风险虚拟卡照样可能让账号被标记。',
@@ -520,7 +520,7 @@ export const ui = {
 
     'privacy.title': '隐私说明',
     'privacy.body':
-      '所有检测都在你的浏览器本地完成，扫描结果不会离开你的设备。网站加载 Google Analytics 统计匿名页面访问量，并通过 Google AdSense 展示广告；检测到的信号不会被发送。WebRTC 泄露检测可能短暂连接公共 STUN 服务器。',
+      '所有检测都在你的浏览器本地完成，扫描结果不会离开你的设备。网站加载 Google Analytics 统计匿名页面访问量；检测到的信号不会被发送。WebRTC 泄露检测可能短暂连接公共 STUN 服务器。',
     'privacy.fullPolicy': '完整隐私政策 →',
 
     'author.by': '作者',
@@ -528,7 +528,7 @@ export const ui = {
 
     'trust.privacy.title': '隐私政策',
     'trust.privacy.description':
-      'Claude Check 如何处理本地检测、Google Analytics、Google AdSense 与 WebRTC STUN 探测。',
+      'Claude Check 如何处理本地检测、Google Analytics 与 WebRTC STUN 探测。',
     'trust.terms.title': '服务条款',
     'trust.terms.description':
       '使用 Claude Check 诊断工具与知识库的法律条款、用户责任与免责声明。',

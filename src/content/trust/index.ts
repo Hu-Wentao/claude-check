@@ -8,66 +8,48 @@ export const TRUST_CONTENT: Record<TrustPageId, { en: string; zh: string }> = {
 <h2>1. Local Scan Architecture — Zero Data Upload</h2>
 <p>Every client-side fingerprinting and environmental risk test on <strong>Claude Check</strong> runs 100% inside your local web browser. Your scan results, detected locale signals, IP observations from WebRTC, and computed risk scores are processed in memory on your device. They are <strong>never uploaded</strong> to our servers, never stored in any remote database, and never shared with or sold to third parties.</p>
 
-<h2>2. Google AdSense & Third-Party Advertising Cookies</h2>
-<p>This website uses <strong>Google AdSense</strong> to display advertisements. Google and third-party advertising partners use cookies, web beacons, and similar technologies to serve and personalize ads based on a user's prior visits to this website and other websites across the Internet:</p>
-<ul>
-  <li>Google's use of advertising cookies enables it and its partners to serve ads to users based on their visit to this site and/or other sites on the Internet.</li>
-  <li>Third-party vendors and ad networks may also serve ads on this website.</li>
-  <li>Users may opt out of personalized advertising by visiting <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer">Google Ads Settings</a>.</li>
-  <li>Alternatively, you can opt out of third-party vendor cookies for personalized advertising by visiting <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer">AboutAds.info</a> or <a href="https://www.youronlinechoices.com/" target="_blank" rel="noopener noreferrer">Your Online Choices</a>.</li>
-</ul>
-
-<h2>3. Google Analytics (GA4) & Aggregated Metrics</h2>
+<h2>2. Google Analytics (GA4) & Aggregated Metrics</h2>
 <p>We use Google Analytics 4 (GA4) with IP anonymization enabled to collect aggregate, non-personally identifiable traffic metrics (such as page views, referrer domains, browser user-agent families, and general geographic regions). Google Analytics collects telemetry strictly to help us understand content performance and improve user experience. Analytics telemetry is completely decoupled from the local fingerprint scanner and does not receive your individual scan results.</p>
 
-<h2>4. WebRTC STUN Probing</h2>
+<h2>3. WebRTC STUN Probing</h2>
 <p>When you run the optional WebRTC leak test, your browser establishes a temporary connection to public STUN (Session Traversal Utilities for NAT) servers to discover local and public ICE candidates. This is a standard, client-initiated WebRTC protocol operation. The discovered candidate strings are evaluated locally within your browser and are not transmitted to our backend.</p>
 
-<h2>5. User Privacy Rights (GDPR & CCPA / CPRA)</h2>
+<h2>4. User Privacy Rights (GDPR & CCPA / CPRA)</h2>
 <p>We respect international privacy frameworks including the EU/UK General Data Protection Regulation (GDPR) and the California Consumer Privacy Act (CCPA / CPRA):</p>
 <ul>
   <li><strong>Right to Know & Access:</strong> Since we do not collect personal profiles, accounts, or scan logs, we do not hold personal identification records on our visitors.</li>
   <li><strong>Right to Deletion:</strong> Any local scan state is cleared upon refreshing the page or clearing your browser storage.</li>
-  <li><strong>Do Not Sell My Personal Information:</strong> We do not sell, rent, or trade your personal data. Advertising partners handle cookie preferences through the opt-out links provided above.</li>
+  <li><strong>Do Not Sell My Personal Information:</strong> We do not sell, rent, or trade your personal data.</li>
 </ul>
 
-<h2>6. Data Security & Storage</h2>
+<h2>5. Data Security & Storage</h2>
 <p>The website is deployed over secure HTTPS encryption (TLS 1.3). Static assets are served via global edge CDNs. We do not maintain server-side session databases or personal data caches.</p>
 
-<h2>7. Policy Updates & Contact</h2>
+<h2>6. Policy Updates & Contact</h2>
 <p>We may update this Privacy Policy periodically to reflect technological changes or regulatory requirements. For privacy inquiries or data rights requests, please contact our data controller at <a href="mailto:${SITE_AUTHOR.email}">${SITE_AUTHOR.email}</a>.</p>
 `.trim(),
     zh: `
 <h2>1. 本地检测架构 — 零数据上传承诺</h2>
 <p><strong>Claude Check</strong> 上的所有客户端指纹检测与环境风控评估均 100% 在你的浏览器本地内存中运行。你的检测结果、命中的区域设置信号、WebRTC 探测到的网络信息以及最终计算出的风险分，<strong>绝不会上传</strong>到我们的服务器，不会存入任何远程数据库，更不会分享或出售给任何第三方。</p>
 
-<h2>2. Google AdSense 与第三方广告 Cookie 说明</h2>
-<p>本站使用 <strong>Google AdSense</strong> 展示广告。Google 及第三方广告合作伙伴会使用 Cookie、网络信标和类似技术，根据用户对本站及互联网上其他网站的历史访问记录投放与个性化广告：</p>
-<ul>
-  <li>Google 对广告 Cookie 的使用使其及合作伙伴能够根据用户对本网站和/或互联网上其他网站的访问向用户投放广告。</li>
-  <li>第三方广告供应商和广告联盟也可能在本站投放广告。</li>
-  <li>你可以随时访问 <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer">Google 广告设置</a> 停用个性化广告。</li>
-  <li>你还可以访问 <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer">AboutAds.info</a> 或 <a href="https://www.youronlinechoices.com/" target="_blank" rel="noopener noreferrer">Your Online Choices</a> 停用第三方供应商用于个性化广告的 Cookie。</li>
-</ul>
-
-<h2>3. Google Analytics (GA4) 匿名统计</h2>
+<h2>2. Google Analytics (GA4) 匿名统计</h2>
 <p>本站加载启用了 IP 匿名化的 Google Analytics 4 (GA4)，用于统计完全匿名的宏观访问数据（如页面浏览量、引荐来源、浏览器类型及粗略国家地区）。这些统计仅用于评估内容质量和优化网站体验。Analytics 系统与本地检测工具完全隔离，不会接收任何具体的扫描结果或设备指纹详情。</p>
 
-<h2>4. WebRTC STUN 探测机制</h2>
+<h2>3. WebRTC STUN 探测机制</h2>
 <p>在进行可选的 WebRTC 泄露检测时，浏览器会短暂与公共 STUN（NAT 会话周转实用程序）服务器建立握手以发现本地与公网 ICE 候选。这是标准的客户端 WebRTC 探测行为，获取到的候选信息仅在浏览器本地进行对比分析，不会发送至后端服务器。</p>
 
-<h2>5. 用户隐私权益（GDPR 与 CCPA / CPRA 合规）</h2>
+<h2>4. 用户隐私权益（GDPR 与 CCPA / CPRA 合规）</h2>
 <p>我们严格尊重包括欧盟/英国通用数据保护条例（GDPR）与美国加州消费者隐私法案（CCPA / CPRA）在内的全球隐私保护标准：</p>
 <ul>
   <li><strong>知情权与访问权：</strong>由于本站不设用户账号、不收集个人身份信息、不记录检测日志，我们并不持有任何访问者的个人档案。</li>
   <li><strong>删除权：</strong>本地扫描状态在刷新网页或清除浏览器缓存后即彻底销毁。</li>
-  <li><strong>不兜售个人信息承诺：</strong>我们绝不兜售、出租或交易用户的个人信息。广告合作伙伴的 Cookie 偏好可通过上方提供的渠道进行自主管理。</li>
+  <li><strong>不兜售个人信息承诺：</strong>我们绝不兜售、出租或交易用户的个人信息。</li>
 </ul>
 
-<h2>6. 数据安全与传输</h2>
+<h2>5. 数据安全与传输</h2>
 <p>本站全站强制启用 HTTPS（TLS 1.3）安全传输协议，静态资源由全球边缘 CDN 节点加速分发。我们不设立任何服务端用户会话库或敏感数据持久化组件。</p>
 
-<h2>7. 政策更新与隐私咨询</h2>
+<h2>6. 政策更新与隐私咨询</h2>
 <p>本隐私政策可能会随技术方案迭代或法律法规要求适时修订。如对隐私保护有任何疑问或请求，欢迎通过邮件联系：<a href="mailto:${SITE_AUTHOR.email}">${SITE_AUTHOR.email}</a>。</p>
 `.trim(),
   },
@@ -210,13 +192,10 @@ export const TRUST_CONTENT: Record<TrustPageId, { en: string; zh: string }> = {
 <h2>7. Third-Party Trademarks & External Links</h2>
 <p>All third-party trademarks, service marks, product names, and company names mentioned on this Website (including "Claude", "Anthropic", "Google", "Cloudflare") are the property of their respective owners. Mention of third-party products or services does not imply endorsement, affiliation, or sponsorship. We are not responsible for the content, privacy practices, or availability of external third-party websites linked from our pages.</p>
 
-<h2>8. Advertising & Monetization</h2>
-<p>This Website displays third-party advertisements served by Google AdSense to offset server hosting and domain maintenance costs. Advertisements are clearly separated from editorial content. We do not endorse the specific products or services advertised by third-party ad networks.</p>
-
-<h2>9. Modifications to the Terms</h2>
+<h2>8. Modifications to the Terms</h2>
 <p>We reserve the right to revise or update these Terms at any time without prior notice. The updated version will be posted directly on this page with the effective date. Your continued use of the Website following any changes constitutes your acceptance of the modified Terms.</p>
 
-<h2>10. Contact Information</h2>
+<h2>9. Contact Information</h2>
 <p>If you have any questions or concerns regarding these Terms, please contact us at <a href="mailto:${SITE_AUTHOR.email}">${SITE_AUTHOR.email}</a> or submit an issue via our <a href="${SITE_AUTHOR.githubUrl}/claude-check/issues" target="_blank" rel="noopener noreferrer">GitHub repository</a>.</p>
 `.trim(),
     zh: `
@@ -246,13 +225,10 @@ export const TRUST_CONTENT: Record<TrustPageId, { en: string; zh: string }> = {
 <h2>7. 第三方商标与外部链接</h2>
 <p>本站提及的所有第三方商标、服务标志、产品名称和公司名称（包括但不限于 "Claude"、"Anthropic"、"Google"、"Cloudflare" 等）均为其各自所有者的财产。提及这些商标仅用于描述与技术指代，不代表任何隶属、认可、赞助或官方合作关系。对于本站链接的第三方外部网站内容与隐私实践，本站概不负责。</p>
 
-<h2>8. 广告展示与运营说明</h2>
-<p>本站通过 Google AdSense 展示第三方广告以维持服务器与域名基础运维成本。广告内容与本站编辑内容严格区分。我们不对第三方广告网络展示的具体产品或服务做任何形式的背书。</p>
-
-<h2>9. 条款修改与终止</h2>
+<h2>8. 条款修改与终止</h2>
 <p>我们保留随时修订或更新本服务条款的权利。更新后的条款将直接发布于本页面。你在条款更新后继续使用本站，即视为接受修订后的条款。</p>
 
-<h2>10. 联系与反馈</h2>
+<h2>9. 联系与反馈</h2>
 <p>如对本条款有任何疑问，请通过电子邮件联系我们：<a href="mailto:${SITE_AUTHOR.email}">${SITE_AUTHOR.email}</a>，或在 <a href="${SITE_AUTHOR.githubUrl}/claude-check/issues" target="_blank" rel="noopener noreferrer">GitHub 仓库</a> 提交 Issue。</p>
 `.trim(),
   },
