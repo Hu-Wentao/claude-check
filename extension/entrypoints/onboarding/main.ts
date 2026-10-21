@@ -40,9 +40,11 @@ const signalList = (params.get('signals') || '')
   .map((item) => item.trim())
   .filter(Boolean);
 const isWebrtc = signal === 'webrtcLeak' || signalList.includes('webrtcLeak');
+// 聚合修复含 webrtc 时用通用文案，仅纯 WebRTC 单项用专属文案
+const webrtcOnly = isWebrtc && signalList.length <= 1 && signal === 'webrtcLeak';
 
-const title = el('h1', undefined, t(isWebrtc ? 'onbTitle' : 'onbFixTitle'));
-const body = el('p', 'body', t(isWebrtc ? 'onbWebrtcBody' : 'onbFixBody'));
+const title = el('h1', undefined, t(webrtcOnly ? 'onbTitle' : 'onbFixTitle'));
+const body = el('p', 'body', t(webrtcOnly ? 'onbWebrtcBody' : 'onbFixBody'));
 const status = el('p', 'status');
 const button = el('button', undefined, t('onbEnable'));
 button.type = 'button';
