@@ -373,6 +373,106 @@ function initApiCopy() {
 
 let running = false;
 
+// （环境：localStorage, 原因/备注：去装扩展再回首页不必重扫——先瞬时回放上次
+// 结果，再静默重扫一次，装好扩展回来的用户直接看到修复后的新分数）
+const CACHE_KEY = 'cc-scan-v1';
+
+interface CacheItem {
+  id: string;
+  raw: string;
+  score: number;
+  contribution: number;
+}
+interface ScanCache {
+  ts: number;
+  total: number;
+  items: CacheItem[];
+}
+
+function saveCache(total: number, items: CacheItem[]): void {
+  try {
+    localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), total, items }));
+  } catch {
+    /* private mode 等：仅损失缓存，不影响本次展示 */
+  }
+}
+
+function readCache(): ScanCache | null {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null') as ScanCache | null;
+    if (!parsed || typeof parsed !== 'object' || !Array.isArray(parsed.items)) return null;
+    const items = parsed.items.filter(
+      (item) => item && typeof item.id === 'string' && typeof item.raw === 'string' && typeof item.score === 'number' && typeof item.contribution === 'number',
+    );
+    if (!items.length) return null;
+    return { ts: Number(parsed.ts) || 0, total: Number(parsed.total) || 0, items };
+  } catch {
+    return null;
+  }
+}
+
+function paintRow(signalId: string, raw: string, contribution: number, score: number): void {
+  const row = q(`[data-signal="${signalId}"]`);
+  if (!row) return;
+  const verdict = signalVerdict(score);
+  const val = q('[data-field="value"]', row);
+  const contrib = q('[data-field="contribution"]', row);
+  const dot = q('[data-field="dot"]', row);
+  if (val) val.textContent = raw;
+  if (contrib) contrib.textContent = `+${contribution}`;
+  if (dot) dot.className = `dot dot--${verdict}`;
+  row.classList.remove('is-pending', 'is-active');
+  row.classList.add('is-done');
+  row.setAttribute('data-verdict', verdict);
+}
+
+/** Instantly replay the last scan without running detectors. */
+function restoreFromCache(cache: ScanCache): void {
+  let total = 0;
+  const hits: Hit[] = [];
+  for (const item of cache.items) {
+    const signal = SIGNALS.find((s) => s.id === item.id);
+    if (!signal) continue;
+    total += item.contribution;
+    if (signalVerdict(item.score) !== 'low') hits.push({ signal, contribution: item.contribution });
+    paintRow(item.id, item.raw, item.contribution, item.score);
+  }
+  const tt = Math.min(100, total);
+  setRing(tt);
+  finalize(tt, hits);
+  initFixSlots(hits);
+  const label = q('#retest-label');
+  if (label) label.textContent = t('ui.retest');
+}
+
+/** Re-run all detectors without animation and refresh the UI in place. */
+async function refreshSilently(): Promise<void> {
+  if (running) return;
+  running = true;
+  let total = 0;
+  const hits: Hit[] = [];
+  const items: CacheItem[] = [];
+  for (const signal of SIGNALS) {
+    let outcome;
+    try {
+      outcome = await signal.detect();
+    } catch {
+      outcome = { raw: '—', score: 0 };
+    }
+    const contribution = Math.round(outcome.score * signal.weight);
+    if (signalVerdict(outcome.score) !== 'low') hits.push({ signal, contribution });
+    total += contribution;
+    items.push({ id: signal.id, raw: outcome.raw, score: outcome.score, contribution });
+    paintRow(signal.id, outcome.raw, contribution, outcome.score);
+  }
+  const tt = Math.min(100, total);
+  setRing(tt);
+  finalize(tt, hits);
+  initFixSlots(hits);
+  saveCache(tt, items);
+  running = false;
+}
+
 async function run() {
   if (running) return;
   running = true;
@@ -385,6 +485,7 @@ async function run() {
 
   let total = 0;
   const hits: Hit[] = [];
+  const outcomes: CacheItem[] = [];
 
   for (const signal of SIGNALS) {
     const row = q(`[data-signal="${signal.id}"]`);
@@ -416,11 +517,13 @@ async function run() {
 
     setRing(Math.min(100, total));
     if (verdict !== 'low') hits.push({ signal, contribution });
+    outcomes.push({ id: signal.id, raw: outcome.raw, score: outcome.score, contribution });
     await delay(SETTLE_MS);
   }
 
   finalize(Math.min(100, total), hits);
   initFixSlots(hits);
+  saveCache(Math.min(100, total), outcomes);
   const label = q('#retest-label');
   if (label) label.textContent = t('ui.retest');
   if (btn) btn.disabled = false;
@@ -602,6 +705,12 @@ function initFixSlots(hits: Hit[]): void {
  */
 function init() {
   q('#retest')?.addEventListener('click', () => run());
+  // 先瞬时回放上次结果；短暂延迟后静默重扫，把装好扩展后的最新值补上
+  const cache = readCache();
+  if (cache) {
+    restoreFromCache(cache);
+    setTimeout(() => void refreshSilently(), 600);
+  }
   initShare();
   initApiCopy();
   initLangMemory();
