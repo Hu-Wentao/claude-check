@@ -238,7 +238,6 @@ export const ui = {
     'social.x': 'X (Twitter)',
     'social.xiaohongshu': 'Xiaohongshu (RED)',
     'social.douyin': 'Douyin',
-    'social.jike': 'Jike',
     'social.scan': 'Scan with the app, or click to open',
 
     'footer.disclaimer':
@@ -520,7 +519,6 @@ export const ui = {
     'social.x': 'X(推特)',
     'social.xiaohongshu': '小红书',
     'social.douyin': '抖音',
-    'social.jike': '即刻',
     'social.scan': '用 App 扫码关注，或点击直达',
 
     'footer.disclaimer': '本工具仅供参考，基于公开逆向分析，不构成任何官方结论或建议。',
