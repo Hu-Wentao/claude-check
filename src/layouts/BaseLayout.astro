@@ -1,6 +1,6 @@
 ---
 import { useTranslations, type Lang } from '../i18n/ui';
-import { ADSENSE_PUB_ID, CLARITY_PROJECT_ID, SEO_ALTERNATE_LOCALES } from '../config/site';
+import { CLARITY_PROJECT_ID, SEO_ALTERNATE_LOCALES } from '../config/site';
 import LocaleSuggestBanner from '../components/LocaleSuggestBanner.astro';
 
 interface Props {
@@ -140,13 +140,6 @@ const jsonLd = {
     <meta name="twitter:image" content={ogImage} />
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
-
-    <!-- Google AdSense -->
-    <script
-      is:inline
-      async
-      src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_PUB_ID}`}
-      crossorigin="anonymous"></script>
 
     <!-- Google tag (gtag.js) -->
     <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
