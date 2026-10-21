@@ -3,10 +3,12 @@ import { formatUtcOffsetLabel, getOffsetMinutes } from '../../src/patch/time';
 import { readWebrtcPolicy, setWebrtcPolicy, clearWebrtcPolicy } from '../../src/lib/webrtc-policy';
 import type { RealEnv } from '../../src/lib/real-env';
 import {
+  mergeSites,
   normalizeSettings,
   recommendedSettings,
   saveSettings,
   loadSettings,
+  suggestedSites,
   type Settings,
 } from '../../src/lib/settings';
 import { originPatterns, parseSiteInput, requestablePatterns, urlMatchesSite, type SiteEntry } from '../../src/lib/sites';
@@ -306,8 +308,15 @@ function build(): void {
   const switches = el('section');
   switches.append(
     checkbox('master', t('master'), (checked) => {
-      if (checked) requestOrigins(current.sites);
-      void persist({ ...current, enabled: checked });
+      // （环境：手动启用, 原因/备注：旧 storage 的站点列表可能缺检测站，启用时
+      // 合并建议站点并请求 origin，否则检测页永远无补丁、徽章显示未授权）
+      if (checked) {
+        const sites = mergeSites(current.sites, suggestedSites());
+        requestOrigins(sites);
+        void persist({ ...current, enabled: true, sites });
+      } else {
+        void persist({ ...current, enabled: false });
+      }
     }),
     checkbox('timezone', t('sigTimezone'), (checked) => {
       void persist({ ...current, timezone: checked });
@@ -406,8 +415,9 @@ function build(): void {
   enable.type = 'button';
   enable.dataset.action = 'enable';
   enable.addEventListener('click', () => {
-    requestOrigins(current.sites);
-    void persist({ ...current, enabled: true });
+    const sites = mergeSites(current.sites, suggestedSites());
+    requestOrigins(sites);
+    void persist({ ...current, enabled: true, sites });
   });
   const restore = el('button', undefined, t('restore'));
   restore.type = 'button';
