@@ -89,9 +89,9 @@ Service worker 读取真实 `navigator.userAgent` 和 `navigator.userAgentData`�
 
 「整个浏览器的 WebRTC 策略」是单独按钮，不属于「应用推荐」。点击后先显示确认，说明会影响所有网站并且可以撤销。确认后才 `chrome.permissions.request(['privacy'])`。`get` 之后只有 `levelOfControl` 为 `controllable_by_this_extension` 或 `controlled_by_this_extension` 才 `set('disable_non_proxied_udp')`。企业策略或其它扩展已经控制该项时，弹窗说明没有修改，不会覆盖。撤销会 `clear()`，再 `permissions.remove(['privacy'])`。
 
-### 检测页一键修复（0.1.1 起）
+### 检测页一键修复（0.1.3 起全项化）
 
-manifest 固定了公钥 `key`，sideload 安装的扩展 ID 稳定为 `waafbhfijvpwtdcv`（私钥不入库，仅上 Chrome 应用商店时需要）。`externally_connectable` 只允许 `https://claudecheck.frely.cloud/*` 发来 `onMessageExternal`：`slc-ping` 回版本与 webrtc 状态；`slc-enable-webrtc` 打开 `settings.webrtc` 并重建注入，`privacy` 权限已给时直接设策略，否则打开 `onboarding.html` 让用户在那儿完成一次手势确认（后台消息不算用户手势，这是 Chrome 的硬限制）。
+manifest 固定了公钥 `key`，sideload 安装的扩展 ID 稳定为 `waafbhfijvpwtdcv`（私钥不入库，仅上 Chrome 应用商店时需要）。`externally_connectable` 只允许 `https://claudecheck.frely.cloud/*` 发来 `onMessageExternal`：`slc-ping` 回版本；`slc-fix-signal`（0.1.3 起，带 `signal` 与 `lang`）按 `src/lib/fix-map.ts` 的分组映射开启对应设置组（只开所点项所在的联动组，不整包推荐）、合并建议站点并重建注入，随后延迟 1.2 秒回载发起页让新配置在 `document_start` 生效——重扫即见修复结果。站点 origin（或 webrtc 时的 `privacy`）权限缺失时打开 `onboarding.html`，由确认页一次手势完成授权（后台消息不算用户手势，这是 Chrome 的硬限制）后同样应用并回载。检测页对旧版本扩展（<0.1.3）不显示一键按钮，只降级为引导链接。
 
 ### 弹窗语言下拉（0.1.2 起）
 

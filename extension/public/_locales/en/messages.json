@@ -244,5 +244,11 @@
   },
   "uiLangAuto": {
     "message": "Auto"
+  },
+  "onbFixTitle": {
+    "message": "Enable one-click fix"
+  },
+  "onbFixBody": {
+    "message": "The site asked this extension to apply its masking settings on the checker site so the fixed checks turn green there. This needs one-time access; every change stays visible and revocable in the popup."
   }
 }

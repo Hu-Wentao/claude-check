@@ -441,15 +441,15 @@ const ICON = {
 };
 
 export const SIGNALS: SignalDef[] = [
-  { id: 'timezone', weight: 24, claudeUsed: true, icon: ICON.clock, detect: detectTimezone },
-  { id: 'language', weight: 18, icon: ICON.globe, detect: detectLanguage },
-  { id: 'fonts', weight: 14, icon: ICON.type, detect: detectFonts },
-  { id: 'vendorFonts', weight: 10, icon: ICON.typeBox, detect: detectVendorFonts },
+  { id: 'timezone', weight: 24, claudeUsed: true, fixKind: 'spoof', icon: ICON.clock, detect: detectTimezone },
+  { id: 'language', weight: 18, fixKind: 'spoof', icon: ICON.globe, detect: detectLanguage },
+  { id: 'fonts', weight: 14, fixKind: 'spoof', icon: ICON.type, detect: detectFonts },
+  { id: 'vendorFonts', weight: 10, fixKind: 'spoof', icon: ICON.typeBox, detect: detectVendorFonts },
   { id: 'webrtcLeak', weight: 10, fixKind: 'webrtc', icon: ICON.shield, detect: detectWebrtcLeak },
-  { id: 'cnBrowser', weight: 8, icon: ICON.compass, detect: detectCnBrowser },
-  { id: 'deviceVendor', weight: 6, icon: ICON.phone, detect: detectDeviceVendor },
-  { id: 'intlLocale', weight: 4, icon: ICON.sliders, detect: detectIntlLocale },
-  { id: 'timezoneOffset', weight: 3, icon: ICON.clockOffset, detect: detectTimezoneOffset },
+  { id: 'cnBrowser', weight: 8, fixKind: 'spoof', icon: ICON.compass, detect: detectCnBrowser },
+  { id: 'deviceVendor', weight: 6, fixKind: 'spoof', icon: ICON.phone, detect: detectDeviceVendor },
+  { id: 'intlLocale', weight: 4, fixKind: 'spoof', icon: ICON.sliders, detect: detectIntlLocale },
+  { id: 'timezoneOffset', weight: 3, fixKind: 'spoof', icon: ICON.clockOffset, detect: detectTimezoneOffset },
   { id: 'emoji', weight: 3, icon: ICON.smile, detect: detectEmoji },
 ];
 

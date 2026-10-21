@@ -1,4 +1,5 @@
 import { scheduleRebuild, updateBadges } from '../src/lib/apply';
+import { CHECKER_ORIGIN_PATTERN, applySignalFix } from '../src/lib/fix-map';
 import { readRealEnv } from '../src/lib/real-env';
 import { ensureDefaults, loadSettings, saveSettings } from '../src/lib/settings';
 import { setWebrtcPolicy } from '../src/lib/webrtc-policy';
@@ -21,23 +22,43 @@ export default defineBackground(() => {
       });
       return true;
     }
-    if (message.type === 'slc-enable-webrtc') {
+    if (message.type === 'slc-fix-signal') {
       void (async () => {
-        const settings = await loadSettings();
-        if (!settings.webrtc) {
-          settings.webrtc = true;
-          await saveSettings(settings);
+        const signal = String(message.signal || '');
+        const senderTabId = sender.tab?.id;
+        const isWebrtc = signal === 'webrtcLeak';
+        const originGranted = await chrome.permissions.contains({ origins: [CHECKER_ORIGIN_PATTERN] });
+        const privacyGranted = await chrome.permissions.contains({ permissions: ['privacy'] });
+
+        // 权限齐备：直接应用 + 重建注入 + 延迟重载检测页（重载后新配置在
+        // document_start 生效，重扫即可见修复结果）
+        if (originGranted && (!isWebrtc || privacyGranted)) {
+          const settings = await loadSettings();
+          const next = applySignalFix(settings, signal);
+          if (!next) {
+            sendResponse({ ok: false, error: 'unsupported-signal' });
+            return;
+          }
+          await saveSettings(next);
           scheduleRebuild();
-        }
-        if (await chrome.permissions.contains({ permissions: ['privacy'] })) {
-          const result = await setWebrtcPolicy();
-          sendResponse({ ok: true, mode: 'auto', policy: result.value });
+          if (isWebrtc) await setWebrtcPolicy();
+          if (senderTabId != null) {
+            setTimeout(() => {
+              void chrome.tabs.reload(senderTabId).catch(() => {});
+            }, 1200);
+          }
+          sendResponse({ ok: true, mode: 'auto' });
           return;
         }
-        // chrome.privacy 授权需要用户手势，只能落在扩展页面里完成；
-        // lang 由站点消息透传，确认页与请求页语言一致
-        const lang = message.lang === 'zh' ? 'zh' : 'en';
-        await chrome.tabs.create({ url: chrome.runtime.getURL(`/onboarding.html?intent=webrtc&lang=${lang}`) });
+
+        // 缺权限：chrome.privacy / 站点 origin 授权都需要用户手势，落到确认页
+        const params = new URLSearchParams({
+          intent: 'fix',
+          signal,
+          lang: message.lang === 'zh' ? 'zh' : 'en',
+        });
+        if (senderTabId != null) params.set('tab', String(senderTabId));
+        await chrome.tabs.create({ url: chrome.runtime.getURL(`/onboarding.html?${params.toString()}`) });
         sendResponse({ ok: true, mode: 'confirm' });
       })().catch((err) => sendResponse({ ok: false, error: String(err) }));
       return true;

@@ -138,12 +138,12 @@ export const ui = {
     'signal.webrtcLeak.name': 'WebRTC IP leak',
     'signal.webrtcLeak.desc':
       'RTCPeerConnection probing for local or real public IP candidate leaks through STUN.',
-    'fix.webrtc.link': 'How to fix',
-    'fix.webrtc.button': 'Fix in one click',
-    'fix.webrtc.auto': 'WebRTC protection is on. Rescan to verify.',
-    'fix.webrtc.confirm': 'Click “Enable” once on the page the extension just opened.',
-    'fix.webrtc.failed':
-      'Could not enable from here. Open the extension popup and toggle WebRTC manually.',
+    'fix.link': 'How to fix',
+    'fix.button': 'Fix in one click',
+    'fix.auto': 'Applied. This page reloads shortly — scan again after the reload.',
+    'fix.confirm': 'Click “Enable” once on the page the extension just opened; this page then reloads.',
+    'fix.failed':
+      'Could not apply from here. Open the extension popup and use “Apply recommended”.',
     'signal.emoji.name': 'Emoji rendering style',
     'signal.emoji.desc':
       'OS vendor guessed from the user agent; a weak, loosely correlated signal.',
@@ -438,11 +438,11 @@ export const ui = {
     'signal.webrtcLeak.name': 'WebRTC IP 泄露',
     'signal.webrtcLeak.desc':
       '探测浏览器 RTCPeerConnection 是否通过 STUN 服务泄露真实内网或公网 IP。',
-    'fix.webrtc.link': '如何修复',
-    'fix.webrtc.button': '一键修复',
-    'fix.webrtc.auto': 'WebRTC 防护已开启，重新检测验证。',
-    'fix.webrtc.confirm': '在扩展刚打开的页面里点一次「启用」。',
-    'fix.webrtc.failed': '此处未能开启。请打开扩展弹窗，手动打开 WebRTC 开关。',
+    'fix.link': '如何修复',
+    'fix.button': '一键修复',
+    'fix.auto': '已应用，本页即将自动刷新，刷新后重新检测。',
+    'fix.confirm': '在扩展刚打开的确认页点一次「启用」，本页随后自动刷新。',
+    'fix.failed': '此处未能应用。请打开扩展弹窗，使用「应用推荐」。',
     'signal.emoji.name': 'Emoji 渲染风格',
     'signal.emoji.desc': '由 UA 推断操作系统厂商，弱相关信号。',
 

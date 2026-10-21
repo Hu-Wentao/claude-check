@@ -434,11 +434,21 @@ async function run() {
  */
 const EXTENSION_ID = 'waafbhfijvpwtdcv';
 
+// 一键修复协议（slc-fix-signal）自 0.1.3 起可用；旧版本只降级显示引导链接
+const MIN_FIX_VERSION = '0.1.3';
+
 interface ExtResponse {
   ok?: boolean;
   version?: string;
-  webrtc?: boolean;
   mode?: string;
+}
+
+function bridgeSupported(version: string | undefined): boolean {
+  if (!version) return false;
+  const toTuple = (v: string) => v.split('.').slice(0, 3).map((part) => Number(part) || 0);
+  const [a1, b1, c1] = toTuple(version);
+  const [a2, b2, c2] = toTuple(MIN_FIX_VERSION);
+  return a1 > a2 || (a1 === a2 && (b1 > b2 || (b1 === b2 && c1 >= c2)));
 }
 
 interface ChromeLike {
@@ -465,41 +475,44 @@ function sendToExtension(type: string, extra?: Record<string, string>): Promise<
 }
 
 function initFixSlots(hits: Hit[]): void {
-  if (!hits.some((hit) => hit.signal.fixKind === 'webrtc')) return;
-  const slot = q<HTMLElement>('[data-fix="webrtc"]');
-  if (!slot) return;
-  slot.hidden = false;
-  const button = q<HTMLButtonElement>('[data-fix-button]', slot);
-  const status = q<HTMLElement>('[data-fix-status]', slot);
+  const fixable = hits.filter((hit) => hit.signal.fixKind);
+  if (!fixable.length) return;
 
   void sendToExtension('slc-ping').then((probe) => {
-    if (!probe?.ok || !button) return;
-    button.hidden = false;
-    if (probe.webrtc && status) {
-      status.dataset.tone = 'ok';
-      status.textContent = t('fix.webrtc.auto');
-    }
-    // 重扫会再次进入本函数；同一按钮只绑一次监听
-    if (button.dataset.bound === '1') return;
-    button.dataset.bound = '1';
-    button.addEventListener('click', () => {
-      button.disabled = true;
-      if (status) status.textContent = '';
-      void sendToExtension('slc-enable-webrtc', { lang: currentLang() }).then((res) => {
-        if (!status) return;
-        if (res?.ok && res.mode === 'auto') {
-          status.dataset.tone = 'ok';
-          status.textContent = t('fix.webrtc.auto');
-        } else if (res?.ok && res.mode === 'confirm') {
-          status.dataset.tone = '';
-          status.textContent = t('fix.webrtc.confirm');
-        } else {
-          status.dataset.tone = 'err';
-          status.textContent = t('fix.webrtc.failed');
-          button.disabled = false;
-        }
+    const supported = !!probe?.ok && bridgeSupported(probe.version);
+    for (const hit of fixable) {
+      const slot = q<HTMLElement>(`[data-fix="${hit.signal.id}"]`);
+      if (!slot) continue;
+      slot.hidden = false;
+      const button = q<HTMLButtonElement>('[data-fix-button]', slot);
+      const status = q<HTMLElement>('[data-fix-status]', slot);
+      if (!supported || !button) continue;
+      button.hidden = false;
+      // 重扫会再次进入本函数；同一按钮只绑一次监听
+      if (button.dataset.bound === '1') continue;
+      button.dataset.bound = '1';
+      button.addEventListener('click', () => {
+        button.disabled = true;
+        if (status) status.textContent = '';
+        void sendToExtension('slc-fix-signal', {
+          signal: hit.signal.id,
+          lang: currentLang(),
+        }).then((res) => {
+          if (!status) return;
+          if (res?.ok && res.mode === 'auto') {
+            status.dataset.tone = 'ok';
+            status.textContent = t('fix.auto');
+          } else if (res?.ok && res.mode === 'confirm') {
+            status.dataset.tone = '';
+            status.textContent = t('fix.confirm');
+          } else {
+            status.dataset.tone = 'err';
+            status.textContent = t('fix.failed');
+            button.disabled = false;
+          }
+        });
       });
-    });
+    }
   });
 }
 

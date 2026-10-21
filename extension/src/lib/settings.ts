@@ -102,7 +102,7 @@ export function recommendedSettings(current?: Settings, suggestDesktop = false):
   };
 }
 
-function mergeSites(current: SiteEntry[], suggested: SiteEntry[]): SiteEntry[] {
+export function mergeSites(current: SiteEntry[], suggested: SiteEntry[]): SiteEntry[] {
   const extras = current.filter((site) => !suggested.some((item) => item.host === site.host));
   return [...suggested, ...extras];
 }
