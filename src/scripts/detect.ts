@@ -440,7 +440,7 @@ function restoreFromCache(cache: ScanCache): void {
   const tt = Math.min(100, total);
   setRing(tt);
   finalize(tt, hits);
-  initFixAll(hits);
+  initFixAll(hits, true);
   const label = q('#retest-label');
   if (label) label.textContent = t('ui.retest');
 }
@@ -636,11 +636,16 @@ function extPageUrl(): string {
 
 // （环境：站点, 原因/备注：一键修复从逐项按钮改为分数旁单按钮——点击后
 // 顺序修复本次扫描的全部可修项；逐项协议不变，扩展侧无需更新）
-function initFixAll(hits: Hit[]): void {
+function initFixAll(hits: Hit[], reveal = false): void {
   const button = q<HTMLButtonElement>('#fix-all');
   if (!button) return;
   const fixable = hits.filter((hit) => hit.signal.fixKind);
   button.hidden = fixable.length === 0;
+  // （环境：窄视口, 原因/备注：粘性导航可能盖住按钮顶部，扫描结束时确保可见；
+  // 仅实时扫描滚动，缓存回放/静默重扫不打扰用户）
+  if (reveal && !button.hidden) {
+    requestAnimationFrame(() => button.scrollIntoView({ block: 'nearest', behavior: 'smooth' }));
+  }
   if (!fixable.length || button.dataset.bound === '1') return;
   button.dataset.bound = '1';
   button.addEventListener('click', () => {
