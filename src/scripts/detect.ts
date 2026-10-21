@@ -440,7 +440,7 @@ function restoreFromCache(cache: ScanCache): void {
   const tt = Math.min(100, total);
   setRing(tt);
   finalize(tt, hits);
-  initFixAll(hits, true);
+  initFixAll(hits);
   const label = q('#retest-label');
   if (label) label.textContent = t('ui.retest');
 }
@@ -522,7 +522,7 @@ async function run() {
   }
 
   finalize(Math.min(100, total), hits);
-  initFixAll(hits);
+  initFixAll(hits, true);
   saveCache(Math.min(100, total), outcomes);
   const label = q('#retest-label');
   if (label) label.textContent = t('ui.retest');
