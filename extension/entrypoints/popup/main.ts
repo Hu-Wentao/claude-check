@@ -275,7 +275,8 @@ function build(): void {
   app.replaceChildren();
   document.title = t('extName');
 
-  const langRow = el('div', 'lang-row');
+  const head = el('div', 'head-row');
+  head.append(el('h1', undefined, t('extName')));
   const langSel = document.createElement('select');
   langSel.dataset.field = 'ui-lang';
   langSel.setAttribute('aria-label', t('uiLangLabel'));
@@ -299,10 +300,8 @@ function build(): void {
       await showPolicy();
     })();
   });
-  langRow.append(langSel);
-  app.append(langRow);
-
-  app.append(el('h1', undefined, t('extName')));
+  head.append(langSel);
+  app.append(head);
 
   const switches = el('section');
   switches.append(
