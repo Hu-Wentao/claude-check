@@ -11,7 +11,7 @@ export interface SiteAuthor {
 export const SITE_AUTHOR: SiteAuthor = {
   id: 'hu-wentao',
   name: 'Hu-Wentao',
-  email: 'linxiaotao1993@gmail.com',
+  email: 'support@frely.cloud',
   github: 'Hu-Wentao',
   githubUrl: 'https://github.com/Hu-Wentao',
   xUrl: 'https://x.com/wyatt_coder',
