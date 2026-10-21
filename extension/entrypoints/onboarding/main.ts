@@ -1,6 +1,6 @@
 // （环境：扩展确认页, 原因/备注：站点 origin / chrome.privacy 授权都必须来自扩展
 // 页面里的用户手势，检测页一键修复在缺权限时打开本页完成最后一次确认；确认后
-// 应用对应设置组、重建注入并回载发起修复的检测页标签）
+// 应用对应设置组并重建注入，页面刷新由检测页的 toast 提示用户自己完成）
 import './style.css';
 import { scheduleRebuild } from '../../src/lib/apply';
 import { CHECKER_ORIGIN_PATTERN, applySignalFix } from '../../src/lib/fix-map';
@@ -35,7 +35,6 @@ if (!app) throw new Error('missing #app');
 
 const signal = params.get('signal') || '';
 const isWebrtc = signal === 'webrtcLeak';
-const reloadTabId = Number(params.get('tab'));
 
 const title = el('h1', undefined, t(isWebrtc ? 'onbTitle' : 'onbFixTitle'));
 const body = el('p', 'body', t(isWebrtc ? 'onbWebrtcBody' : 'onbFixBody'));
@@ -48,15 +47,6 @@ async function closeSoon(): Promise<void> {
   await new Promise((r) => setTimeout(r, 1500));
   const tab = await chrome.tabs.getCurrent();
   if (tab?.id != null) await chrome.tabs.remove(tab.id);
-}
-
-async function reloadCheckerTab(): Promise<void> {
-  if (!Number.isInteger(reloadTabId) || reloadTabId <= 0) return;
-  try {
-    await chrome.tabs.reload(reloadTabId);
-  } catch {
-    /* 检测页标签可能已被关闭；设置已生效，无需报错 */
-  }
 }
 
 async function enable(): Promise<void> {
@@ -93,7 +83,6 @@ async function enable(): Promise<void> {
     }
   }
   status.textContent = t('onbDone');
-  await reloadCheckerTab();
   void closeSoon();
 }
 

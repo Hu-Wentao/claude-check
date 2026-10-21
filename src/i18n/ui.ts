@@ -140,10 +140,14 @@ export const ui = {
       'RTCPeerConnection probing for local or real public IP candidate leaks through STUN.',
     'fix.link': 'How to fix',
     'fix.button': 'Fix in one click',
-    'fix.auto': 'Applied. This page reloads shortly — scan again after the reload.',
-    'fix.confirm': 'Click “Enable” once on the page the extension just opened; this page then reloads.',
     'fix.failed':
       'Could not apply from here. Open the extension popup and use “Apply recommended”.',
+    'toast.fixTitle': 'Fix applied',
+    'toast.fixBody': 'Refresh this page to make it take effect, then scan again.',
+    'toast.fixConfirmBody':
+      'Click “Enable” once on the page the extension just opened, then refresh this page.',
+    'toast.refresh': 'Refresh now',
+    'toast.dismiss': 'Close',
     'signal.emoji.name': 'Emoji rendering style',
     'signal.emoji.desc':
       'OS vendor guessed from the user agent; a weak, loosely correlated signal.',
@@ -440,9 +444,12 @@ export const ui = {
       '探测浏览器 RTCPeerConnection 是否通过 STUN 服务泄露真实内网或公网 IP。',
     'fix.link': '如何修复',
     'fix.button': '一键修复',
-    'fix.auto': '已应用，本页即将自动刷新，刷新后重新检测。',
-    'fix.confirm': '在扩展刚打开的确认页点一次「启用」，本页随后自动刷新。',
     'fix.failed': '此处未能应用。请打开扩展弹窗，使用「应用推荐」。',
+    'toast.fixTitle': '修复已应用',
+    'toast.fixBody': '刷新本页后生效，刷新后重新检测。',
+    'toast.fixConfirmBody': '在扩展确认页点一次「启用」，然后刷新本页。',
+    'toast.refresh': '立即刷新',
+    'toast.dismiss': '关闭',
     'signal.emoji.name': 'Emoji 渲染风格',
     'signal.emoji.desc': '由 UA 推断操作系统厂商，弱相关信号。',
 

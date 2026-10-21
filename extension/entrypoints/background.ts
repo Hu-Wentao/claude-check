@@ -25,13 +25,12 @@ export default defineBackground(() => {
     if (message.type === 'slc-fix-signal') {
       void (async () => {
         const signal = String(message.signal || '');
-        const senderTabId = sender.tab?.id;
         const isWebrtc = signal === 'webrtcLeak';
         const originGranted = await chrome.permissions.contains({ origins: [CHECKER_ORIGIN_PATTERN] });
         const privacyGranted = await chrome.permissions.contains({ permissions: ['privacy'] });
 
-        // 权限齐备：直接应用 + 重建注入 + 延迟重载检测页（重载后新配置在
-        // document_start 生效，重扫即可见修复结果）
+        // 权限齐备：直接应用 + 重建注入；页面刷新交由检测页的 toast 提示
+        // 用户主动完成（新配置在刷新后的 document_start 生效）
         if (originGranted && (!isWebrtc || privacyGranted)) {
           const settings = await loadSettings();
           const next = applySignalFix(settings, signal);
@@ -42,11 +41,6 @@ export default defineBackground(() => {
           await saveSettings(next);
           scheduleRebuild();
           if (isWebrtc) await setWebrtcPolicy();
-          if (senderTabId != null) {
-            setTimeout(() => {
-              void chrome.tabs.reload(senderTabId).catch(() => {});
-            }, 1200);
-          }
           sendResponse({ ok: true, mode: 'auto' });
           return;
         }
@@ -57,7 +51,6 @@ export default defineBackground(() => {
           signal,
           lang: message.lang === 'zh' ? 'zh' : 'en',
         });
-        if (senderTabId != null) params.set('tab', String(senderTabId));
         await chrome.tabs.create({ url: chrome.runtime.getURL(`/onboarding.html?${params.toString()}`) });
         sendResponse({ ok: true, mode: 'confirm' });
       })().catch((err) => sendResponse({ ok: false, error: String(err) }));

@@ -474,6 +474,43 @@ function sendToExtension(type: string, extra?: Record<string, string>): Promise<
   });
 }
 
+function showToast(title: string, text: string): void {
+  let toast = q<HTMLElement>('.fix-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.className = 'fix-toast';
+    toast.setAttribute('role', 'status');
+    toast.setAttribute('aria-live', 'polite');
+    const body = document.createElement('div');
+    body.className = 'fix-toast__body';
+    const t1 = document.createElement('span');
+    t1.className = 'fix-toast__title';
+    const t2 = document.createElement('span');
+    t2.className = 'fix-toast__text';
+    body.append(t1, t2);
+    const actions = document.createElement('div');
+    actions.className = 'fix-toast__actions';
+    const refresh = document.createElement('button');
+    refresh.type = 'button';
+    refresh.className = 'fix-toast__refresh';
+    refresh.addEventListener('click', () => location.reload());
+    const close = document.createElement('button');
+    close.type = 'button';
+    close.className = 'fix-toast__close';
+    close.setAttribute('aria-label', t('toast.dismiss'));
+    close.addEventListener('click', () => toast?.remove());
+    actions.append(refresh, close);
+    toast.append(body, actions);
+    document.body.append(toast);
+  }
+  const titleEl = q<HTMLElement>('.fix-toast__title', toast);
+  const textEl = q<HTMLElement>('.fix-toast__text', toast);
+  if (titleEl) titleEl.textContent = title;
+  if (textEl) textEl.textContent = text;
+  const refresh = q<HTMLButtonElement>('.fix-toast__refresh', toast);
+  if (refresh) refresh.textContent = t('toast.refresh');
+}
+
 function initFixSlots(hits: Hit[]): void {
   const fixable = hits.filter((hit) => hit.signal.fixKind);
   if (!fixable.length) return;
@@ -501,10 +538,12 @@ function initFixSlots(hits: Hit[]): void {
           if (!status) return;
           if (res?.ok && res.mode === 'auto') {
             status.dataset.tone = 'ok';
-            status.textContent = t('fix.auto');
+            status.textContent = '';
+            showToast(t('toast.fixTitle'), t('toast.fixBody'));
           } else if (res?.ok && res.mode === 'confirm') {
             status.dataset.tone = '';
-            status.textContent = t('fix.confirm');
+            status.textContent = '';
+            showToast(t('toast.fixTitle'), t('toast.fixConfirmBody'));
           } else {
             status.dataset.tone = 'err';
             status.textContent = t('fix.failed');
