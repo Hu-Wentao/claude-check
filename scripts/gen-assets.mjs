@@ -1,6 +1,6 @@
 /**
- * Generates the site's visual assets (Claude palette + middle-finger mark):
- *   public/favicon.svg          – orange tile + white middle finger
+ * Generates the site's visual assets (Claude palette + thumbs-up mark):
+ *   public/favicon.svg          – orange tile + white thumbs-up
  *   public/apple-touch-icon.png – 180×180, square (iOS applies its own mask)
  *   public/icon-192.png / icon-512.png – PWA/manifest icons
  *   public/og.png               – 1200×630 Open Graph card
@@ -18,17 +18,12 @@ const MUTED = '#63615B';
 const FAINT = '#8A887F';
 
 /**
- * Stylized middle-finger hand (raised middle finger, folded knuckles, thumb),
- * drawn inside a 64×64 box. Kept as overlapping rounded rects so it stays
- * crisp at favicon sizes.
+ * Thumbs-up hand (fist left, thumb raised), drawn in a 24×24 box and scaled
+ * into the 64×64 tile; single path keeps it crisp at favicon sizes.
  */
 function hand(color) {
-  return `<g fill="${color}">
-    <rect x="26.9" y="8" width="7.6" height="29" rx="3.8"/>
-    <rect x="18.9" y="24.5" width="6.4" height="11" rx="3.2"/>
-    <rect x="36.1" y="24.5" width="6.4" height="11" rx="3.2"/>
-    <rect x="16.9" y="30" width="27.6" height="24" rx="9"/>
-    <rect x="40.6" y="32.5" width="7.6" height="16" rx="3.8" transform="rotate(-24 44.4 40.5)"/>
+  return `<g fill="${color}" transform="translate(56 10) scale(-2 2)">
+    <path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/>
   </g>`;
 }
 
