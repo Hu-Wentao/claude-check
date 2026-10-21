@@ -138,7 +138,6 @@ export const ui = {
     'signal.webrtcLeak.name': 'WebRTC IP leak',
     'signal.webrtcLeak.desc':
       'RTCPeerConnection probing for local or real public IP candidate leaks through STUN.',
-    'fix.link': 'How to fix',
     'fix.button': 'Fix in one click',
     'fix.failed':
       'Could not apply from here. Open the extension popup and use “Apply recommended”.',
@@ -448,7 +447,6 @@ export const ui = {
     'signal.webrtcLeak.name': 'WebRTC IP 泄露',
     'signal.webrtcLeak.desc':
       '探测浏览器 RTCPeerConnection 是否通过 STUN 服务泄露真实内网或公网 IP。',
-    'fix.link': '如何修复',
     'fix.button': '一键修复',
     'fix.failed': '此处未能应用。请打开扩展弹窗，使用「应用推荐」。',
     'toast.fixTitle': '修复已应用',

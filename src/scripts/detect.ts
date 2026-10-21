@@ -440,7 +440,7 @@ function restoreFromCache(cache: ScanCache): void {
   const tt = Math.min(100, total);
   setRing(tt);
   finalize(tt, hits);
-  initFixSlots(hits);
+  initFixAll(hits);
   const label = q('#retest-label');
   if (label) label.textContent = t('ui.retest');
 }
@@ -468,7 +468,7 @@ async function refreshSilently(): Promise<void> {
   const tt = Math.min(100, total);
   setRing(tt);
   finalize(tt, hits);
-  initFixSlots(hits);
+  initFixAll(hits);
   saveCache(tt, items);
   running = false;
 }
@@ -522,7 +522,7 @@ async function run() {
   }
 
   finalize(Math.min(100, total), hits);
-  initFixSlots(hits);
+  initFixAll(hits);
   saveCache(Math.min(100, total), outcomes);
   const label = q('#retest-label');
   if (label) label.textContent = t('ui.retest');
@@ -624,79 +624,67 @@ function showToast(title: string, text: string, action?: { label: string; run: (
   }
 }
 
-function extPageUrl(slot: HTMLElement): string {
-  // 修复槽自带引导链接（已按语言/锚点渲染），直接复用其地址，去掉锚点
-  const link = q<HTMLAnchorElement>('[data-fix-link]', slot);
-  const href = link?.getAttribute('href') ?? '/extension/';
+function extPageUrl(): string {
+  // 按当前页面语言跳转对应插件页
+  const path = currentLang() === 'zh' ? '/zh/extension/' : '/extension/';
   try {
-    return new URL(href, location.origin).href.split('#')[0];
+    return new URL(path, location.origin).href;
   } catch {
     return '/extension/';
   }
 }
 
-function initFixSlots(hits: Hit[]): void {
+// （环境：站点, 原因/备注：一键修复从逐项按钮改为分数旁单按钮——点击后
+// 顺序修复本次扫描的全部可修项；逐项协议不变，扩展侧无需更新）
+function initFixAll(hits: Hit[]): void {
+  const button = q<HTMLButtonElement>('#fix-all');
+  if (!button) return;
   const fixable = hits.filter((hit) => hit.signal.fixKind);
-  for (const hit of fixable) {
-    const slot = q<HTMLElement>(`[data-fix="${hit.signal.id}"]`);
-    if (!slot) continue;
-    slot.hidden = false;
-    const button = q<HTMLButtonElement>('[data-fix-button]', slot);
-    const status = q<HTMLElement>('[data-fix-status]', slot);
-    if (!button) continue;
-    // 按钮常驻：是否可修复在点击时检测（未安装/未启用/旧版都由 toast 引导）
-    button.hidden = false;
-    // 重扫会再次进入本函数；同一按钮只绑一次监听
-    if (button.dataset.bound === '1') continue;
-    button.dataset.bound = '1';
-    button.addEventListener('click', () => {
-      button.disabled = true;
-      if (status) status.textContent = '';
-      void sendToExtension('slc-ping').then((probe) => {
-        if (!probe?.ok) {
-          button.disabled = false;
-          showToast(t('toast.extMissingTitle'), t('toast.extMissingBody'), {
-            label: t('toast.extAction'),
-            run: () => location.assign(extPageUrl(slot)),
-          });
-          return;
-        }
-        if (!bridgeSupported(probe.version)) {
-          button.disabled = false;
-          showToast(t('toast.extOldTitle'), t('toast.extOldBody'), {
-            label: t('toast.extAction'),
-            run: () => location.assign(extPageUrl(slot)),
-          });
-          return;
-        }
-        void sendToExtension('slc-fix-signal', {
-          signal: hit.signal.id,
-          lang: currentLang(),
-        }).then((res) => {
-          if (!status) return;
-          if (res?.ok && res.mode === 'auto') {
-            status.dataset.tone = 'ok';
-            status.textContent = '';
-            showToast(t('toast.fixTitle'), t('toast.fixBody'), {
-              label: t('toast.refresh'),
-              run: () => location.reload(),
-            });
-          } else if (res?.ok && res.mode === 'confirm') {
-            status.dataset.tone = '';
-            status.textContent = '';
-            showToast(t('toast.fixTitle'), t('toast.fixConfirmBody'), {
-              label: t('toast.refresh'),
-              run: () => location.reload(),
-            });
-          } else {
-            status.dataset.tone = 'err';
-            status.textContent = t('fix.failed');
-            button.disabled = false;
-          }
-        });
-      });
+  button.hidden = fixable.length === 0;
+  if (!fixable.length || button.dataset.bound === '1') return;
+  button.dataset.bound = '1';
+  button.addEventListener('click', () => {
+    button.disabled = true;
+    const guideToExt = (kind: 'extMissing' | 'extOld') => {
+      button.disabled = false;
+      showToast(
+        t(kind === 'extMissing' ? 'toast.extMissingTitle' : 'toast.extOldTitle'),
+        t(kind === 'extMissing' ? 'toast.extMissingBody' : 'toast.extOldBody'),
+        { label: t('toast.extAction'), run: () => location.assign(extPageUrl()) },
+      );
+    };
+    void sendToExtension('slc-ping').then(async (probe) => {
+      if (!probe?.ok) {
+        guideToExt('extMissing');
+        return;
+      }
+      if (!bridgeSupported(probe.version)) {
+        guideToExt('extOld');
+        return;
+      }
+      const lang = currentLang();
+      let applied = 0;
+      let confirmNeeded = false;
+      let failed = 0;
+      for (const hit of fixable) {
+        const res = await sendToExtension('slc-fix-signal', { signal: hit.signal.id, lang });
+        if (res?.ok && res.mode === 'auto') applied += 1;
+        else if (res?.ok && res.mode === 'confirm') confirmNeeded = true;
+        else failed += 1;
+      }
+      if (applied > 0 || confirmNeeded) {
+        // 成功后保持禁用，刷新页面后随新扫描重置
+        showToast(
+          t('toast.fixTitle'),
+          confirmNeeded && applied === 0 ? t('toast.fixConfirmBody') : t('toast.fixBody'),
+          { label: t('toast.refresh'), run: () => location.reload() },
+        );
+      } else {
+        button.disabled = false;
+        showToast(t('toast.fixTitle'), t('fix.failed'));
+      }
     });
-  }
+  });
 }
 
 /**
