@@ -44,12 +44,12 @@ const ogSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630"
   <rect width="1200" height="630" fill="${CREAM}"/>
   <circle cx="280" cy="315" r="205" fill="${BONE}"/>
   <g transform="translate(${(280 - 32 * OG_HAND_SCALE).toFixed(1)} ${(315 - 32 * OG_HAND_SCALE).toFixed(1)}) scale(${OG_HAND_SCALE})">${hand(ORANGE)}</g>
-  <text x="530" y="190" font-family="Helvetica, Arial, sans-serif" font-size="25" font-weight="700" letter-spacing="8" fill="${ORANGE}">FUCK CLAUDE</text>
+  <text x="530" y="190" font-family="Helvetica, Arial, sans-serif" font-size="25" font-weight="700" letter-spacing="8" fill="${ORANGE}">CLAUDE CHECK</text>
   <text x="525" y="280" font-family="Georgia, 'Times New Roman', serif" font-size="70" font-weight="700" fill="${SLATE}">Are you a Claude</text>
   <text x="525" y="370" font-family="Georgia, 'Times New Roman', serif" font-size="70" font-weight="700" font-style="italic" fill="${ORANGE}">“China user”?</text>
   <text x="530" y="442" font-family="Helvetica, Arial, sans-serif" font-size="25" fill="${MUTED}">Timezone · Language · Fonts · Locale</text>
   <text x="530" y="482" font-family="Helvetica, Arial, sans-serif" font-size="25" fill="${MUTED}">Checked 100% locally in your browser</text>
-  <text x="530" y="556" font-family="Menlo, monospace" font-size="23" fill="${FAINT}">fuck-claude.vercel.app</text>
+  <text x="530" y="556" font-family="Menlo, monospace" font-size="23" fill="${FAINT}">claudecheck.frely.cloud</text>
 </svg>`;
 
 const px = (svg, size) =>

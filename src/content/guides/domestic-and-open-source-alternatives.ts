@@ -435,7 +435,7 @@ async function route(prompt: string) {
 
 <p>若降级本身失败——网关超时、tool JSON 乱码、403 含义不明——请先走 <a href="/zh/guides/troubleshooting-guide/">故障排查指南</a> 决策树，避免盲目换模型。</p>
 
-<p>体验入口：可在 <a href="https://www.kimi.com/code?utm_source=fuck-claude" target="_blank" rel="noopener">Kimi Code</a>、<a href="https://www.deepseek.com/?utm_source=fuck-claude" target="_blank" rel="noopener">DeepSeek</a> 或 <a href="https://bigmodel.cn/?utm_source=fuck-claude" target="_blank" rel="noopener">智谱 GLM</a> 官方站点注册 API 后接入上述网关。</p>
+<p>体验入口：可在 <a href="https://www.kimi.com/code?utm_source=claude-check" target="_blank" rel="noopener">Kimi Code</a>、<a href="https://www.deepseek.com/?utm_source=claude-check" target="_blank" rel="noopener">DeepSeek</a> 或 <a href="https://bigmodel.cn/?utm_source=claude-check" target="_blank" rel="noopener">智谱 GLM</a> 官方站点注册 API 后接入上述网关。</p>
 
 <h2>常见问题</h2>
 

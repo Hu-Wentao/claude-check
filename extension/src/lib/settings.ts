@@ -24,7 +24,7 @@ export function suggestedSites(): SiteEntry[] {
   const sites: SiteEntry[] = [
     { host: 'claude.ai', includeSubdomains: true, suggested: true },
     { host: 'claude.com', includeSubdomains: true, suggested: true },
-    { host: 'fuck-claude.vercel.app', includeSubdomains: false, suggested: true },
+    { host: 'claudecheck.frely.cloud', includeSubdomains: false, suggested: true },
   ];
   if (__SLC_E2E__) {
     sites.push({ host: 'localhost', includeSubdomains: false, suggested: true });

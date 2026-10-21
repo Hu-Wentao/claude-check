@@ -23,7 +23,7 @@ const newsHub = lang === 'zh' ? '/zh/news/' : '/news/';
 const extensionPage = lang === 'zh' ? '/zh/extension/' : '/extension/';
 const prefix = lang === 'zh' ? '/zh' : '';
 
-const site = Astro.site ?? new URL('https://fuck-claude.vercel.app');
+const site = Astro.site ?? new URL('https://claudecheck.frely.cloud');
 const currentUrl = new URL(path, site).href;
 const homeUrl = new URL(home, site).href;
 
@@ -49,7 +49,7 @@ const breadcrumbJsonLd = {
 <BaseLayout
   lang={lang}
   {path}
-  title={`${title} | Fuck Claude`}
+  title={`${title} | Claude Check`}
   {description}
   {enPath}
   {zhPath}

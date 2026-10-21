@@ -38,7 +38,7 @@ const { html, toc } = prepareArticleHtml(rawHtml, t('guides.tableLabel'));
 const readTime = t('guides.readTime').replace('{n}', String(estimateReadMinutes(rawHtml, lang)));
 const relatedGuides = getRelatedGuides(guide);
 
-const site = Astro.site ?? new URL('https://fuck-claude.vercel.app');
+const site = Astro.site ?? new URL('https://claudecheck.frely.cloud');
 const currentUrl = new URL(articlePath, site).href;
 const homeUrl = new URL(home, site).href;
 const guidesHubUrl = new URL(guidesHub, site).href;
@@ -56,7 +56,7 @@ const jsonLdExtra = [
     },
     publisher: {
       '@type': 'Organization',
-      name: 'Fuck Claude',
+      name: 'Claude Check',
       url: new URL('/', site).href,
     },
     datePublished: toIsoDate(guide.publishedAt),
@@ -80,7 +80,7 @@ const jsonLdExtra = [
 <BaseLayout
   lang={lang}
   path={articlePath}
-  title={`${title} | Fuck Claude`}
+  title={`${title} | Claude Check`}
   description={summary}
   enPath={`/guides/${slug}/`}
   zhPath={`/zh/guides/${slug}/`}

@@ -179,7 +179,7 @@ const nav = navigator as Navigator & {
   canShare?: (data: ShareData) => boolean;
 };
 
-const CARD_FILENAME = 'fuck-claude-result.png';
+const CARD_FILENAME = 'claude-check-result.png';
 let cardBlob: Blob | null = null;
 
 function resetCard() {
@@ -199,7 +199,7 @@ async function buildCard(total: number, band: RiskBand, hits: CardHit[]) {
       outOf: t('hero.scoreOutOf'),
       hits,
       url: pageShareUrl(),
-      brand: 'Fuck Claude',
+      brand: 'Claude Check',
     });
     cardBlob = blob;
     const save = q<HTMLButtonElement>('#share-save');

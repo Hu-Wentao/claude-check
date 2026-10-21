@@ -33,7 +33,7 @@ export default defineConfig({
       'https://*.claude.ai/*',
       'https://claude.com/*',
       'https://*.claude.com/*',
-      'https://fuck-claude.vercel.app/*',
+      'https://claudecheck.frely.cloud/*',
       'https://*/*',
     ],
     icons: {

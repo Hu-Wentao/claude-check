@@ -6,7 +6,7 @@ export const TRUST_CONTENT: Record<TrustPageId, { en: string; zh: string }> = {
   privacy: {
     en: `
 <h2>1. Local Scan Architecture — Zero Data Upload</h2>
-<p>Every client-side fingerprinting and environmental risk test on <strong>Fuck Claude</strong> runs 100% inside your local web browser. Your scan results, detected locale signals, IP observations from WebRTC, and computed risk scores are processed in memory on your device. They are <strong>never uploaded</strong> to our servers, never stored in any remote database, and never shared with or sold to third parties.</p>
+<p>Every client-side fingerprinting and environmental risk test on <strong>Claude Check</strong> runs 100% inside your local web browser. Your scan results, detected locale signals, IP observations from WebRTC, and computed risk scores are processed in memory on your device. They are <strong>never uploaded</strong> to our servers, never stored in any remote database, and never shared with or sold to third parties.</p>
 
 <h2>2. Google AdSense & Third-Party Advertising Cookies</h2>
 <p>This website uses <strong>Google AdSense</strong> to display advertisements. Google and third-party advertising partners use cookies, web beacons, and similar technologies to serve and personalize ads based on a user's prior visits to this website and other websites across the Internet:</p>
@@ -39,7 +39,7 @@ export const TRUST_CONTENT: Record<TrustPageId, { en: string; zh: string }> = {
 `.trim(),
     zh: `
 <h2>1. 本地检测架构 — 零数据上传承诺</h2>
-<p><strong>Fuck Claude</strong> 上的所有客户端指纹检测与环境风控评估均 100% 在你的浏览器本地内存中运行。你的检测结果、命中的区域设置信号、WebRTC 探测到的网络信息以及最终计算出的风险分，<strong>绝不会上传</strong>到我们的服务器，不会存入任何远程数据库，更不会分享或出售给任何第三方。</p>
+<p><strong>Claude Check</strong> 上的所有客户端指纹检测与环境风控评估均 100% 在你的浏览器本地内存中运行。你的检测结果、命中的区域设置信号、WebRTC 探测到的网络信息以及最终计算出的风险分，<strong>绝不会上传</strong>到我们的服务器，不会存入任何远程数据库，更不会分享或出售给任何第三方。</p>
 
 <h2>2. Google AdSense 与第三方广告 Cookie 说明</h2>
 <p>本站使用 <strong>Google AdSense</strong> 展示广告。Google 及第三方广告合作伙伴会使用 Cookie、网络信标和类似技术，根据用户对本站及互联网上其他网站的历史访问记录投放与个性化广告：</p>
@@ -77,16 +77,16 @@ export const TRUST_CONTENT: Record<TrustPageId, { en: string; zh: string }> = {
 <h2>Who We Are</h2>
 <p><strong>${SITE_AUTHOR.name}</strong> — ${SITE_AUTHOR.bio.en}</p>
 
-<h2>What Fuck Claude Is</h2>
-<p><strong>Fuck Claude</strong> is an open-source technical diagnostic tool and educational knowledge base. It was developed to help software engineers, researchers, and global developers analyze how modern AI client software (specifically Anthropic's Claude Code and Claude web interfaces) inspects system environments and performs locale fingerprinting.</p>
+<h2>What Claude Check Is</h2>
+<p><strong>Claude Check</strong> is an open-source technical diagnostic tool and educational knowledge base. It was developed to help software engineers, researchers, and global developers analyze how modern AI client software (specifically Anthropic's Claude Code and Claude web interfaces) inspects system environments and performs locale fingerprinting.</p>
 <p>Through ten distinct browser-accessible signals — including system timezone, language order, Chinese core fonts, hardware vendor fonts, WebRTC candidate leaks, domestic browser engines, device vendor attributes, Intl locale resolution, UTC offset, and emoji glyph metrics — our open scanner provides a transparent, weighted 0–100 risk score and clear debugging recommendations.</p>
 
 <h2>Editorial Standards & Research Methodology</h2>
-<p>All content published on Fuck Claude adheres to rigorous software engineering and technical verification standards:</p>
+<p>All content published on Claude Check adheres to rigorous software engineering and technical verification standards:</p>
 <ul>
   <li><strong>Empirical Reverse-Engineering:</strong> Our guides and scoring weights are grounded in reproducible reverse-engineering analyses of publicly distributed binaries, prompt injection diagnostics, and open-source network captures.</li>
   <li><strong>Continuous Validation:</strong> When Anthropic publishes updates, modifies model deprecation schedules, adjusts API rate limits, or updates terms of service, our team verifies and updates the corresponding <a href="/guides/">Anti-Ban Guides</a> and <a href="/news/">Claude News</a> archive.</li>
-  <li><strong>Peer Review & Open Source Transparency:</strong> The entire website, detection algorithms, and guide repositories are open source under the MIT License on <a href="${SITE_AUTHOR.githubUrl}/FuckClaude" target="_blank" rel="noopener noreferrer">GitHub</a>. Community feedback and pull requests undergo technical review before merging.</li>
+  <li><strong>Peer Review & Open Source Transparency:</strong> The entire website, detection algorithms, and guide repositories are open source under the MIT License on <a href="${SITE_AUTHOR.githubUrl}/claude-check" target="_blank" rel="noopener noreferrer">GitHub</a>. Community feedback and pull requests undergo technical review before merging.</li>
 </ul>
 
 <h2>Technical Capabilities & Scope Limitations</h2>
@@ -97,25 +97,25 @@ export const TRUST_CONTENT: Record<TrustPageId, { en: string; zh: string }> = {
 </ul>
 
 <h2>Open Source & Community Collaboration</h2>
-<p>We believe in open knowledge and software transparency. The project source code is available at <a href="${SITE_AUTHOR.githubUrl}/FuckClaude" target="_blank" rel="noopener noreferrer">${SITE_AUTHOR.github}/FuckClaude</a>. For technical bug reports, algorithm suggestions, or editorial corrections, visit our <a href="/contact/">contact page</a> or submit an issue on GitHub.</p>
+<p>We believe in open knowledge and software transparency. The project source code is available at <a href="${SITE_AUTHOR.githubUrl}/claude-check" target="_blank" rel="noopener noreferrer">${SITE_AUTHOR.github}/claude-check</a>. For technical bug reports, algorithm suggestions, or editorial corrections, visit our <a href="/contact/">contact page</a> or submit an issue on GitHub.</p>
 
 <h2>Disclaimer of Affiliation</h2>
-<p>Fuck Claude is an independent open-source educational project. It is <strong>not affiliated with, maintained by, authorized by, or endorsed by Anthropic, PBC</strong>. Claude, Claude Code, Anthropic, and associated trademarks belong to Anthropic, PBC.</p>
+<p>Claude Check is an independent open-source educational project. It is <strong>not affiliated with, maintained by, authorized by, or endorsed by Anthropic, PBC</strong>. Claude, Claude Code, Anthropic, and associated trademarks belong to Anthropic, PBC.</p>
 `.trim(),
     zh: `
 <h2>网站运营与作者团队</h2>
 <p><strong>${SITE_AUTHOR.name}</strong> — ${SITE_AUTHOR.bio.zh}</p>
 
-<h2>Fuck Claude 项目概述</h2>
-<p><strong>Fuck Claude</strong> 是一套面向开发者与技术研究者的开源诊断工具与深度知识库。项目旨在帮助全球开发者与科研人员深入理解现代 AI 客户端（特别是 Anthropic 的 Claude Code 与 Web 界面）如何对运行环境进行区域指纹识别与风控检测。</p>
+<h2>Claude Check 项目概述</h2>
+<p><strong>Claude Check</strong> 是一套面向开发者与技术研究者的开源诊断工具与深度知识库。项目旨在帮助全球开发者与科研人员深入理解现代 AI 客户端（特别是 Anthropic 的 Claude Code 与 Web 界面）如何对运行环境进行区域指纹识别与风控检测。</p>
 <p>通过检测系统时区、浏览器语言优先级、中文字体集、国产厂商专属字体、WebRTC 候选泄漏、国产浏览器引擎、硬件设备属性、Intl 区域解析、UTC 偏移量以及 Emoji 渲染等十项核心指标，本站提供透明的 0–100 加权风控分值及针对性的纯化配置建议。</p>
 
 <h2>编辑准则与研究方法论</h2>
-<p>Fuck Claude 知识库与动态资讯遵循严格的软件工程与技术验证准则：</p>
+<p>Claude Check 知识库与动态资讯遵循严格的软件工程与技术验证准则：</p>
 <ul>
   <li><strong>实证逆向分析：</strong>所有防封指南与指纹权重均基于公开可复现的二进制逆向分析、Prompt 注入测试及抓包协议分析，杜绝道听途说与虚假信息。</li>
   <li><strong>持续跟踪与校验：</strong>每当 Anthropic 调整地区政策、上线新模型架构（如 Claude 3.7 Sonnet 混合推理）、推行文本水印或更新 API 速率限制，团队均会第一时间在 <a href="/zh/guides/">防封指南</a> 与 <a href="/zh/news/">最新动态</a> 中同步实测结论与应对策略。</li>
-  <li><strong>开源透明与同行评审：</strong>本站的全部代码、评分算法及指南文稿均在 <a href="${SITE_AUTHOR.githubUrl}/FuckClaude" target="_blank" rel="noopener noreferrer">GitHub</a> 上基于 MIT 协议完全开源，接受全球开发者的共同审查与改进。</li>
+  <li><strong>开源透明与同行评审：</strong>本站的全部代码、评分算法及指南文稿均在 <a href="${SITE_AUTHOR.githubUrl}/claude-check" target="_blank" rel="noopener noreferrer">GitHub</a> 上基于 MIT 协议完全开源，接受全球开发者的共同审查与改进。</li>
 </ul>
 
 <h2>技术范围与能力边界说明</h2>
@@ -126,10 +126,10 @@ export const TRUST_CONTENT: Record<TrustPageId, { en: string; zh: string }> = {
 </ul>
 
 <h2>开源协议与社区协作</h2>
-<p>我们坚信开源透明的力量。项目仓库地址：<a href="${SITE_AUTHOR.githubUrl}/FuckClaude" target="_blank" rel="noopener noreferrer">${SITE_AUTHOR.github}/FuckClaude</a>。欢迎通过 <a href="/zh/contact/">联系我们</a> 页面或 GitHub Issues 提交技术探讨、算法优化建议及勘误。</p>
+<p>我们坚信开源透明的力量。项目仓库地址：<a href="${SITE_AUTHOR.githubUrl}/claude-check" target="_blank" rel="noopener noreferrer">${SITE_AUTHOR.github}/claude-check</a>。欢迎通过 <a href="/zh/contact/">联系我们</a> 页面或 GitHub Issues 提交技术探讨、算法优化建议及勘误。</p>
 
 <h2>独立声明</h2>
-<p>Fuck Claude 为独立的开源技术与教育研究项目，<strong>与 Anthropic, PBC 无任何隶属、赞助、授权或官方关联</strong>。Claude、Claude Code、Anthropic 及其相关标识均为 Anthropic, PBC 的注册商标或许可财产。</p>
+<p>Claude Check 为独立的开源技术与教育研究项目，<strong>与 Anthropic, PBC 无任何隶属、赞助、授权或官方关联</strong>。Claude、Claude Code、Anthropic 及其相关标识均为 Anthropic, PBC 的注册商标或许可财产。</p>
 `.trim(),
   },
 
@@ -140,7 +140,7 @@ export const TRUST_CONTENT: Record<TrustPageId, { en: string; zh: string }> = {
 
 <h2>Primary Contact Channels</h2>
 <ul>
-  <li><strong>GitHub Issues (Recommended for Technical Feedback):</strong> For bug reports, fingerprint algorithm improvements, new environment signals, or guide errata, please open an issue at <a href="${SITE_AUTHOR.githubUrl}/FuckClaude/issues" target="_blank" rel="noopener noreferrer">${SITE_AUTHOR.github}/FuckClaude/issues</a>. GitHub provides the fastest turnaround and public tracking.</li>
+  <li><strong>GitHub Issues (Recommended for Technical Feedback):</strong> For bug reports, fingerprint algorithm improvements, new environment signals, or guide errata, please open an issue at <a href="${SITE_AUTHOR.githubUrl}/claude-check/issues" target="_blank" rel="noopener noreferrer">${SITE_AUTHOR.github}/claude-check/issues</a>. GitHub provides the fastest turnaround and public tracking.</li>
   <li><strong>Direct Email:</strong> For general inquiries, privacy notices, collaboration, or sponsorship: <a href="mailto:${SITE_AUTHOR.email}">${SITE_AUTHOR.email}</a>. We endeavor to respond to legitimate inquiries within 48 business hours.</li>
   <li><strong>Social Platforms:</strong> Connect with the author on <a href="${SITE_AUTHOR.xUrl}" target="_blank" rel="noopener noreferrer">X (Twitter)</a>, Xiaohongshu, Douyin, and Jike. Platform links are available in the top navigation.</li>
 </ul>
@@ -163,7 +163,7 @@ export const TRUST_CONTENT: Record<TrustPageId, { en: string; zh: string }> = {
 
 <h2>主要联系渠道</h2>
 <ul>
-  <li><strong>GitHub Issues（技术反馈首选）：</strong>针对 Bug 报告、指纹算法优化、新环境特征补充或指南勘误，请在 <a href="${SITE_AUTHOR.githubUrl}/FuckClaude/issues" target="_blank" rel="noopener noreferrer">${SITE_AUTHOR.github}/FuckClaude/issues</a> 提交 Issue。这是响应最迅速、最透明的沟通方式。</li>
+  <li><strong>GitHub Issues（技术反馈首选）：</strong>针对 Bug 报告、指纹算法优化、新环境特征补充或指南勘误，请在 <a href="${SITE_AUTHOR.githubUrl}/claude-check/issues" target="_blank" rel="noopener noreferrer">${SITE_AUTHOR.github}/claude-check/issues</a> 提交 Issue。这是响应最迅速、最透明的沟通方式。</li>
   <li><strong>官方电子邮件：</strong>一般咨询、隐私合规请求、技术交流与赞助合作，请发送邮件至：<a href="mailto:${SITE_AUTHOR.email}">${SITE_AUTHOR.email}</a>。我们通常会在 48 个工作小时内给予回复。</li>
   <li><strong>社交平台：</strong>欢迎在 <a href="${SITE_AUTHOR.xUrl}" target="_blank" rel="noopener noreferrer">X (Twitter)</a>、小红书、抖音与即刻关注作者（链接见顶部导航）。</li>
 </ul>
@@ -185,17 +185,17 @@ export const TRUST_CONTENT: Record<TrustPageId, { en: string; zh: string }> = {
   terms: {
     en: `
 <h2>1. Acceptance of Terms</h2>
-<p>By accessing or using <strong>Fuck Claude</strong> (the "Website", "Service", or "Tool"), you agree to be bound by these Terms of Service ("Terms") and our <a href="/privacy/">Privacy Policy</a>. If you do not agree to these Terms, please discontinue using the Service immediately.</p>
+<p>By accessing or using <strong>Claude Check</strong> (the "Website", "Service", or "Tool"), you agree to be bound by these Terms of Service ("Terms") and our <a href="/privacy/">Privacy Policy</a>. If you do not agree to these Terms, please discontinue using the Service immediately.</p>
 
 <h2>2. Educational & Research Purpose</h2>
-<p>Fuck Claude is an independent open-source educational and technical research tool. All tools, risk calculators, fingerprint scanners, and knowledge base articles are published strictly for educational, security auditing, and technical research purposes. Nothing on this website constitutes legal, financial, or commercial advice.</p>
+<p>Claude Check is an independent open-source educational and technical research tool. All tools, risk calculators, fingerprint scanners, and knowledge base articles are published strictly for educational, security auditing, and technical research purposes. Nothing on this website constitutes legal, financial, or commercial advice.</p>
 
 <h2>3. User Responsibility & Compliance</h2>
 <p>You acknowledge and agree that:</p>
 <ul>
   <li>You are solely responsible for how you configure your local devices, networks, operating systems, and developer environments.</li>
   <li>You remain solely responsible for your use of third-party AI services (including Anthropic's Claude, Claude Code, and Claude API) and for complying with their applicable Terms of Service, Acceptable Use Policies, and your local laws.</li>
-  <li>Fuck Claude does not guarantee that following any checklist or guide will prevent account suspension, rate-limiting, or administrative action by third-party service providers.</li>
+  <li>Claude Check does not guarantee that following any checklist or guide will prevent account suspension, rate-limiting, or administrative action by third-party service providers.</li>
 </ul>
 
 <h2>4. Disclaimer of Warranties</h2>
@@ -205,7 +205,7 @@ export const TRUST_CONTENT: Record<TrustPageId, { en: string; zh: string }> = {
 <p>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL THE AUTHORS, MAINTAINERS, OR CONTRIBUTORS BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO LOSS OF DATA, LOSS OF PROFITS, ACCOUNT SUSPENSION, OR SERVICE DISRUPTION, ARISING OUT OF OR IN CONNECTION WITH YOUR USE OF OR INABILITY TO USE THE SERVICE OR GUIDES.</p>
 
 <h2>6. Intellectual Property & Open Source Licensing</h2>
-<p>The source code of Fuck Claude is licensed under the <strong>MIT License</strong>. You may inspect, modify, and distribute the code in accordance with the MIT License terms, provided that original copyright notices and permission notices are retained.</p>
+<p>The source code of Claude Check is licensed under the <strong>MIT License</strong>. You may inspect, modify, and distribute the code in accordance with the MIT License terms, provided that original copyright notices and permission notices are retained.</p>
 
 <h2>7. Third-Party Trademarks & External Links</h2>
 <p>All third-party trademarks, service marks, product names, and company names mentioned on this Website (including "Claude", "Anthropic", "Google", "Cloudflare") are the property of their respective owners. Mention of third-party products or services does not imply endorsement, affiliation, or sponsorship. We are not responsible for the content, privacy practices, or availability of external third-party websites linked from our pages.</p>
@@ -217,14 +217,14 @@ export const TRUST_CONTENT: Record<TrustPageId, { en: string; zh: string }> = {
 <p>We reserve the right to revise or update these Terms at any time without prior notice. The updated version will be posted directly on this page with the effective date. Your continued use of the Website following any changes constitutes your acceptance of the modified Terms.</p>
 
 <h2>10. Contact Information</h2>
-<p>If you have any questions or concerns regarding these Terms, please contact us at <a href="mailto:${SITE_AUTHOR.email}">${SITE_AUTHOR.email}</a> or submit an issue via our <a href="${SITE_AUTHOR.githubUrl}/FuckClaude/issues" target="_blank" rel="noopener noreferrer">GitHub repository</a>.</p>
+<p>If you have any questions or concerns regarding these Terms, please contact us at <a href="mailto:${SITE_AUTHOR.email}">${SITE_AUTHOR.email}</a> or submit an issue via our <a href="${SITE_AUTHOR.githubUrl}/claude-check/issues" target="_blank" rel="noopener noreferrer">GitHub repository</a>.</p>
 `.trim(),
     zh: `
 <h2>1. 条款的接受与确认</h2>
-<p>欢迎访问并使用 <strong>Fuck Claude</strong>（以下简称“本站”、“服务”或“本工具”）。一旦你访问或使用本站，即表示你已充分阅读、理解并同意受本服务条款（以下简称“本条款”）及本站 <a href="/zh/privacy/">隐私政策</a> 的约束。如果你不同意本条款的任何内容，请立即停止使用本站。</p>
+<p>欢迎访问并使用 <strong>Claude Check</strong>（以下简称“本站”、“服务”或“本工具”）。一旦你访问或使用本站，即表示你已充分阅读、理解并同意受本服务条款（以下简称“本条款”）及本站 <a href="/zh/privacy/">隐私政策</a> 的约束。如果你不同意本条款的任何内容，请立即停止使用本站。</p>
 
 <h2>2. 教育与技术研究性质</h2>
-<p>Fuck Claude 是一个独立的开源教育与技术研究项目。本站提供的所有检测工具、风险估算器、指纹扫描脚本及防封知识库文章，仅供技术研究、安全审计与学习参考之用。本站任何内容均不构成法律、财务、合规或商业建议。</p>
+<p>Claude Check 是一个独立的开源教育与技术研究项目。本站提供的所有检测工具、风险估算器、指纹扫描脚本及防封知识库文章，仅供技术研究、安全审计与学习参考之用。本站任何内容均不构成法律、财务、合规或商业建议。</p>
 
 <h2>3. 用户责任与合规守则</h2>
 <p>你理解并明确同意：</p>
@@ -241,7 +241,7 @@ export const TRUST_CONTENT: Record<TrustPageId, { en: string; zh: string }> = {
 <p>在适用法律允许的最大范围内，本站作者、维护者或贡献者在任何情况下均不对因使用或无法使用本站服务、工具或指南而引起的任何间接、附带、特殊、后果性或惩罚性损害（包括但不限于数据丢失、利润损失、账号封禁或业务中断）承担赔偿责任。</p>
 
 <h2>6. 知识产权与开源授权</h2>
-<p>Fuck Claude 项目源代码基于 <strong>MIT 开源协议</strong> 发布。你可以在保留原作者版权声明和许可声明的前提下，自由查阅、修改、分发与使用本项目的代码。</p>
+<p>Claude Check 项目源代码基于 <strong>MIT 开源协议</strong> 发布。你可以在保留原作者版权声明和许可声明的前提下，自由查阅、修改、分发与使用本项目的代码。</p>
 
 <h2>7. 第三方商标与外部链接</h2>
 <p>本站提及的所有第三方商标、服务标志、产品名称和公司名称（包括但不限于 "Claude"、"Anthropic"、"Google"、"Cloudflare" 等）均为其各自所有者的财产。提及这些商标仅用于描述与技术指代，不代表任何隶属、认可、赞助或官方合作关系。对于本站链接的第三方外部网站内容与隐私实践，本站概不负责。</p>
@@ -253,7 +253,7 @@ export const TRUST_CONTENT: Record<TrustPageId, { en: string; zh: string }> = {
 <p>我们保留随时修订或更新本服务条款的权利。更新后的条款将直接发布于本页面。你在条款更新后继续使用本站，即视为接受修订后的条款。</p>
 
 <h2>10. 联系与反馈</h2>
-<p>如对本条款有任何疑问，请通过电子邮件联系我们：<a href="mailto:${SITE_AUTHOR.email}">${SITE_AUTHOR.email}</a>，或在 <a href="${SITE_AUTHOR.githubUrl}/FuckClaude/issues" target="_blank" rel="noopener noreferrer">GitHub 仓库</a> 提交 Issue。</p>
+<p>如对本条款有任何疑问，请通过电子邮件联系我们：<a href="mailto:${SITE_AUTHOR.email}">${SITE_AUTHOR.email}</a>，或在 <a href="${SITE_AUTHOR.githubUrl}/claude-check/issues" target="_blank" rel="noopener noreferrer">GitHub 仓库</a> 提交 Issue。</p>
 `.trim(),
   },
 };

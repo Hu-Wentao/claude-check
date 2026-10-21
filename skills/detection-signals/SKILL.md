@@ -1,6 +1,6 @@
 ---
 name: detection-signals
-description: Add, adjust or remove "China user" detection signals in the FuckClaude project (browser scan + /api/check). Use when adding detection methods, changing signal weights or scorers, or when the user mentions 检测信号 / 检测手段 / 新增检测 / signals / weights / detectors.
+description: Add, adjust or remove "China user" detection signals in the claude-check project (browser scan + /api/check). Use when adding detection methods, changing signal weights or scorers, or when the user mentions 检测信号 / 检测手段 / 新增检测 / signals / weights / detectors.
 ---
 
 # 检测信号(Detection Signals)开发

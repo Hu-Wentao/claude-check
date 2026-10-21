@@ -29,7 +29,7 @@ const readingPaths = [
   { slug: 'account-appeal-and-recovery-sop', key: 'path5' },
 ];
 
-const site = Astro.site ?? new URL('https://fuck-claude.vercel.app');
+const site = Astro.site ?? new URL('https://claudecheck.frely.cloud');
 const currentUrl = new URL(guidesHub, site).href;
 const homeUrl = new URL(home, site).href;
 
@@ -55,7 +55,7 @@ const breadcrumbJsonLd = {
 <BaseLayout
   lang={lang}
   path={guidesHub}
-  title={`${t('guides.title')} | Fuck Claude`}
+  title={`${t('guides.title')} | Claude Check`}
   description={t('guides.sub')}
   enPath="/guides/"
   zhPath="/zh/guides/"

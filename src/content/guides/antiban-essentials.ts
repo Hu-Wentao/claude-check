@@ -59,7 +59,7 @@ export const antiban_essentials_content = {
 <p>→ Full guide: <a href="/guides/account-appeal-and-recovery-sop/">Account Appeal & Recovery SOP</a> · <a href="/guides/domestic-and-open-source-alternatives/">Domestic Alternatives</a></p>
 
 <h2>Quick Self-Check</h2>
-<p>Run the <a href="/">Fuck Claude detector</a> on the same browser profile you use for Claude. Score above 60? Fix timezone and language before touching payment or API settings. Score below 30 but still banned? The scan cannot see your account region, IP reputation, payment method, or usage pattern, so check those next. An account created from an unsupported location can be disabled regardless of the browser score.</p>
+<p>Run the <a href="/">Claude Check detector</a> on the same browser profile you use for Claude. Score above 60? Fix timezone and language before touching payment or API settings. Score below 30 but still banned? The scan cannot see your account region, IP reputation, payment method, or usage pattern, so check those next. An account created from an unsupported location can be disabled regardless of the browser score.</p>
 `,
   zh: `
 <p>这份清单先列出 Anthropic 官方公布的规则，再列出社区反馈和公开逆向分析中最常被提到的做法。官方规则之外的内容是观察，不是文档化的规则，也不能让不符合资格的账号变得符合资格。每个板块都链接到更详细的指南。</p>
@@ -121,6 +121,6 @@ export const antiban_essentials_content = {
 <p>→ 完整指南：<a href="/zh/guides/account-appeal-and-recovery-sop/">封号申诉 SOP</a> · <a href="/zh/guides/domestic-and-open-source-alternatives/">国产平替与灾备</a></p>
 
 <h2>快速自检</h2>
-<p>在与 Claude 相同的浏览器 Profile 上运行 <a href="/zh/">Fuck Claude 检测器</a>。分数高于 60？先改时区和语言，再动支付或 API 配置。分数低于 30 仍被封？扫描看不到账号注册地区、IP 信誉、支付方式和使用模式，下一步检查这些。从不受支持的地区创建的账号，无论浏览器得分多少都可能被停用。</p>
+<p>在与 Claude 相同的浏览器 Profile 上运行 <a href="/zh/">Claude Check 检测器</a>。分数高于 60？先改时区和语言，再动支付或 API 配置。分数低于 30 仍被封？扫描看不到账号注册地区、IP 信誉、支付方式和使用模式，下一步检查这些。从不受支持的地区创建的账号，无论浏览器得分多少都可能被停用。</p>
 `,
 };
