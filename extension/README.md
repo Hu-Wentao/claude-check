@@ -89,6 +89,10 @@ Service worker 读取真实 `navigator.userAgent` 和 `navigator.userAgentData`�
 
 「整个浏览器的 WebRTC 策略」是单独按钮，不属于「应用推荐」。点击后先显示确认，说明会影响所有网站并且可以撤销。确认后才 `chrome.permissions.request(['privacy'])`。`get` 之后只有 `levelOfControl` 为 `controllable_by_this_extension` 或 `controlled_by_this_extension` 才 `set('disable_non_proxied_udp')`。企业策略或其它扩展已经控制该项时，弹窗说明没有修改，不会覆盖。撤销会 `clear()`，再 `permissions.remove(['privacy'])`。
 
+### 检测页一键修复（0.1.1 起）
+
+manifest 固定了公钥 `key`，sideload 安装的扩展 ID 稳定为 `waafbhfijvpwtdcv`（私钥不入库，仅上 Chrome 应用商店时需要）。`externally_connectable` 只允许 `https://claudecheck.frely.cloud/*` 发来 `onMessageExternal`：`slc-ping` 回版本与 webrtc 状态；`slc-enable-webrtc` 打开 `settings.webrtc` 并重建注入，`privacy` 权限已给时直接设策略，否则打开 `onboarding.html` 让用户在那儿完成一次手势确认（后台消息不算用户手势，这是 Chrome 的硬限制）。
+
 ## 表情符号
 
 不单独实现。它跟随 UA 和 `platform`。按网站 `scoreEmojiVendor`，Apple 贡献四舍五入后是 1 分，Windows 是 1 分，Linux 是 2 分。最低仍有 1 到 2 分，不能变成 0。桌面预设不会为了这一项假装另一个操作系统。

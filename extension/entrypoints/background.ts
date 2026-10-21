@@ -1,12 +1,45 @@
 import { scheduleRebuild, updateBadges } from '../src/lib/apply';
 import { readRealEnv } from '../src/lib/real-env';
-import { ensureDefaults, loadSettings } from '../src/lib/settings';
+import { ensureDefaults, loadSettings, saveSettings } from '../src/lib/settings';
+import { setWebrtcPolicy } from '../src/lib/webrtc-policy';
+
+// （环境：prod 域名固定, 原因/备注：检测页一键修复的合法来源；preview/localhost 一律忽略）
+const BRIDGE_ORIGIN = 'https://claudecheck.frely.cloud';
 
 export default defineBackground(() => {
   chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     if (!message || message.type !== 'slc-real-env') return;
     void readRealEnv().then(sendResponse, (err) => sendResponse({ error: String(err) }));
     return true;
+  });
+  chrome.runtime.onMessageExternal.addListener((message, sender, sendResponse) => {
+    if (sender.origin !== BRIDGE_ORIGIN) return;
+    if (!message || typeof message.type !== 'string') return;
+    if (message.type === 'slc-ping') {
+      void loadSettings().then((settings) => {
+        sendResponse({ ok: true, version: chrome.runtime.getManifest().version, webrtc: settings.webrtc });
+      });
+      return true;
+    }
+    if (message.type === 'slc-enable-webrtc') {
+      void (async () => {
+        const settings = await loadSettings();
+        if (!settings.webrtc) {
+          settings.webrtc = true;
+          await saveSettings(settings);
+          scheduleRebuild();
+        }
+        if (await chrome.permissions.contains({ permissions: ['privacy'] })) {
+          const result = await setWebrtcPolicy();
+          sendResponse({ ok: true, mode: 'auto', policy: result.value });
+          return;
+        }
+        // chrome.privacy 授权需要用户手势，只能落在扩展页面里完成
+        await chrome.tabs.create({ url: chrome.runtime.getURL('/onboarding.html?intent=webrtc') });
+        sendResponse({ ok: true, mode: 'confirm' });
+      })().catch((err) => sendResponse({ ok: false, error: String(err) }));
+      return true;
+    }
   });
   chrome.runtime.onInstalled.addListener(() => {
     void ensureDefaults().then(() => scheduleRebuild());

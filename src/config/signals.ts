@@ -31,6 +31,8 @@ export interface SignalDef {
   weight: number;
   /** True when Claude Code's real mechanism actually reads this signal. */
   claudeUsed?: boolean;
+  /** Marks the signal as fixable from the site via the companion extension bridge. */
+  fixKind?: 'webrtc';
   /** Inline SVG icon markup. */
   icon: string;
   /** Sync or async (e.g. userAgentData high-entropy values) detector. */
@@ -443,7 +445,7 @@ export const SIGNALS: SignalDef[] = [
   { id: 'language', weight: 18, icon: ICON.globe, detect: detectLanguage },
   { id: 'fonts', weight: 14, icon: ICON.type, detect: detectFonts },
   { id: 'vendorFonts', weight: 10, icon: ICON.typeBox, detect: detectVendorFonts },
-  { id: 'webrtcLeak', weight: 10, icon: ICON.shield, detect: detectWebrtcLeak },
+  { id: 'webrtcLeak', weight: 10, fixKind: 'webrtc', icon: ICON.shield, detect: detectWebrtcLeak },
   { id: 'cnBrowser', weight: 8, icon: ICON.compass, detect: detectCnBrowser },
   { id: 'deviceVendor', weight: 6, icon: ICON.phone, detect: detectDeviceVendor },
   { id: 'intlLocale', weight: 4, icon: ICON.sliders, detect: detectIntlLocale },

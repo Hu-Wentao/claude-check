@@ -1,87 +1,242 @@
 {
-  "extName": { "message": "Site Locale Control" },
-  "extDesc": { "message": "Choose the time zone, language, and locale that selected sites see. System time zone and IP address stay unchanged." },
-  "extAction": { "message": "Site Locale Control" },
-  "master": { "message": "Master switch" },
-  "sigTimezone": { "message": "Time zone" },
-  "sigOffset": { "message": "Time zone offset" },
-  "sigLanguage": { "message": "Language" },
-  "sigIntl": { "message": "Locale format" },
-  "tzLabel": { "message": "Target time zone" },
-  "langLabel": { "message": "Target language" },
+  "extName": {
+    "message": "Site Locale Control"
+  },
+  "extDesc": {
+    "message": "Choose the time zone, language, and locale that selected sites see. System time zone and IP address stay unchanged."
+  },
+  "extAction": {
+    "message": "Site Locale Control"
+  },
+  "master": {
+    "message": "Master switch"
+  },
+  "sigTimezone": {
+    "message": "Time zone"
+  },
+  "sigOffset": {
+    "message": "Time zone offset"
+  },
+  "sigLanguage": {
+    "message": "Language"
+  },
+  "sigIntl": {
+    "message": "Locale format"
+  },
+  "tzLabel": {
+    "message": "Target time zone"
+  },
+  "langLabel": {
+    "message": "Target language"
+  },
   "tzMeta": {
     "message": "$ZONE$ ($OFFSET$, $NOTE$)",
     "placeholders": {
-      "zone": { "content": "$1" },
-      "offset": { "content": "$2" },
-      "note": { "content": "$3" }
+      "zone": {
+        "content": "$1"
+      },
+      "offset": {
+        "content": "$2"
+      },
+      "note": {
+        "content": "$3"
+      }
     }
   },
-  "utc8Yes": { "message": "This is UTC+8" },
-  "utc8No": { "message": "Not UTC+8" },
-  "mismatchTz": { "message": "Only one of time zone and offset is on. The mismatch can be recognized." },
-  "mismatchLocale": { "message": "Only one of language and locale format is on. The mismatch can be recognized." },
-  "apply": { "message": "Apply recommended" },
-  "enable": { "message": "Enable" },
-  "restore": { "message": "Restore" },
-  "sites": { "message": "Sites" },
-  "includeSub": { "message": "Include subdomains" },
-  "remove": { "message": "Remove" },
-  "add": { "message": "Add" },
-  "addPlaceholder": { "message": "https://example.com" },
-  "suggested": { "message": "Suggested" },
-  "selfTest": { "message": "Self-test" },
-  "statusOn": { "message": "On" },
-  "statusOff": { "message": "Off" },
-  "statusUnauth": { "message": "Not granted" },
-  "statusPrefix": { "message": "This tab: " },
-  "refreshHint": { "message": "Open pages need a refresh before this applies." },
-  "unchanged": { "message": "System time zone and IP address do not change." },
-  "invalidSite": { "message": "Enter a concrete HTTPS site. Wildcards and bare domains are not accepted." },
-  "permPartial": { "message": "Some sites were not allowed." },
-  "permOk": { "message": "Site access was updated." },
-  "badgeOn": { "message": "ON" },
-  "badgeOff": { "message": "OFF" },
-  "badgeUnknown": { "message": "?" },
-  "sigFonts": { "message": "Font measurement" },
-  "sigWebrtc": { "message": "Filter WebRTC candidates" },
-  "uaLabel": { "message": "User-agent preset" },
-  "uaNative": { "message": "Keep the real user agent" },
-  "uaDesktop": { "message": "Desktop Chrome (same operating system and Chrome major version)" },
+  "utc8Yes": {
+    "message": "This is UTC+8"
+  },
+  "utc8No": {
+    "message": "Not UTC+8"
+  },
+  "mismatchTz": {
+    "message": "Only one of time zone and offset is on. The mismatch can be recognized."
+  },
+  "mismatchLocale": {
+    "message": "Only one of language and locale format is on. The mismatch can be recognized."
+  },
+  "apply": {
+    "message": "Apply recommended"
+  },
+  "enable": {
+    "message": "Enable"
+  },
+  "restore": {
+    "message": "Restore"
+  },
+  "sites": {
+    "message": "Sites"
+  },
+  "includeSub": {
+    "message": "Include subdomains"
+  },
+  "remove": {
+    "message": "Remove"
+  },
+  "add": {
+    "message": "Add"
+  },
+  "addPlaceholder": {
+    "message": "https://example.com"
+  },
+  "suggested": {
+    "message": "Suggested"
+  },
+  "selfTest": {
+    "message": "Self-test"
+  },
+  "statusOn": {
+    "message": "On"
+  },
+  "statusOff": {
+    "message": "Off"
+  },
+  "statusUnauth": {
+    "message": "Not granted"
+  },
+  "statusPrefix": {
+    "message": "This tab: "
+  },
+  "refreshHint": {
+    "message": "Open pages need a refresh before this applies."
+  },
+  "unchanged": {
+    "message": "System time zone and IP address do not change."
+  },
+  "invalidSite": {
+    "message": "Enter a concrete HTTPS site. Wildcards and bare domains are not accepted."
+  },
+  "permPartial": {
+    "message": "Some sites were not allowed."
+  },
+  "permOk": {
+    "message": "Site access was updated."
+  },
+  "badgeOn": {
+    "message": "ON"
+  },
+  "badgeOff": {
+    "message": "OFF"
+  },
+  "badgeUnknown": {
+    "message": "?"
+  },
+  "sigFonts": {
+    "message": "Font measurement"
+  },
+  "sigWebrtc": {
+    "message": "Filter WebRTC candidates"
+  },
+  "uaLabel": {
+    "message": "User-agent preset"
+  },
+  "uaNative": {
+    "message": "Keep the real user agent"
+  },
+  "uaDesktop": {
+    "message": "Desktop Chrome (same operating system and Chrome major version)"
+  },
   "uaActive": {
     "message": "User agent that will apply: $UA$",
-    "placeholders": { "ua": { "content": "$1" } }
+    "placeholders": {
+      "ua": {
+        "content": "$1"
+      }
+    }
   },
   "uaPlatformLine": {
     "message": "Platform that will apply: $PLATFORM$",
-    "placeholders": { "platform": { "content": "$1" } }
+    "placeholders": {
+      "platform": {
+        "content": "$1"
+      }
+    }
   },
   "cnBrowserHit": {
     "message": "Domestic browser name detected: $NAME$.",
-    "placeholders": { "name": { "content": "$1" } }
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
   },
-  "cnBrowserClear": { "message": "No domestic browser name detected." },
+  "cnBrowserClear": {
+    "message": "No domestic browser name detected."
+  },
   "cnDeviceHit": {
     "message": "Domestic device name detected: $NAME$.",
-    "placeholders": { "name": { "content": "$1" } }
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
   },
-  "cnDeviceClear": { "message": "No domestic device name detected." },
-  "uaSuggestOn": { "message": "Apply recommended will select Desktop Chrome." },
-  "uaSuggestOff": { "message": "Apply recommended will keep the real user agent." },
-  "fontHint": { "message": "Only canvas measureText and fonts.check are affected. Layout size and pixel comparison stay as they are. The fonts remain installed." },
-  "webrtcHint": { "message": "On enabled sites, host, srflx, and prflx candidates that expose an IP address are dropped. Relay candidates and mDNS names stay. No address is invented." },
-  "emojiHint": { "message": "Emoji follows the user agent and platform. The site formula still scores at least 1 or 2." },
-  "policyTitle": { "message": "Browser-wide WebRTC policy" },
-  "policyBody": { "message": "This disables non-proxied UDP for every site in this browser, not only enabled sites. You can revoke it." },
-  "policyOpen": { "message": "Set browser policy" },
-  "policyConfirm": { "message": "Confirm: disable non-proxied UDP for all sites" },
-  "policyRevoke": { "message": "Revoke" },
+  "cnDeviceClear": {
+    "message": "No domestic device name detected."
+  },
+  "uaSuggestOn": {
+    "message": "Apply recommended will select Desktop Chrome."
+  },
+  "uaSuggestOff": {
+    "message": "Apply recommended will keep the real user agent."
+  },
+  "fontHint": {
+    "message": "Only canvas measureText and fonts.check are affected. Layout size and pixel comparison stay as they are. The fonts remain installed."
+  },
+  "webrtcHint": {
+    "message": "On enabled sites, host, srflx, and prflx candidates that expose an IP address are dropped. Relay candidates and mDNS names stay. No address is invented."
+  },
+  "emojiHint": {
+    "message": "Emoji follows the user agent and platform. The site formula still scores at least 1 or 2."
+  },
+  "policyTitle": {
+    "message": "Browser-wide WebRTC policy"
+  },
+  "policyBody": {
+    "message": "This disables non-proxied UDP for every site in this browser, not only enabled sites. You can revoke it."
+  },
+  "policyOpen": {
+    "message": "Set browser policy"
+  },
+  "policyConfirm": {
+    "message": "Confirm: disable non-proxied UDP for all sites"
+  },
+  "policyRevoke": {
+    "message": "Revoke"
+  },
   "policyNow": {
     "message": "Current policy: $VALUE$",
-    "placeholders": { "value": { "content": "$1" } }
+    "placeholders": {
+      "value": {
+        "content": "$1"
+      }
+    }
   },
-  "policyNone": { "message": "not granted" },
-  "policyDenied": { "message": "Permission was not granted. The policy was not changed." },
-  "policyBlocked": { "message": "This policy is controlled elsewhere, so it was not changed." },
-  "policyNeedConfirm": { "message": "Confirm first. This affects every site and can be revoked." }
+  "policyNone": {
+    "message": "not granted"
+  },
+  "policyDenied": {
+    "message": "Permission was not granted. The policy was not changed."
+  },
+  "policyBlocked": {
+    "message": "This policy is controlled elsewhere, so it was not changed."
+  },
+  "policyNeedConfirm": {
+    "message": "Confirm first. This affects every site and can be revoked."
+  },
+  "onbTitle": {
+    "message": "Enable WebRTC protection"
+  },
+  "onbWebrtcBody": {
+    "message": "The site asked this extension to filter WebRTC candidates and set the browser-wide WebRTC policy. The policy needs one confirmation here because it affects every site in this browser. You can revoke it later from the popup."
+  },
+  "onbEnable": {
+    "message": "Enable"
+  },
+  "onbDone": {
+    "message": "Protection is on. This tab closes shortly."
+  },
+  "onbAlreadyNote": {
+    "message": "Candidate filtering is already on."
+  }
 }

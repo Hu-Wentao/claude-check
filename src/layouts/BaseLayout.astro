@@ -1049,6 +1049,45 @@ const jsonLd = {
         font-size: 0.82rem;
         color: var(--muted);
       }
+      .fix-slot {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 8px;
+      }
+      .fix-slot[hidden] {
+        display: none;
+      }
+      .fix-slot__button {
+        padding: 4px 12px;
+        font-size: 0.78rem;
+        font-weight: 620;
+        border: 0;
+        border-radius: 999px;
+        background: var(--accent);
+        color: var(--bg);
+        cursor: pointer;
+      }
+      .fix-slot__button:disabled {
+        opacity: 0.6;
+        cursor: wait;
+      }
+      .fix-slot__link {
+        font-size: 0.78rem;
+        color: var(--muted);
+        text-decoration: underline dotted;
+      }
+      .fix-slot__status {
+        font-size: 0.78rem;
+        color: var(--muted);
+      }
+      .fix-slot__status[data-tone='ok'] {
+        color: var(--low);
+      }
+      .fix-slot__status[data-tone='err'] {
+        color: var(--high);
+      }
       .scan-row__status {
         display: flex;
         align-items: center;

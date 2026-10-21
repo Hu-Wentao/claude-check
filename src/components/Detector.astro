@@ -189,6 +189,17 @@ const apiExamples = [
                 {signal.claudeUsed && <span class="badge badge--claude">{t('ui.claudeBadge')}</span>}
               </span>
               <span class="scan-row__desc">{t(`signal.${signal.id}.desc`)}</span>
+              {signal.fixKind === 'webrtc' && (
+                <div class="fix-slot" data-fix="webrtc" hidden>
+                  <button class="fix-slot__button" type="button" data-fix-button hidden>
+                    {t('fix.webrtc.button')}
+                  </button>
+                  <a class="fix-slot__link" data-fix-link href={`${extensionPage}#webrtc`}>
+                    {t('fix.webrtc.link')}
+                  </a>
+                  <span class="fix-slot__status" data-fix-status role="status" />
+                </div>
+              )}
             </span>
             <span class="scan-row__status">
               <span class="scan-row__value" data-field="value" />

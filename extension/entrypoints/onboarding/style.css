@@ -1,0 +1,43 @@
+/* onboarding 确认页：与 popup 同一套视觉基色，保持极简 */
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  background: #16181d;
+  color: #e8eaed;
+}
+#app {
+  max-width: 420px;
+  margin: 48px auto;
+  padding: 0 20px;
+}
+h1 {
+  font-size: 18px;
+  margin: 0 0 12px;
+}
+p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #bdc1c6;
+}
+p.status.done {
+  color: #81c995;
+}
+p.status.error {
+  color: #f28b82;
+}
+button {
+  margin-top: 16px;
+  padding: 8px 18px;
+  font-size: 14px;
+  border: 0;
+  border-radius: 8px;
+  background: #8ab4f8;
+  color: #202124;
+  cursor: pointer;
+}
+button:hover {
+  background: #aecbfa;
+}

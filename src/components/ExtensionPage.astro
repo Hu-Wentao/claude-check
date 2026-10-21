@@ -146,6 +146,17 @@ function formatBytes(bytes: number): string {
 
       <h2>{t('ext.updateTitle')}</h2>
       <p class="ext-update">{t('ext.update')}</p>
+
+      <h2 id="webrtc">{t('ext.webrtcTitle')}</h2>
+      <ol class="ext-steps">
+        <li>{t('ext.webrtcStep1')}</li>
+        <li>{t('ext.webrtcStep2')}</li>
+      </ol>
+      <p class="ext-alt-title">{t('ext.webrtcAltTitle')}</p>
+      <ul class="ext-alt">
+        <li>{t('ext.webrtcAlt1')}</li>
+        <li>{t('ext.webrtcAlt2')}</li>
+      </ul>
     </article>
   </main>
 
@@ -234,6 +245,24 @@ function formatBytes(bytes: number): string {
   }
   .ext-steps li + li {
     margin-top: 8px;
+  }
+  .ext-alt-title {
+    margin: 0 0 6px;
+    font-weight: 620;
+    font-size: 0.92rem;
+  }
+  .ext-alt {
+    margin: 0 0 14px;
+    padding-left: 1.25rem;
+    max-width: 68ch;
+    font-size: 0.92rem;
+    color: var(--muted);
+  }
+  .ext-alt li + li {
+    margin-top: 6px;
+  }
+  .ext h2#webrtc {
+    scroll-margin-top: 80px;
   }
   .ext-check-row {
     margin: 0 0 28px;

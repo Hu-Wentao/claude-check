@@ -138,6 +138,12 @@ export const ui = {
     'signal.webrtcLeak.name': 'WebRTC IP leak',
     'signal.webrtcLeak.desc':
       'RTCPeerConnection probing for local or real public IP candidate leaks through STUN.',
+    'fix.webrtc.link': 'How to fix',
+    'fix.webrtc.button': 'Fix in one click',
+    'fix.webrtc.auto': 'WebRTC protection is on. Rescan to verify.',
+    'fix.webrtc.confirm': 'Click “Enable” once on the page the extension just opened.',
+    'fix.webrtc.failed':
+      'Could not enable from here. Open the extension popup and toggle WebRTC manually.',
     'signal.emoji.name': 'Emoji rendering style',
     'signal.emoji.desc':
       'OS vendor guessed from the user agent; a weak, loosely correlated signal.',
@@ -293,6 +299,16 @@ export const ui = {
     'ext.updateTitle': 'Update',
     'ext.update':
       'After downloading a new version, replace the unpacked folder, then open chrome://extensions and click Reload.',
+    'ext.webrtcTitle': 'Fixing the WebRTC IP leak',
+    'ext.webrtcStep1':
+      'If the check page shows a “Fix in one click” button, the extension is installed: click it and confirm once. That filters WebRTC candidates and sets the browser-wide WebRTC policy.',
+    'ext.webrtcStep2':
+      'Otherwise open the extension popup and turn on “Filter WebRTC candidates”. For the browser-wide policy, use “Set browser policy” and confirm — it affects every site and can be revoked.',
+    'ext.webrtcAltTitle': 'Without the extension',
+    'ext.webrtcAlt1':
+      'uBlock Origin: enable “Prevent WebRTC from leaking local IP addresses” in the settings.',
+    'ext.webrtcAlt2':
+      'Firefox: set media.peerconnection.enabled to false in about:config (this disables WebRTC entirely).',
 
     'banner.prompt': 'Choose another language to browse content adapted for your browser language preference.',
     'banner.continue': 'Continue',
@@ -422,6 +438,11 @@ export const ui = {
     'signal.webrtcLeak.name': 'WebRTC IP 泄露',
     'signal.webrtcLeak.desc':
       '探测浏览器 RTCPeerConnection 是否通过 STUN 服务泄露真实内网或公网 IP。',
+    'fix.webrtc.link': '如何修复',
+    'fix.webrtc.button': '一键修复',
+    'fix.webrtc.auto': 'WebRTC 防护已开启，重新检测验证。',
+    'fix.webrtc.confirm': '在扩展刚打开的页面里点一次「启用」。',
+    'fix.webrtc.failed': '此处未能开启。请打开扩展弹窗，手动打开 WebRTC 开关。',
     'signal.emoji.name': 'Emoji 渲染风格',
     'signal.emoji.desc': '由 UA 推断操作系统厂商，弱相关信号。',
 
@@ -570,6 +591,14 @@ export const ui = {
     'ext.checkCta': '打开检测页',
     'ext.updateTitle': '更新',
     'ext.update': '下载新版本后，用新文件夹替换原来的文件夹，再在 chrome://extensions 中点击“重新加载”。',
+    'ext.webrtcTitle': '修复 WebRTC IP 泄露',
+    'ext.webrtcStep1':
+      '检测页若显示「一键修复」按钮，说明已安装本扩展：点击并确认一次，即可过滤 WebRTC 候选并设置浏览器级 WebRTC 策略。',
+    'ext.webrtcStep2':
+      '否则打开扩展弹窗，开启「过滤 WebRTC 候选」。浏览器级策略请用「设置浏览器策略」并确认——它影响所有站点且可随时撤销。',
+    'ext.webrtcAltTitle': '不装扩展的替代方案',
+    'ext.webrtcAlt1': 'uBlock Origin：在设置中勾选“防止 WebRTC 泄露本地 IP 地址”。',
+    'ext.webrtcAlt2': 'Firefox：在 about:config 中把 media.peerconnection.enabled 设为 false（会完全禁用 WebRTC）。',
 
     'banner.prompt': '选择另一语言以浏览适用于你浏览器语言偏好的内容。',
     'banner.continue': '继续',

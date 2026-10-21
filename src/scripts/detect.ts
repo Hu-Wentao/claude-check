@@ -420,10 +420,87 @@ async function run() {
   }
 
   finalize(Math.min(100, total), hits);
+  initFixSlots(hits);
   const label = q('#retest-label');
   if (label) label.textContent = t('ui.retest');
   if (btn) btn.disabled = false;
   running = false;
+}
+
+/**
+ * Companion-extension bridge. The sideloaded extension pins its ID via a
+ * manifest key (extension/wxt.config.ts) so this page can address it through
+ * externally_connectable messaging. No host permission is involved.
+ */
+const EXTENSION_ID = 'waafbhfijvpwtdcv';
+
+interface ExtResponse {
+  ok?: boolean;
+  version?: string;
+  webrtc?: boolean;
+  mode?: string;
+}
+
+interface ChromeLike {
+  runtime?: {
+    sendMessage?: (
+      extensionId: string,
+      message: { type: string },
+      callback: (response: ExtResponse | undefined) => void,
+    ) => void;
+  };
+}
+
+function sendToExtension(type: string): Promise<ExtResponse | null> {
+  const chromeLike = (globalThis as { chrome?: ChromeLike }).chrome;
+  const send = chromeLike?.runtime?.sendMessage;
+  if (typeof send !== 'function') return Promise.resolve(null);
+  return new Promise((resolve) => {
+    try {
+      send.call(chromeLike?.runtime, EXTENSION_ID, { type }, (response) => resolve(response ?? null));
+    } catch {
+      resolve(null);
+    }
+  });
+}
+
+function initFixSlots(hits: Hit[]): void {
+  if (!hits.some((hit) => hit.signal.fixKind === 'webrtc')) return;
+  const slot = q<HTMLElement>('[data-fix="webrtc"]');
+  if (!slot) return;
+  slot.hidden = false;
+  const button = q<HTMLButtonElement>('[data-fix-button]', slot);
+  const status = q<HTMLElement>('[data-fix-status]', slot);
+
+  void sendToExtension('slc-ping').then((probe) => {
+    if (!probe?.ok || !button) return;
+    button.hidden = false;
+    if (probe.webrtc && status) {
+      status.dataset.tone = 'ok';
+      status.textContent = t('fix.webrtc.auto');
+    }
+    // 重扫会再次进入本函数；同一按钮只绑一次监听
+    if (button.dataset.bound === '1') return;
+    button.dataset.bound = '1';
+    button.addEventListener('click', () => {
+      button.disabled = true;
+      if (status) status.textContent = '';
+      void sendToExtension('slc-enable-webrtc').then((res) => {
+        if (!status) return;
+        if (res?.ok && res.mode === 'auto') {
+          status.dataset.tone = 'ok';
+          status.textContent = t('fix.webrtc.auto');
+        } else if (res?.ok && res.mode === 'confirm') {
+          status.dataset.tone = '';
+          status.textContent = t('fix.webrtc.confirm');
+        } else {
+          status.dataset.tone = 'err';
+          status.textContent = t('fix.webrtc.failed');
+          button.disabled = false;
+        }
+      });
+    });
+  });
 }
 
 /**

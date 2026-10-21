@@ -1,87 +1,242 @@
 {
-  "extName": { "message": "站点区域控制" },
-  "extDesc": { "message": "为选中的网站设置它看到的时区、语言和区域。系统时区和 IP 地址保持不变，可以随时关闭。" },
-  "extAction": { "message": "站点区域控制" },
-  "master": { "message": "总开关" },
-  "sigTimezone": { "message": "时区" },
-  "sigOffset": { "message": "时区偏移" },
-  "sigLanguage": { "message": "语言" },
-  "sigIntl": { "message": "区域格式" },
-  "tzLabel": { "message": "目标时区" },
-  "langLabel": { "message": "目标语言" },
+  "extName": {
+    "message": "站点区域控制"
+  },
+  "extDesc": {
+    "message": "为选中的网站设置它看到的时区、语言和区域。系统时区和 IP 地址保持不变，可以随时关闭。"
+  },
+  "extAction": {
+    "message": "站点区域控制"
+  },
+  "master": {
+    "message": "总开关"
+  },
+  "sigTimezone": {
+    "message": "时区"
+  },
+  "sigOffset": {
+    "message": "时区偏移"
+  },
+  "sigLanguage": {
+    "message": "语言"
+  },
+  "sigIntl": {
+    "message": "区域格式"
+  },
+  "tzLabel": {
+    "message": "目标时区"
+  },
+  "langLabel": {
+    "message": "目标语言"
+  },
   "tzMeta": {
     "message": "$ZONE$（$OFFSET$，$NOTE$）",
     "placeholders": {
-      "zone": { "content": "$1" },
-      "offset": { "content": "$2" },
-      "note": { "content": "$3" }
+      "zone": {
+        "content": "$1"
+      },
+      "offset": {
+        "content": "$2"
+      },
+      "note": {
+        "content": "$3"
+      }
     }
   },
-  "utc8Yes": { "message": "这是 UTC+8" },
-  "utc8No": { "message": "不是 UTC+8" },
-  "mismatchTz": { "message": "时区与偏移只开了一项。两项不一致会被识别。" },
-  "mismatchLocale": { "message": "语言和区域格式只开了一项。两项不一致会被识别。" },
-  "apply": { "message": "应用推荐" },
-  "enable": { "message": "启用" },
-  "restore": { "message": "恢复" },
-  "sites": { "message": "站点" },
-  "includeSub": { "message": "包含子域" },
-  "remove": { "message": "删除" },
-  "add": { "message": "添加" },
-  "addPlaceholder": { "message": "https://example.com" },
-  "suggested": { "message": "推荐" },
-  "selfTest": { "message": "自测" },
-  "statusOn": { "message": "已启用" },
-  "statusOff": { "message": "已关闭" },
-  "statusUnauth": { "message": "未授权" },
-  "statusPrefix": { "message": "当前标签状态：" },
-  "refreshHint": { "message": "已打开的页面需刷新后生效。" },
-  "unchanged": { "message": "系统时区和 IP 地址不会改变。" },
-  "invalidSite": { "message": "请输入一个具体的 HTTPS 站点。不支持通配符和裸域名。" },
-  "permPartial": { "message": "有部分站点未获得授权。" },
-  "permOk": { "message": "站点权限已更新。" },
-  "badgeOn": { "message": "开" },
-  "badgeOff": { "message": "关" },
-  "badgeUnknown": { "message": "？" },
-  "sigFonts": { "message": "字体测量" },
-  "sigWebrtc": { "message": "过滤网页 WebRTC 候选" },
-  "uaLabel": { "message": "UA 预设" },
-  "uaNative": { "message": "保持真实 UA" },
-  "uaDesktop": { "message": "桌面 Chrome（与本机同一操作系统、同一 Chrome 大版本）" },
+  "utc8Yes": {
+    "message": "这是 UTC+8"
+  },
+  "utc8No": {
+    "message": "不是 UTC+8"
+  },
+  "mismatchTz": {
+    "message": "时区与偏移只开了一项。两项不一致会被识别。"
+  },
+  "mismatchLocale": {
+    "message": "语言和区域格式只开了一项。两项不一致会被识别。"
+  },
+  "apply": {
+    "message": "应用推荐"
+  },
+  "enable": {
+    "message": "启用"
+  },
+  "restore": {
+    "message": "恢复"
+  },
+  "sites": {
+    "message": "站点"
+  },
+  "includeSub": {
+    "message": "包含子域"
+  },
+  "remove": {
+    "message": "删除"
+  },
+  "add": {
+    "message": "添加"
+  },
+  "addPlaceholder": {
+    "message": "https://example.com"
+  },
+  "suggested": {
+    "message": "推荐"
+  },
+  "selfTest": {
+    "message": "自测"
+  },
+  "statusOn": {
+    "message": "已启用"
+  },
+  "statusOff": {
+    "message": "已关闭"
+  },
+  "statusUnauth": {
+    "message": "未授权"
+  },
+  "statusPrefix": {
+    "message": "当前标签状态："
+  },
+  "refreshHint": {
+    "message": "已打开的页面需刷新后生效。"
+  },
+  "unchanged": {
+    "message": "系统时区和 IP 地址不会改变。"
+  },
+  "invalidSite": {
+    "message": "请输入一个具体的 HTTPS 站点。不支持通配符和裸域名。"
+  },
+  "permPartial": {
+    "message": "有部分站点未获得授权。"
+  },
+  "permOk": {
+    "message": "站点权限已更新。"
+  },
+  "badgeOn": {
+    "message": "开"
+  },
+  "badgeOff": {
+    "message": "关"
+  },
+  "badgeUnknown": {
+    "message": "？"
+  },
+  "sigFonts": {
+    "message": "字体测量"
+  },
+  "sigWebrtc": {
+    "message": "过滤网页 WebRTC 候选"
+  },
+  "uaLabel": {
+    "message": "UA 预设"
+  },
+  "uaNative": {
+    "message": "保持真实 UA"
+  },
+  "uaDesktop": {
+    "message": "桌面 Chrome（与本机同一操作系统、同一 Chrome 大版本）"
+  },
   "uaActive": {
     "message": "将生效的 UA：$UA$",
-    "placeholders": { "ua": { "content": "$1" } }
+    "placeholders": {
+      "ua": {
+        "content": "$1"
+      }
+    }
   },
   "uaPlatformLine": {
     "message": "将生效的平台：$PLATFORM$",
-    "placeholders": { "platform": { "content": "$1" } }
+    "placeholders": {
+      "platform": {
+        "content": "$1"
+      }
+    }
   },
   "cnBrowserHit": {
     "message": "检测到国产浏览器：$NAME$。",
-    "placeholders": { "name": { "content": "$1" } }
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
   },
-  "cnBrowserClear": { "message": "未检测到国产浏览器。" },
+  "cnBrowserClear": {
+    "message": "未检测到国产浏览器。"
+  },
   "cnDeviceHit": {
     "message": "检测到国产设备：$NAME$。",
-    "placeholders": { "name": { "content": "$1" } }
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
   },
-  "cnDeviceClear": { "message": "未检测到国产设备。" },
-  "uaSuggestOn": { "message": "应用推荐会改用桌面 Chrome 预设。" },
-  "uaSuggestOff": { "message": "应用推荐会保持真实 UA。" },
-  "fontHint": { "message": "只影响画布 measureText 与字体 check。页面尺寸和像素比对不受影响，系统字体仍会用来绘制。" },
-  "webrtcHint": { "message": "只在已启用的网站上丢掉带有 IP 地址的 host、srflx、prflx 候选。中继候选和 mDNS 名字会保留。不伪造地址。" },
-  "emojiHint": { "message": "表情符号跟随 UA 与平台。按站点公式，最低仍有 1 到 2 分。" },
-  "policyTitle": { "message": "整个浏览器的 WebRTC 策略" },
-  "policyBody": { "message": "这会让此浏览器里所有网站都不再使用不经代理的 UDP，而不只是已启用的网站。可以撤销。" },
-  "policyOpen": { "message": "设置浏览器策略" },
-  "policyConfirm": { "message": "确认：所有网站都改为禁用非代理 UDP" },
-  "policyRevoke": { "message": "撤销" },
+  "cnDeviceClear": {
+    "message": "未检测到国产设备。"
+  },
+  "uaSuggestOn": {
+    "message": "应用推荐会改用桌面 Chrome 预设。"
+  },
+  "uaSuggestOff": {
+    "message": "应用推荐会保持真实 UA。"
+  },
+  "fontHint": {
+    "message": "只影响画布 measureText 与字体 check。页面尺寸和像素比对不受影响，系统字体仍会用来绘制。"
+  },
+  "webrtcHint": {
+    "message": "只在已启用的网站上丢掉带有 IP 地址的 host、srflx、prflx 候选。中继候选和 mDNS 名字会保留。不伪造地址。"
+  },
+  "emojiHint": {
+    "message": "表情符号跟随 UA 与平台。按站点公式，最低仍有 1 到 2 分。"
+  },
+  "policyTitle": {
+    "message": "整个浏览器的 WebRTC 策略"
+  },
+  "policyBody": {
+    "message": "这会让此浏览器里所有网站都不再使用不经代理的 UDP，而不只是已启用的网站。可以撤销。"
+  },
+  "policyOpen": {
+    "message": "设置浏览器策略"
+  },
+  "policyConfirm": {
+    "message": "确认：所有网站都改为禁用非代理 UDP"
+  },
+  "policyRevoke": {
+    "message": "撤销"
+  },
   "policyNow": {
     "message": "当前策略：$VALUE$",
-    "placeholders": { "value": { "content": "$1" } }
+    "placeholders": {
+      "value": {
+        "content": "$1"
+      }
+    }
   },
-  "policyNone": { "message": "未授予" },
-  "policyDenied": { "message": "未获得权限，策略未改变。" },
-  "policyBlocked": { "message": "当前策略不受本扩展控制，没有修改。" },
-  "policyNeedConfirm": { "message": "请先确认。此操作影响所有网站，可以撤销。" }
+  "policyNone": {
+    "message": "未授予"
+  },
+  "policyDenied": {
+    "message": "未获得权限，策略未改变。"
+  },
+  "policyBlocked": {
+    "message": "当前策略不受本扩展控制，没有修改。"
+  },
+  "policyNeedConfirm": {
+    "message": "请先确认。此操作影响所有网站，可以撤销。"
+  },
+  "onbTitle": {
+    "message": "启用 WebRTC 防护"
+  },
+  "onbWebrtcBody": {
+    "message": "检测页请求本扩展过滤 WebRTC 候选，并设置浏览器级 WebRTC 策略。该策略影响浏览器内的所有站点，因此需要在这里确认一次。之后可随时在扩展弹窗中撤销。"
+  },
+  "onbEnable": {
+    "message": "启用"
+  },
+  "onbDone": {
+    "message": "防护已开启，本页即将自动关闭。"
+  },
+  "onbAlreadyNote": {
+    "message": "候选过滤已开启。"
+  }
 }
