@@ -531,6 +531,8 @@ const jsonLd = {
         flex-wrap: wrap;
       }
       .fix-all {
+        /* （环境：粘性导航, 原因/备注：scrollIntoView 不感知 sticky 遮挡，留出导航高度） */
+        scroll-margin-top: 88px;
         display: inline-flex;
         align-items: center;
         gap: 8px;
