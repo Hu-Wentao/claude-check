@@ -474,7 +474,7 @@ function sendToExtension(type: string, extra?: Record<string, string>): Promise<
   });
 }
 
-function showToast(title: string, text: string): void {
+function showToast(title: string, text: string, action?: { label: string; run: () => void }): void {
   let toast = q<HTMLElement>('.fix-toast');
   if (!toast) {
     toast = document.createElement('div');
@@ -490,16 +490,15 @@ function showToast(title: string, text: string): void {
     body.append(t1, t2);
     const actions = document.createElement('div');
     actions.className = 'fix-toast__actions';
-    const refresh = document.createElement('button');
-    refresh.type = 'button';
-    refresh.className = 'fix-toast__refresh';
-    refresh.addEventListener('click', () => location.reload());
+    const primary = document.createElement('button');
+    primary.type = 'button';
+    primary.className = 'fix-toast__refresh';
     const close = document.createElement('button');
     close.type = 'button';
     close.className = 'fix-toast__close';
     close.setAttribute('aria-label', t('toast.dismiss'));
     close.addEventListener('click', () => toast?.remove());
-    actions.append(refresh, close);
+    actions.append(primary, close);
     toast.append(body, actions);
     document.body.append(toast);
   }
@@ -507,30 +506,66 @@ function showToast(title: string, text: string): void {
   const textEl = q<HTMLElement>('.fix-toast__text', toast);
   if (titleEl) titleEl.textContent = title;
   if (textEl) textEl.textContent = text;
-  const refresh = q<HTMLButtonElement>('.fix-toast__refresh', toast);
-  if (refresh) refresh.textContent = t('toast.refresh');
+  const primary = q<HTMLButtonElement>('.fix-toast__refresh', toast);
+  if (primary) {
+    // 主按钮按场景替换（刷新 / 前往插件页）；重复弹窗不叠加监听
+    const next = primary.cloneNode(false) as HTMLButtonElement;
+    if (action) {
+      next.textContent = action.label;
+      next.hidden = false;
+      next.addEventListener('click', () => action.run());
+    } else {
+      next.hidden = true;
+    }
+    primary.replaceWith(next);
+  }
+}
+
+function extPageUrl(slot: HTMLElement): string {
+  // 修复槽自带引导链接（已按语言/锚点渲染），直接复用其地址，去掉锚点
+  const link = q<HTMLAnchorElement>('[data-fix-link]', slot);
+  const href = link?.getAttribute('href') ?? '/extension/';
+  try {
+    return new URL(href, location.origin).href.split('#')[0];
+  } catch {
+    return '/extension/';
+  }
 }
 
 function initFixSlots(hits: Hit[]): void {
   const fixable = hits.filter((hit) => hit.signal.fixKind);
-  if (!fixable.length) return;
-
-  void sendToExtension('slc-ping').then((probe) => {
-    const supported = !!probe?.ok && bridgeSupported(probe.version);
-    for (const hit of fixable) {
-      const slot = q<HTMLElement>(`[data-fix="${hit.signal.id}"]`);
-      if (!slot) continue;
-      slot.hidden = false;
-      const button = q<HTMLButtonElement>('[data-fix-button]', slot);
-      const status = q<HTMLElement>('[data-fix-status]', slot);
-      if (!supported || !button) continue;
-      button.hidden = false;
-      // 重扫会再次进入本函数；同一按钮只绑一次监听
-      if (button.dataset.bound === '1') continue;
-      button.dataset.bound = '1';
-      button.addEventListener('click', () => {
-        button.disabled = true;
-        if (status) status.textContent = '';
+  for (const hit of fixable) {
+    const slot = q<HTMLElement>(`[data-fix="${hit.signal.id}"]`);
+    if (!slot) continue;
+    slot.hidden = false;
+    const button = q<HTMLButtonElement>('[data-fix-button]', slot);
+    const status = q<HTMLElement>('[data-fix-status]', slot);
+    if (!button) continue;
+    // 按钮常驻：是否可修复在点击时检测（未安装/未启用/旧版都由 toast 引导）
+    button.hidden = false;
+    // 重扫会再次进入本函数；同一按钮只绑一次监听
+    if (button.dataset.bound === '1') continue;
+    button.dataset.bound = '1';
+    button.addEventListener('click', () => {
+      button.disabled = true;
+      if (status) status.textContent = '';
+      void sendToExtension('slc-ping').then((probe) => {
+        if (!probe?.ok) {
+          button.disabled = false;
+          showToast(t('toast.extMissingTitle'), t('toast.extMissingBody'), {
+            label: t('toast.extAction'),
+            run: () => location.assign(extPageUrl(slot)),
+          });
+          return;
+        }
+        if (!bridgeSupported(probe.version)) {
+          button.disabled = false;
+          showToast(t('toast.extOldTitle'), t('toast.extOldBody'), {
+            label: t('toast.extAction'),
+            run: () => location.assign(extPageUrl(slot)),
+          });
+          return;
+        }
         void sendToExtension('slc-fix-signal', {
           signal: hit.signal.id,
           lang: currentLang(),
@@ -539,11 +574,17 @@ function initFixSlots(hits: Hit[]): void {
           if (res?.ok && res.mode === 'auto') {
             status.dataset.tone = 'ok';
             status.textContent = '';
-            showToast(t('toast.fixTitle'), t('toast.fixBody'));
+            showToast(t('toast.fixTitle'), t('toast.fixBody'), {
+              label: t('toast.refresh'),
+              run: () => location.reload(),
+            });
           } else if (res?.ok && res.mode === 'confirm') {
             status.dataset.tone = '';
             status.textContent = '';
-            showToast(t('toast.fixTitle'), t('toast.fixConfirmBody'));
+            showToast(t('toast.fixTitle'), t('toast.fixConfirmBody'), {
+              label: t('toast.refresh'),
+              run: () => location.reload(),
+            });
           } else {
             status.dataset.tone = 'err';
             status.textContent = t('fix.failed');
@@ -551,8 +592,8 @@ function initFixSlots(hits: Hit[]): void {
           }
         });
       });
-    }
-  });
+    });
+  }
 }
 
 /**

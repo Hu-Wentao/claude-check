@@ -148,6 +148,12 @@ export const ui = {
       'Click “Enable” once on the page the extension just opened, then refresh this page.',
     'toast.refresh': 'Refresh now',
     'toast.dismiss': 'Close',
+    'toast.extMissingTitle': 'Extension not installed or not enabled',
+    'toast.extMissingBody':
+      'Install and enable the companion extension from the extension page, then come back and fix in one click.',
+    'toast.extOldTitle': 'Extension is out of date',
+    'toast.extOldBody': 'Download the latest zip from the extension page and replace the installed copy.',
+    'toast.extAction': 'Open extension page',
     'signal.emoji.name': 'Emoji rendering style',
     'signal.emoji.desc':
       'OS vendor guessed from the user agent; a weak, loosely correlated signal.',
@@ -450,6 +456,11 @@ export const ui = {
     'toast.fixConfirmBody': '在扩展确认页点一次「启用」，然后刷新本页。',
     'toast.refresh': '立即刷新',
     'toast.dismiss': '关闭',
+    'toast.extMissingTitle': '插件未安装或未启用',
+    'toast.extMissingBody': '请先在插件页安装并启用配套扩展，再回来一键修复。',
+    'toast.extOldTitle': '插件版本过旧',
+    'toast.extOldBody': '请在插件页重新下载最新版 zip，替换安装后再试。',
+    'toast.extAction': '前往插件页',
     'signal.emoji.name': 'Emoji 渲染风格',
     'signal.emoji.desc': '由 UA 推断操作系统厂商，弱相关信号。',
 
