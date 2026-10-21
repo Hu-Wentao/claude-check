@@ -1,6 +1,6 @@
 {
-  "name": "Fuck Claude — Claude China User Check",
-  "short_name": "Fuck Claude",
+  "name": "Claude Check — Claude China User Check",
+  "short_name": "Claude Check",
   "description": "Check whether Claude Code would flag you as a China user. Runs 100% locally.",
   "start_url": "/",
   "display": "standalone",

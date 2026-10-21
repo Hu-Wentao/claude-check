@@ -13,11 +13,11 @@ export const defaultLang: Lang = 'en';
 
 export const ui = {
   en: {
-    'meta.title': 'Fuck Claude | Are You a Claude "China User"?',
+    'meta.title': 'Claude Check | Are You a Claude "China User"?',
     'meta.description':
       'One-click check of your browser timezone, language, Chinese fonts and locale to see if Claude Code would flag you as a China user. 100% local, nothing uploaded.',
 
-    'nav.title': 'Fuck Claude',
+    'nav.title': 'Claude Check',
     'nav.guides': 'Anti-Ban Guides',
     'nav.news': 'News',
     'nav.extension': 'Extension',
@@ -224,13 +224,13 @@ export const ui = {
 
     'trust.privacy.title': 'Privacy Policy',
     'trust.privacy.description':
-      'How Fuck Claude handles local scans, Google Analytics, Google AdSense, and WebRTC STUN probing.',
+      'How Claude Check handles local scans, Google Analytics, Google AdSense, and WebRTC STUN probing.',
     'trust.terms.title': 'Terms of Service',
     'trust.terms.description':
-      'Terms and conditions governing the educational and technical use of Fuck Claude.',
+      'Terms and conditions governing the educational and technical use of Claude Check.',
     'trust.about.title': 'About',
     'trust.about.description':
-      'Who runs Fuck Claude, why it exists, editorial standards, and its relationship to Anthropic.',
+      'Who runs Claude Check, why it exists, editorial standards, and its relationship to Anthropic.',
     'trust.contact.title': 'Contact',
     'trust.contact.description':
       'Reach LinXiaoTao by email, GitHub Issues, or social media.',
@@ -301,11 +301,11 @@ export const ui = {
   },
 
   zh: {
-    'meta.title': 'Fuck Claude ｜ 你是「Claude 中国用户」吗',
+    'meta.title': 'Claude Check ｜ 你是「Claude 中国用户」吗',
     'meta.description':
       '一键检测浏览器时区、语言、中文字体与 locale 等信号，评估你是否会被 Claude Code 判定为中国用户并有封号风险。纯本地运行，零数据上传。',
 
-    'nav.title': 'Fuck Claude',
+    'nav.title': 'Claude Check',
     'nav.guides': '防封指南',
     'nav.news': '最新动态',
     'nav.extension': '浏览器扩展',
@@ -508,12 +508,12 @@ export const ui = {
 
     'trust.privacy.title': '隐私政策',
     'trust.privacy.description':
-      'Fuck Claude 如何处理本地检测、Google Analytics、Google AdSense 与 WebRTC STUN 探测。',
+      'Claude Check 如何处理本地检测、Google Analytics、Google AdSense 与 WebRTC STUN 探测。',
     'trust.terms.title': '服务条款',
     'trust.terms.description':
-      '使用 Fuck Claude 诊断工具与知识库的法律条款、用户责任与免责声明。',
+      '使用 Claude Check 诊断工具与知识库的法律条款、用户责任与免责声明。',
     'trust.about.title': '关于本站',
-    'trust.about.description': 'Fuck Claude 的运营者、项目目的、编辑准则及其与 Anthropic 的关系。',
+    'trust.about.description': 'Claude Check 的运营者、项目目的、编辑准则及其与 Anthropic 的关系。',
     'trust.contact.title': '联系我们',
     'trust.contact.description': '通过电子邮件、GitHub Issues 或社交媒体联系 LinXiaoTao。',
 
