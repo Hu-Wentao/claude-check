@@ -91,7 +91,7 @@ Service worker 读取真实 `navigator.userAgent` 和 `navigator.userAgentData`�
 
 ### 检测页一键修复（0.1.4 起 toast 提示刷新）
 
-manifest 固定了公钥 `key`，sideload 安装的扩展 ID 稳定为 `waafbhfijvpwtdcv`（私钥不入库，仅上 Chrome 应用商店时需要）。`externally_connectable` 只允许 `https://claudecheck.frely.cloud/*` 发来 `onMessageExternal`：`slc-ping` 回版本；`slc-fix-signal`（0.1.3 起，带 `signal` 与 `lang`）按 `src/lib/fix-map.ts` 的分组映射开启对应设置组（只开所点项所在的联动组，不整包推荐）、合并建议站点并重建注入。修复完成后不再自动回载检测页，由检测页 toast 提示用户自行刷新（刷新后新配置在 `document_start` 生效，重扫即见修复结果）。站点 origin（或 webrtc 时的 `privacy`）权限缺失时打开 `onboarding.html`，由确认页一次手势完成授权（后台消息不算用户手势，这是 Chrome 的硬限制）后同样应用并回载。检测页对旧版本扩展（<0.1.3）不显示一键按钮，只降级为引导链接。
+manifest 固定了公钥 `key`，sideload 安装的扩展 ID 稳定为 `oohedadoopeimapnbghdogplahnhihdg`（私钥不入库，仅上 Chrome 应用商店时需要）。`externally_connectable` 只允许 `https://claudecheck.frely.cloud/*` 发来 `onMessageExternal`：`slc-ping` 回版本；`slc-fix-signal`（0.1.3 起，带 `signal` 与 `lang`）按 `src/lib/fix-map.ts` 的分组映射开启对应设置组（只开所点项所在的联动组，不整包推荐）、合并建议站点并重建注入。修复完成后不再自动回载检测页，由检测页 toast 提示用户自行刷新（刷新后新配置在 `document_start` 生效，重扫即见修复结果）。站点 origin（或 webrtc 时的 `privacy`）权限缺失时打开 `onboarding.html`，由确认页一次手势完成授权（后台消息不算用户手势，这是 Chrome 的硬限制）后同样应用并回载。检测页对旧版本扩展（<0.1.3）不显示一键按钮，只降级为引导链接。
 
 ### 弹窗语言下拉（0.1.2 起）
 

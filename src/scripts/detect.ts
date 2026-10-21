@@ -432,7 +432,7 @@ async function run() {
  * manifest key (extension/wxt.config.ts) so this page can address it through
  * externally_connectable messaging. No host permission is involved.
  */
-const EXTENSION_ID = 'waafbhfijvpwtdcv';
+const EXTENSION_ID = 'oohedadoopeimapnbghdogplahnhihdg';
 
 // 一键修复协议（slc-fix-signal）自 0.1.3 起可用；旧版本只降级显示引导链接
 const MIN_FIX_VERSION = '0.1.3';
