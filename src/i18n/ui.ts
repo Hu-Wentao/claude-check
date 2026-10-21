@@ -98,8 +98,6 @@ export const ui = {
     'hero.badge.openSource': 'Open source',
     'hero.scoreOutOf': '/ 100',
 
-    'sponsors.label': 'Sponsors',
-    'sponsors.cta': 'Want to be listed here?',
 
     'cnModels.label': 'Chinese AI models',
     'cnModels.slogan': 'Chinese models are simply better',
@@ -388,8 +386,6 @@ export const ui = {
     'hero.badge.openSource': '开源代码',
     'hero.scoreOutOf': '/ 100',
 
-    'sponsors.label': '赞助商',
-    'sponsors.cta': '想显示在下方？',
 
     'cnModels.label': '国产大模型',
     'cnModels.slogan': '模型还是中国的好',
