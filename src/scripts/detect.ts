@@ -451,13 +451,13 @@ interface ChromeLike {
   };
 }
 
-function sendToExtension(type: string): Promise<ExtResponse | null> {
+function sendToExtension(type: string, extra?: Record<string, string>): Promise<ExtResponse | null> {
   const chromeLike = (globalThis as { chrome?: ChromeLike }).chrome;
   const send = chromeLike?.runtime?.sendMessage;
   if (typeof send !== 'function') return Promise.resolve(null);
   return new Promise((resolve) => {
     try {
-      send.call(chromeLike?.runtime, EXTENSION_ID, { type }, (response) => resolve(response ?? null));
+      send.call(chromeLike?.runtime, EXTENSION_ID, { type, ...extra }, (response) => resolve(response ?? null));
     } catch {
       resolve(null);
     }
@@ -485,7 +485,7 @@ function initFixSlots(hits: Hit[]): void {
     button.addEventListener('click', () => {
       button.disabled = true;
       if (status) status.textContent = '';
-      void sendToExtension('slc-enable-webrtc').then((res) => {
+      void sendToExtension('slc-enable-webrtc', { lang: currentLang() }).then((res) => {
         if (!status) return;
         if (res?.ok && res.mode === 'auto') {
           status.dataset.tone = 'ok';

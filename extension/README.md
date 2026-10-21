@@ -93,6 +93,10 @@ Service worker 读取真实 `navigator.userAgent` 和 `navigator.userAgentData`�
 
 manifest 固定了公钥 `key`，sideload 安装的扩展 ID 稳定为 `waafbhfijvpwtdcv`（私钥不入库，仅上 Chrome 应用商店时需要）。`externally_connectable` 只允许 `https://claudecheck.frely.cloud/*` 发来 `onMessageExternal`：`slc-ping` 回版本与 webrtc 状态；`slc-enable-webrtc` 打开 `settings.webrtc` 并重建注入，`privacy` 权限已给时直接设策略，否则打开 `onboarding.html` 让用户在那儿完成一次手势确认（后台消息不算用户手势，这是 Chrome 的硬限制）。
 
+### 弹窗语言下拉（0.1.2 起）
+
+弹窗右上角有「自动 / English / 中文」下拉。不落 storage：每次打开重新解析，「自动」= 若当前标签页是检测站则用 `activeTab` 读它的 `document.documentElement.lang`，否则浏览器界面语言；手动选择仅当次有效。为此 manifest 增加 `activeTab` 权限（安装无新增提示，仅点击图标那一次临时授权当前页）。onboarding 确认页语言由站点消息以 `?lang=` 透传。文案表在运行时 `fetch` `_locales`，不再走 `chrome.i18n.getMessage` 渲染主体 UI。
+
 ## 表情符号
 
 不单独实现。它跟随 UA 和 `platform`。按网站 `scoreEmojiVendor`，Apple 贡献四舍五入后是 1 分，Windows 是 1 分，Linux 是 2 分。最低仍有 1 到 2 分，不能变成 0。桌面预设不会为了这一项假装另一个操作系统。

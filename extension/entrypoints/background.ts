@@ -34,8 +34,10 @@ export default defineBackground(() => {
           sendResponse({ ok: true, mode: 'auto', policy: result.value });
           return;
         }
-        // chrome.privacy 授权需要用户手势，只能落在扩展页面里完成
-        await chrome.tabs.create({ url: chrome.runtime.getURL('/onboarding.html?intent=webrtc') });
+        // chrome.privacy 授权需要用户手势，只能落在扩展页面里完成；
+        // lang 由站点消息透传，确认页与请求页语言一致
+        const lang = message.lang === 'zh' ? 'zh' : 'en';
+        await chrome.tabs.create({ url: chrome.runtime.getURL(`/onboarding.html?intent=webrtc&lang=${lang}`) });
         sendResponse({ ok: true, mode: 'confirm' });
       })().catch((err) => sendResponse({ ok: false, error: String(err) }));
       return true;

@@ -63,7 +63,7 @@ if (!names.includes('manifest.json')) {
 }
 
 const manifest = JSON.parse(unzipEntry(packed, 'manifest.json').toString('utf8'));
-const permissions = ['storage', 'scripting', 'declarativeNetRequestWithHostAccess'];
+const permissions = ['storage', 'scripting', 'declarativeNetRequestWithHostAccess', 'activeTab'];
 if (JSON.stringify(manifest.permissions) !== JSON.stringify(permissions)) {
   fail(`permissions ${JSON.stringify(manifest.permissions)}`);
 }

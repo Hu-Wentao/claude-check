@@ -238,5 +238,11 @@
   },
   "onbAlreadyNote": {
     "message": "候选过滤已开启。"
+  },
+  "uiLangLabel": {
+    "message": "语言"
+  },
+  "uiLangAuto": {
+    "message": "自动"
   }
 }

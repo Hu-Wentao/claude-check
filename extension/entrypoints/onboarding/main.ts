@@ -1,11 +1,18 @@
 // （环境：扩展确认页, 原因/备注：chrome.privacy 授权必须来自扩展页面里的用户手势，
-// 站点一键修复在缺权限时会打开本页完成最后一次点击确认）
+// 站点一键修复在缺权限时会打开本页完成最后一次点击确认；语言由 background
+// 依据请求来源站点的语言以 ?lang= 透传）
 import './style.css';
+import { formatUiMessage, loadUiMessages, type UiLang } from '../../src/lib/ui-lang';
 import { loadSettings } from '../../src/lib/settings';
 import { setWebrtcPolicy } from '../../src/lib/webrtc-policy';
 
-function t(key: string): string {
-  return chrome.i18n.getMessage(key) || key;
+const param = new URLSearchParams(location.search).get('lang');
+const lang: UiLang = param === 'zh' ? 'zh' : param === 'en' ? 'en' : chrome.i18n.getUILanguage().toLowerCase().startsWith('zh') ? 'zh' : 'en';
+const messages = await loadUiMessages(lang);
+document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+
+function t(key: string, subs?: string[]): string {
+  return formatUiMessage(messages, key, subs) || chrome.i18n.getMessage(key, subs) || key;
 }
 
 function el(tag: 'h1' | 'p' | 'button', className?: string, text?: string): HTMLElement {
@@ -19,8 +26,6 @@ const app = document.getElementById('app');
 if (!app) throw new Error('missing #app');
 
 const intent = new URLSearchParams(location.search).get('intent') || 'webrtc';
-const uiLang = chrome.i18n.getUILanguage();
-document.documentElement.lang = uiLang.toLowerCase().startsWith('zh') ? 'zh-CN' : 'en';
 
 const title = el('h1', undefined, t('onbTitle'));
 const body = el('p', 'body', t(intent === 'webrtc' ? 'onbWebrtcBody' : 'onbTitle'));

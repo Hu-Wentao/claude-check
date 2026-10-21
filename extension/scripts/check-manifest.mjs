@@ -20,7 +20,7 @@ walk(root);
 if (hits.length !== 1) throw new Error(`expected one manifest, found ${hits.join(', ') || 'none'}`);
 
 const manifest = JSON.parse(readFileSync(hits[0], 'utf8'));
-const permissions = ['storage', 'scripting', 'declarativeNetRequestWithHostAccess'];
+const permissions = ['storage', 'scripting', 'declarativeNetRequestWithHostAccess', 'activeTab'];
 const optional = [
   'https://claude.ai/*',
   'https://*.claude.ai/*',

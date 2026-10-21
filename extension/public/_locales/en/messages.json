@@ -238,5 +238,11 @@
   },
   "onbAlreadyNote": {
     "message": "Candidate filtering is already on."
+  },
+  "uiLangLabel": {
+    "message": "Language"
+  },
+  "uiLangAuto": {
+    "message": "Auto"
   }
 }

@@ -23,6 +23,21 @@ h1, .sites-title {
   font-weight: 650;
 }
 
+.lang-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: -6px;
+}
+
+.lang-row select {
+  font-size: 12px;
+  padding: 2px 6px;
+  border: 1px solid #d8dbe2;
+  border-radius: 6px;
+  background: #fff;
+  color: inherit;
+}
+
 section {
   margin: 0 0 10px;
   padding: 10px;

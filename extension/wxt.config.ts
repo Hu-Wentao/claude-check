@@ -30,6 +30,7 @@ export default defineConfig({
       'storage',
       'scripting',
       'declarativeNetRequestWithHostAccess',
+      'activeTab',
       ...(e2e ? ['privacy'] : []),
     ],
     optional_permissions: ['privacy'],

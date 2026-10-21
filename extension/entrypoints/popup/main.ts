@@ -11,6 +11,7 @@ import {
 } from '../../src/lib/settings';
 import { originPatterns, parseSiteInput, requestablePatterns, urlMatchesSite, type SiteEntry } from '../../src/lib/sites';
 import { buildUaProfile } from '../../src/lib/ua-profile.js';
+import { formatUiMessage, loadUiMessages, resolveAutoUiLang, type MessageTable, type UiLang } from '../../src/lib/ui-lang';
 import './style.css';
 
 let current: Settings = {
@@ -29,9 +30,17 @@ let current: Settings = {
 
 let env: RealEnv | null = null;
 
+// 会话内 UI 语言状态：mode 'auto' 每次重解析，手动选择仅当次有效
+let uiMode: 'auto' | UiLang = 'auto';
+let messages: MessageTable = {};
+
+async function applyUiLang(lang: UiLang): Promise<void> {
+  messages = await loadUiMessages(lang);
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+}
+
 function t(key: string, subs?: string[]): string {
-  const value = subs ? chrome.i18n.getMessage(key, subs) : chrome.i18n.getMessage(key);
-  return value || key;
+  return formatUiMessage(messages, key, subs) || chrome.i18n.getMessage(key, subs) || key;
 }
 
 function el<K extends keyof HTMLElementTagNameMap>(tag: K, className?: string, text?: string): HTMLElementTagNameMap[K] {
@@ -264,8 +273,34 @@ function build(): void {
   const app = document.querySelector('#app');
   if (!app) return;
   app.replaceChildren();
-  document.documentElement.lang = chrome.i18n.getUILanguage() || 'en';
   document.title = t('extName');
+
+  const langRow = el('div', 'lang-row');
+  const langSel = document.createElement('select');
+  langSel.dataset.field = 'ui-lang';
+  langSel.setAttribute('aria-label', t('uiLangLabel'));
+  for (const [value, label] of [
+    ['auto', t('uiLangAuto')],
+    ['en', 'English'],
+    ['zh', '中文'],
+  ] as const) {
+    const option = document.createElement('option');
+    option.value = value;
+    option.textContent = label;
+    langSel.append(option);
+  }
+  langSel.value = uiMode;
+  langSel.addEventListener('change', () => {
+    uiMode = langSel.value as 'auto' | UiLang;
+    void (async () => {
+      await applyUiLang(uiMode === 'auto' ? await resolveAutoUiLang() : uiMode);
+      build();
+      sync();
+      await showPolicy();
+    })();
+  });
+  langRow.append(langSel);
+  app.append(langRow);
 
   app.append(el('h1', undefined, t('extName')));
 
@@ -518,6 +553,7 @@ async function showPolicy(): Promise<void> {
 async function main(): Promise<void> {
   current = await loadSettings();
   env = await loadEnv();
+  await applyUiLang(await resolveAutoUiLang());
   build();
   sync();
   await showPolicy();
