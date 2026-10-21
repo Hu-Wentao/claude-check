@@ -1,5 +1,5 @@
 export interface SiteAuthor {
-  id: 'linxiaotao';
+  id: 'hu-wentao';
   name: string;
   email: string;
   github: string;
@@ -9,12 +9,12 @@ export interface SiteAuthor {
 }
 
 export const SITE_AUTHOR: SiteAuthor = {
-  id: 'linxiaotao',
-  name: 'LinXiaoTao',
+  id: 'hu-wentao',
+  name: 'Hu-Wentao',
   email: 'linxiaotao1993@gmail.com',
-  github: 'LinXiaoTao',
-  githubUrl: 'https://github.com/LinXiaoTao',
-  xUrl: 'https://x.com/linxiaotao1993',
+  github: 'Hu-Wentao',
+  githubUrl: 'https://github.com/Hu-Wentao',
+  xUrl: 'https://x.com/wyatt_coder',
   bio: {
     en: 'Independent developer who built Claude Check from public reverse-engineering of Claude Code fingerprinting. This site is a reference tool and educational knowledge base — not affiliated with Anthropic.',
     zh: '独立开发者,基于 Claude Code 指纹检测的公开逆向分析构建了 Claude Check。本站是参考工具与教育型知识库,与 Anthropic 无任何关联。',

@@ -142,7 +142,7 @@ export const TRUST_CONTENT: Record<TrustPageId, { en: string; zh: string }> = {
 <ul>
   <li><strong>GitHub Issues (Recommended for Technical Feedback):</strong> For bug reports, fingerprint algorithm improvements, new environment signals, or guide errata, please open an issue at <a href="${SITE_AUTHOR.githubUrl}/claude-check/issues" target="_blank" rel="noopener noreferrer">${SITE_AUTHOR.github}/claude-check/issues</a>. GitHub provides the fastest turnaround and public tracking.</li>
   <li><strong>Direct Email:</strong> For general inquiries, privacy notices, collaboration, or sponsorship: <a href="mailto:${SITE_AUTHOR.email}">${SITE_AUTHOR.email}</a>. We endeavor to respond to legitimate inquiries within 48 business hours.</li>
-  <li><strong>Social Platforms:</strong> Connect with the author on <a href="${SITE_AUTHOR.xUrl}" target="_blank" rel="noopener noreferrer">X (Twitter)</a>, Xiaohongshu, Douyin, and Jike. Platform links are available in the top navigation.</li>
+  <li><strong>Social Platforms:</strong> Connect with the author on <a href="${SITE_AUTHOR.xUrl}" target="_blank" rel="noopener noreferrer">X (Twitter)</a>, Xiaohongshu, and Douyin. Platform links are available in the top navigation.</li>
 </ul>
 
 <h2>Guidelines for Reporting Signal Issues</h2>
@@ -165,7 +165,7 @@ export const TRUST_CONTENT: Record<TrustPageId, { en: string; zh: string }> = {
 <ul>
   <li><strong>GitHub Issues（技术反馈首选）：</strong>针对 Bug 报告、指纹算法优化、新环境特征补充或指南勘误，请在 <a href="${SITE_AUTHOR.githubUrl}/claude-check/issues" target="_blank" rel="noopener noreferrer">${SITE_AUTHOR.github}/claude-check/issues</a> 提交 Issue。这是响应最迅速、最透明的沟通方式。</li>
   <li><strong>官方电子邮件：</strong>一般咨询、隐私合规请求、技术交流与赞助合作，请发送邮件至：<a href="mailto:${SITE_AUTHOR.email}">${SITE_AUTHOR.email}</a>。我们通常会在 48 个工作小时内给予回复。</li>
-  <li><strong>社交平台：</strong>欢迎在 <a href="${SITE_AUTHOR.xUrl}" target="_blank" rel="noopener noreferrer">X (Twitter)</a>、小红书、抖音与即刻关注作者（链接见顶部导航）。</li>
+  <li><strong>社交平台：</strong>欢迎在 <a href="${SITE_AUTHOR.xUrl}" target="_blank" rel="noopener noreferrer">X (Twitter)</a>、小红书与抖音关注作者（链接见顶部导航）。</li>
 </ul>
 
 <h2>反馈指纹检测问题时的建议</h2>

@@ -50,7 +50,7 @@ export const ui = {
     'guides.back': '← Back to Knowledge Base',
     'guides.backHome': '← Back to Home',
     'guides.editorial':
-      'Written and maintained by LinXiaoTao, an independent developer. Guides are updated as new reverse-engineering findings and community reports emerge. This knowledge base is educational and for reference — not official Anthropic documentation.',
+      'Written and maintained by Hu-Wentao, an independent developer. Guides are updated as new reverse-engineering findings and community reports emerge. This knowledge base is educational and for reference — not official Anthropic documentation.',
     'guides.intro':
       'This knowledge base collects what is publicly known about how Claude Code fingerprints users and how bans happen, from Unicode steganography and Anthropic’s multi-layer risk model to environment cleanup, account and payment safety, and what to do once an account is flagged. Statements about Anthropic’s rules link to official pages and carry a verification date. Everything else comes from community reports and public reverse-engineering and is labeled as such. Every article is bilingual and can be read on its own or as part of a path below.',
     'guides.paths.title': 'Where to start',
@@ -233,7 +233,7 @@ export const ui = {
       'Who runs Claude Check, why it exists, editorial standards, and its relationship to Anthropic.',
     'trust.contact.title': 'Contact',
     'trust.contact.description':
-      'Reach LinXiaoTao by email, GitHub Issues, or social media.',
+      'Reach Hu-Wentao by email, GitHub Issues, or social media.',
 
     'social.x': 'X (Twitter)',
     'social.xiaohongshu': 'Xiaohongshu (RED)',
@@ -337,7 +337,7 @@ export const ui = {
     'guides.back': '← 返回资料库',
     'guides.backHome': '← 返回首页',
     'guides.editorial':
-      '由独立开发者 LinXiaoTao 撰写与维护。指南会随新的逆向发现与社区反馈持续更新。本资料库仅供教育与参考，并非 Anthropic 官方文档。',
+      '由独立开发者 Hu-Wentao 撰写与维护。指南会随新的逆向发现与社区反馈持续更新。本资料库仅供教育与参考，并非 Anthropic 官方文档。',
     'guides.intro':
       '这个资料库整理了公开信息中关于 Claude Code 如何给用户打指纹、封号如何发生的内容：从 Unicode 隐写与 Anthropic 多维风控模型，到环境纯化、账号与支付安全，再到账号被标记后的处理。涉及 Anthropic 规则的陈述附官方链接和核对日期，其余内容来自社区反馈与公开逆向分析，并会标明。每篇文章均为中英双语，可单独阅读，也可按下方路径阅读。',
     'guides.paths.title': '从哪里开始',
@@ -514,7 +514,7 @@ export const ui = {
     'trust.about.title': '关于本站',
     'trust.about.description': 'Claude Check 的运营者、项目目的、编辑准则及其与 Anthropic 的关系。',
     'trust.contact.title': '联系我们',
-    'trust.contact.description': '通过电子邮件、GitHub Issues 或社交媒体联系 LinXiaoTao。',
+    'trust.contact.description': '通过电子邮件、GitHub Issues 或社交媒体联系 Hu-Wentao。',
 
     'social.x': 'X(推特)',
     'social.xiaohongshu': '小红书',
