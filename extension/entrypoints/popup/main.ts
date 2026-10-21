@@ -13,7 +13,7 @@ import {
 } from '../../src/lib/settings';
 import { originPatterns, parseSiteInput, requestablePatterns, urlMatchesSite, type SiteEntry } from '../../src/lib/sites';
 import { buildUaProfile } from '../../src/lib/ua-profile.js';
-import { formatUiMessage, loadUiMessages, resolveAutoUiLang, type MessageTable, type UiLang } from '../../src/lib/ui-lang';
+import { formatUiMessage, loadUiMessages, loadUiMode, resolveAutoUiLang, saveUiMode, type MessageTable, type UiLang, type UiMode } from '../../src/lib/ui-lang';
 import './style.css';
 
 let current: Settings = {
@@ -32,8 +32,8 @@ let current: Settings = {
 
 let env: RealEnv | null = null;
 
-// 会话内 UI 语言状态：mode 'auto' 每次重解析，手动选择仅当次有效
-let uiMode: 'auto' | UiLang = 'auto';
+// UI 语言状态：手动选择持久化到 storage.local，'auto' 每次重解析
+let uiMode: UiMode = 'auto';
 let messages: MessageTable = {};
 
 async function applyUiLang(lang: UiLang): Promise<void> {
@@ -294,7 +294,8 @@ function build(): void {
   }
   langSel.value = uiMode;
   langSel.addEventListener('change', () => {
-    uiMode = langSel.value as 'auto' | UiLang;
+    uiMode = langSel.value as UiMode;
+    void saveUiMode(uiMode);
     void (async () => {
       await applyUiLang(uiMode === 'auto' ? await resolveAutoUiLang() : uiMode);
       build();
@@ -562,7 +563,8 @@ async function showPolicy(): Promise<void> {
 async function main(): Promise<void> {
   current = await loadSettings();
   env = await loadEnv();
-  await applyUiLang(await resolveAutoUiLang());
+  uiMode = await loadUiMode();
+  await applyUiLang(uiMode === 'auto' ? await resolveAutoUiLang() : uiMode);
   build();
   sync();
   await showPolicy();

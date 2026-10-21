@@ -3,7 +3,7 @@
 // 应用对应设置组并重建注入，页面刷新由检测页的 toast 提示用户自己完成）
 import './style.css';
 import { scheduleRebuild } from '../../src/lib/apply';
-import { CHECKER_ORIGIN_PATTERN, applySignalFix } from '../../src/lib/fix-map';
+import { CHECKER_ORIGIN_PATTERN, applySignalFix, applySignalFixes } from '../../src/lib/fix-map';
 import { loadSettings, saveSettings } from '../../src/lib/settings';
 import { setWebrtcPolicy } from '../../src/lib/webrtc-policy';
 import { formatUiMessage, loadUiMessages, type UiLang } from '../../src/lib/ui-lang';
@@ -34,7 +34,12 @@ const app = document.getElementById('app');
 if (!app) throw new Error('missing #app');
 
 const signal = params.get('signal') || '';
-const isWebrtc = signal === 'webrtcLeak';
+// 聚合模式：signals=a,b,c（一键修复缺权限时一次确认修完全部）
+const signalList = (params.get('signals') || '')
+  .split(',')
+  .map((item) => item.trim())
+  .filter(Boolean);
+const isWebrtc = signal === 'webrtcLeak' || signalList.includes('webrtcLeak');
 
 const title = el('h1', undefined, t(isWebrtc ? 'onbTitle' : 'onbFixTitle'));
 const body = el('p', 'body', t(isWebrtc ? 'onbWebrtcBody' : 'onbFixBody'));
@@ -66,7 +71,7 @@ async function enable(): Promise<void> {
   }
 
   const settings = await loadSettings();
-  const next = applySignalFix(settings, signal);
+  const next = signalList.length > 1 ? applySignalFixes(settings, signalList) : applySignalFix(settings, signal);
   if (!next) {
     status.textContent = t('policyDenied');
     status.classList.add('error');

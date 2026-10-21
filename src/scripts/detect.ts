@@ -668,14 +668,33 @@ function initFixAll(hits: Hit[], reveal = false): void {
         return;
       }
       const lang = currentLang();
+      const ids = fixable.map((hit) => hit.signal.id);
+      // 聚合请求：一次修完全部可修项；旧扩展（不支持 signals[]）返回 not ok
+      // 时降级逐项，且遇到 confirm 即停，避免逐项各开一个确认页
+      const agg = await sendToExtension('slc-fix-signal', { signals: ids, lang });
+      if (agg?.ok) {
+        if (agg.mode === 'confirm') {
+          showToast(t('toast.fixTitle'), t('toast.fixConfirmBody'), {
+            label: t('toast.refresh'),
+            run: () => location.reload(),
+          });
+        } else {
+          showToast(t('toast.fixTitle'), t('toast.fixBody'), {
+            label: t('toast.refresh'),
+            run: () => location.reload(),
+          });
+        }
+        return;
+      }
       let applied = 0;
       let confirmNeeded = false;
-      let failed = 0;
-      for (const hit of fixable) {
-        const res = await sendToExtension('slc-fix-signal', { signal: hit.signal.id, lang });
+      for (const id of ids) {
+        const res = await sendToExtension('slc-fix-signal', { signal: id, lang });
         if (res?.ok && res.mode === 'auto') applied += 1;
-        else if (res?.ok && res.mode === 'confirm') confirmNeeded = true;
-        else failed += 1;
+        else if (res?.ok && res.mode === 'confirm') {
+          confirmNeeded = true;
+          break;
+        }
       }
       if (applied > 0 || confirmNeeded) {
         // 成功后保持禁用，刷新页面后随新扫描重置

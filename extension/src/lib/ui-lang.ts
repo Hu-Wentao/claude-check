@@ -1,6 +1,9 @@
-// （环境：popup/onboarding 共用, 原因/备注：UI 语言不落 storage——每次打开按
-// 「claudecheck 标签页页面语言 > 浏览器界面语言」解析，手动选择仅当次有效）
+// （环境：popup/onboarding 共用, 原因/备注：手动选择的 UI 语言持久化到 storage.local
+// （'auto' 表示清除记忆、回到自动解析：claudecheck 标签页页面语言 > 浏览器界面语言））
 export type UiLang = 'en' | 'zh';
+export type UiMode = 'auto' | UiLang;
+
+const UI_LANG_KEY = 'slc-ui-lang';
 
 const SITE_ORIGIN = 'https://claudecheck.frely.cloud';
 const LOCALE_DIR: Record<UiLang, string> = { en: 'en', zh: 'zh_CN' };
@@ -41,6 +44,26 @@ export async function loadUiMessages(lang: UiLang): Promise<MessageTable> {
   const url = chrome.runtime.getURL(`_locales/${LOCALE_DIR[lang]}/messages.json`);
   const res = await fetch(url);
   return (await res.json()) as MessageTable;
+}
+
+/** Remembered manual UI language, or 'auto' when nothing was pinned. */
+export async function loadUiMode(): Promise<UiMode> {
+  try {
+    const stored = (await chrome.storage.local.get(UI_LANG_KEY))[UI_LANG_KEY];
+    if (stored === 'en' || stored === 'zh') return stored;
+  } catch {
+    /* storage unavailable — fall back to auto */
+  }
+  return 'auto';
+}
+
+export async function saveUiMode(mode: UiMode): Promise<void> {
+  try {
+    if (mode === 'auto') await chrome.storage.local.remove(UI_LANG_KEY);
+    else await chrome.storage.local.set({ [UI_LANG_KEY]: mode });
+  } catch {
+    /* best effort */
+  }
 }
 
 /** Replaces $NAME$ tokens the way chrome.i18n.getMessage does for $N content. */

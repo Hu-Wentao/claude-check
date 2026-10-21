@@ -55,3 +55,22 @@ export function applySignalFix(current: Settings, signal: string): Settings | nu
     ...patch,
   };
 }
+
+/** Fold every requested group into one settings patch set (一键修复 aggregate). */
+export function applySignalFixes(current: Settings, signals: string[]): Settings | null {
+  const patches: Partial<Settings>[] = [];
+  let sawWebrtc = false;
+  for (const signal of signals) {
+    const patch = settingsPatchFor(signal);
+    if (!patch) return null;
+    if (signal === 'webrtcLeak') sawWebrtc = true;
+    patches.push(patch);
+  }
+  return {
+    ...current,
+    enabled: true,
+    sites: mergeSites(current.sites, suggestedSites()),
+    ...(sawWebrtc ? { webrtc: true } : {}),
+    ...Object.assign({}, ...patches),
+  };
+}
