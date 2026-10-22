@@ -51,6 +51,19 @@ mkdirSync(downloadsDir, { recursive: true });
 run(['install', '--frozen-lockfile']);
 run(['run', 'build']);
 run(['scripts/check-manifest.mjs', 'prod']);
+
+// （环境：vercel cli 部署, 原因/备注：CLI 上传不读嵌套 gitignore，本地遗留的旧版
+// chrome zip 会被传到远端并卡死下方“恰好一个 zip”断言；打包前清掉陈旧产物让构建自愈）
+const outputDir = join(extensionDir, '.output');
+try {
+  for (const stale of readdirSync(outputDir)) {
+    if (stale.endsWith('.zip') && !stale.includes('sources')) {
+      rmSync(join(outputDir, stale), { force: true });
+    }
+  }
+} catch {
+  // no .output yet — wxt zip creates it
+}
 run(['x', 'wxt', 'zip']);
 
 const zipName = findZip(join(extensionDir, '.output'));
