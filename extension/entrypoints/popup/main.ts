@@ -279,7 +279,10 @@ function build(): void {
   document.title = t('extName');
 
   const head = el('div', 'head-row');
-  head.append(el('h1', undefined, t('extName')));
+  const title = el('div', 'head-title');
+  title.append(el('h1', undefined, t('extName')));
+  title.append(el('span', 'head-version', `v${chrome.runtime.getManifest().version}`));
+  head.append(title);
   const langSel = document.createElement('select');
   langSel.dataset.field = 'ui-lang';
   langSel.setAttribute('aria-label', t('uiLangLabel'));

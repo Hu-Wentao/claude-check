@@ -1,7 +1,7 @@
 {
   "name": "site-locale-control",
   "private": true,
-  "version": "0.1.8",
+  "version": "0.1.9",
   "type": "module",
   "description": "Site Locale Control, a Manifest V3 extension that sets the time zone and language selected sites see.",
   "scripts": {
@@ -21,5 +21,10 @@
     "vitest": "^3.2.4",
     "wxt": "^0.20.11"
   },
-  "trustedDependencies": ["esbuild", "puppeteer", "sharp", "spawn-sync"]
+  "trustedDependencies": [
+    "esbuild",
+    "puppeteer",
+    "sharp",
+    "spawn-sync"
+  ]
 }
