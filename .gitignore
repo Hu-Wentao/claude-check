@@ -4,6 +4,8 @@ dist/
 public/downloads/
 # vercel adapter build output
 .vercel/
+# wxt extension build output (zip is rebuilt by CI on every deploy)
+extension/.output/
 # generated types
 .astro/
 
