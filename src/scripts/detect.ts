@@ -88,9 +88,14 @@ function resetUI() {
     const val = q('[data-field="value"]', row);
     const contrib = q('[data-field="contribution"]', row);
     const dot = q('[data-field="dot"]', row);
+    const fix = q<HTMLButtonElement>('[data-field="fix"]', row);
     if (val) val.textContent = '';
     if (contrib) contrib.textContent = '';
     if (dot) dot.className = 'dot';
+    if (fix) {
+      fix.hidden = true;
+      fix.disabled = false;
+    }
   }
 }
 
@@ -414,6 +419,7 @@ function readCache(): ScanCache | null {
 function paintRow(signalId: string, raw: string, contribution: number, score: number): void {
   const row = q(`[data-signal="${signalId}"]`);
   if (!row) return;
+  const signal = SIGNALS.find((s) => s.id === signalId);
   const verdict = signalVerdict(score);
   const val = q('[data-field="value"]', row);
   const contrib = q('[data-field="contribution"]', row);
@@ -424,6 +430,63 @@ function paintRow(signalId: string, raw: string, contribution: number, score: nu
   row.classList.remove('is-pending', 'is-active');
   row.classList.add('is-done');
   row.setAttribute('data-verdict', verdict);
+  if (signal) updateRowFix(row, signal, verdict);
+}
+
+// （环境：逐项修复, 原因/备注：行内扳手按钮仅对可修且未变绿的行显示；
+// verdict 变 low 或重扫重置时隐藏）
+function updateRowFix(row: Element, signal: SignalDef, verdict: string): void {
+  if (!signal.fixKind) return;
+  const btn = q<HTMLButtonElement>('[data-field="fix"]', row);
+  if (!btn) return;
+  btn.hidden = verdict === 'low';
+  btn.disabled = false;
+}
+
+function guideToExt(kind: 'extMissing' | 'extOld', restore?: HTMLButtonElement): void {
+  if (restore) restore.disabled = false;
+  showToast(
+    t(kind === 'extMissing' ? 'toast.extMissingTitle' : 'toast.extOldTitle'),
+    t(kind === 'extMissing' ? 'toast.extMissingBody' : 'toast.extOldBody'),
+    { label: t('toast.extAction'), run: () => location.assign(extPageUrl()) },
+  );
+}
+
+function fixOne(signalId: string, button: HTMLButtonElement): void {
+  button.disabled = true;
+  void sendToExtension('slc-ping').then(async (probe) => {
+    if (!probe?.ok) {
+      guideToExt('extMissing', button);
+      return;
+    }
+    if (!bridgeSupported(probe.version)) {
+      guideToExt('extOld', button);
+      return;
+    }
+    const res = await sendToExtension('slc-fix-signal', { signal: signalId, lang: currentLang() });
+    if (res?.ok) {
+      // 成功后保持禁用，刷新页面后随新扫描重置
+      showToast(
+        t('toast.fixTitle'),
+        t(res.mode === 'confirm' ? 'toast.fixConfirmBody' : 'toast.fixBody'),
+        { label: t('toast.refresh'), run: () => location.reload() },
+      );
+      return;
+    }
+    button.disabled = false;
+    showToast(t('toast.fixTitle'), t('fix.failed'));
+  });
+}
+
+function initRowFixes(): void {
+  q('#scan')?.addEventListener('click', (event) => {
+    const target = event.target instanceof Element ? event.target : null;
+    const btn = target?.closest('button[data-field="fix"]');
+    if (!(btn instanceof HTMLButtonElement) || btn.hidden || btn.disabled) return;
+    const row = btn.closest('[data-signal]');
+    const id = row?.getAttribute('data-signal');
+    if (id) fixOne(id, btn);
+  });
 }
 
 /** Instantly replay the last scan without running detectors. */
@@ -517,6 +580,7 @@ async function run() {
 
     setRing(Math.min(100, total));
     if (verdict !== 'low') hits.push({ signal, contribution });
+    if (row) updateRowFix(row, signal, verdict);
     outcomes.push({ id: signal.id, raw: outcome.raw, score: outcome.score, contribution });
     await delay(SETTLE_MS);
   }
@@ -650,21 +714,13 @@ function initFixAll(hits: Hit[], reveal = false): void {
   button.dataset.bound = '1';
   button.addEventListener('click', () => {
     button.disabled = true;
-    const guideToExt = (kind: 'extMissing' | 'extOld') => {
-      button.disabled = false;
-      showToast(
-        t(kind === 'extMissing' ? 'toast.extMissingTitle' : 'toast.extOldTitle'),
-        t(kind === 'extMissing' ? 'toast.extMissingBody' : 'toast.extOldBody'),
-        { label: t('toast.extAction'), run: () => location.assign(extPageUrl()) },
-      );
-    };
     void sendToExtension('slc-ping').then(async (probe) => {
       if (!probe?.ok) {
-        guideToExt('extMissing');
+        guideToExt('extMissing', button);
         return;
       }
       if (!bridgeSupported(probe.version)) {
-        guideToExt('extOld');
+        guideToExt('extOld', button);
         return;
       }
       const lang = currentLang();
@@ -717,6 +773,7 @@ function initFixAll(hits: Hit[], reveal = false): void {
  */
 function init() {
   q('#retest')?.addEventListener('click', () => run());
+  initRowFixes();
   // 先瞬时回放上次结果；短暂延迟后静默重扫，把装好扩展后的最新值补上
   const cache = readCache();
   if (cache) {

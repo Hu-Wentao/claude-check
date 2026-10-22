@@ -568,6 +568,37 @@ const jsonLd = {
         height: 16px;
         flex: none;
       }
+      .row-fix {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 26px;
+        height: 26px;
+        padding: 0;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: transparent;
+        color: var(--muted);
+        cursor: pointer;
+        transition:
+          color 0.15s ease,
+          border-color 0.15s ease;
+      }
+      .row-fix[hidden] {
+        display: none;
+      }
+      .row-fix:hover {
+        color: var(--accent);
+        border-color: var(--accent);
+      }
+      .row-fix:disabled {
+        opacity: 0.5;
+        cursor: wait;
+      }
+      .row-fix svg {
+        width: 13px;
+        height: 13px;
+      }
       .gauge__ring {
         position: relative;
         width: 210px;
