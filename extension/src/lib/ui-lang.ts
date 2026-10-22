@@ -1,11 +1,12 @@
 // （环境：popup/onboarding 共用, 原因/备注：手动选择的 UI 语言持久化到 storage.local
 // （'auto' 表示清除记忆、回到自动解析：claudecheck 标签页页面语言 > 浏览器界面语言））
+import { CHECKER_ORIGINS } from './origins';
+
 export type UiLang = 'en' | 'zh';
 export type UiMode = 'auto' | UiLang;
 
 const UI_LANG_KEY = 'slc-ui-lang';
 
-const SITE_ORIGINS = ['https://claudecheck.frely.cloud', 'https://cc.frely.cloud'];
 const LOCALE_DIR: Record<UiLang, string> = { en: 'en', zh: 'zh_CN' };
 
 interface MessageEntry {
@@ -24,7 +25,7 @@ export type MessageTable = Record<string, MessageEntry>;
 export async function resolveAutoUiLang(): Promise<UiLang> {
   try {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-    if (tab?.id != null && typeof tab.url === 'string' && SITE_ORIGINS.some((o) => tab.url!.startsWith(`${o}/`))) {
+    if (tab?.id != null && typeof tab.url === 'string' && CHECKER_ORIGINS.some((o) => tab.url!.startsWith(`${o}/`))) {
       const results = await chrome.scripting.executeScript({
         target: { tabId: tab.id },
         func: () => document.documentElement.lang,

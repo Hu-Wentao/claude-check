@@ -21,6 +21,11 @@ export const SITE_AUTHOR: SiteAuthor = {
   },
 };
 
+// （环境：站点侧域名唯一事实源, 原因/备注：SEO canonical、og:url、分享卡片水印、
+// api 基准全部派生自此；cc 短域名只是入口别名，不作权威源；扩展侧事实源在
+// extension/src/lib/origins.ts——两边由 extension/tests/scatter-guard.test.ts 锁定）
+export const CANONICAL_ORIGIN = 'https://claudecheck.frely.cloud';
+
 export const CLARITY_PROJECT_ID = 'z0jc6o8jrt';
 
 // SEO hreflang 扩展:站点仅实际构建 en(/) 与 zh(/zh/) 两种内容,下列区域市场码

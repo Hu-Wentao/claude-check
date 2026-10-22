@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import { CANONICAL_ORIGIN } from './src/config/site';
 import sitemap from '@astrojs/sitemap';
 import vercel from '@astrojs/vercel';
 
@@ -11,7 +12,7 @@ import vercel from '@astrojs/vercel';
 // (`export const prerender = false`) can run as a Vercel Function and read the
 // request's geo headers for the curl/API endpoint.
 export default defineConfig({
-  site: 'https://claudecheck.frely.cloud',
+  site: CANONICAL_ORIGIN,
   output: 'static',
   adapter: vercel(),
   i18n: {

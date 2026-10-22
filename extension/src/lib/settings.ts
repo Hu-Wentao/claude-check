@@ -1,4 +1,5 @@
 import { STORAGE_KEY } from '../shared/constants';
+import { DEFAULT_SITES } from './origins';
 import type { SiteEntry } from './sites';
 
 export type UaPreset = 'native' | 'desktop-chrome';
@@ -21,12 +22,8 @@ export const DEFAULT_TIME_ZONE = 'America/Los_Angeles';
 export const DEFAULT_LANGUAGE = 'en-US';
 
 export function suggestedSites(): SiteEntry[] {
-  const sites: SiteEntry[] = [
-    { host: 'claude.ai', includeSubdomains: true, suggested: true },
-    { host: 'claude.com', includeSubdomains: true, suggested: true },
-    { host: 'claudecheck.frely.cloud', includeSubdomains: false, suggested: true },
-    { host: 'cc.frely.cloud', includeSubdomains: false, suggested: true },
-  ];
+  // 默认站点表唯一事实源在 ./origins.ts（e2e 仅追加本地站点）
+  const sites: SiteEntry[] = DEFAULT_SITES.map((site) => ({ ...site }));
   if (__SLC_E2E__) {
     sites.push({ host: 'localhost', includeSubdomains: false, suggested: true });
     sites.push({ host: '127.0.0.1', includeSubdomains: false, suggested: true });

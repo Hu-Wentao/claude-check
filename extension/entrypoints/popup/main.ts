@@ -14,6 +14,7 @@ import {
 import { originPatterns, parseSiteInput, requestablePatterns, urlMatchesSite, type SiteEntry } from '../../src/lib/sites';
 import { buildUaProfile } from '../../src/lib/ua-profile.js';
 import { formatUiMessage, loadUiMessages, loadUiMode, resolveAutoUiLang, saveUiMode, type MessageTable, type UiLang, type UiMode } from '../../src/lib/ui-lang';
+import { CHECKER_HOSTS } from '../../src/lib/origins';
 import './style.css';
 
 let current: Settings = {
@@ -200,7 +201,7 @@ function renderSites(): void {
     });
     sub.append(box, document.createTextNode(t('includeSub')));
     row.append(sub);
-    if (site.host === 'claudecheck.frely.cloud' || site.host === 'cc.frely.cloud') row.append(el('span', 'tag', t('selfTest')));
+    if (CHECKER_HOSTS.includes(site.host)) row.append(el('span', 'tag', t('selfTest')));
     else if (site.suggested) row.append(el('span', 'tag', t('suggested')));
     const remove = el('button', undefined, t('remove'));
     remove.type = 'button';

@@ -1,11 +1,12 @@
 import { scheduleRebuild, updateBadges } from '../src/lib/apply';
-import { CHECKER_ORIGIN_PATTERNS, applySignalFix, applySignalFixes } from '../src/lib/fix-map';
+import { CHECKER_ORIGIN_PATTERNS, CHECKER_ORIGINS } from '../src/lib/origins';
+import { applySignalFix, applySignalFixes } from '../src/lib/fix-map';
 import { readRealEnv } from '../src/lib/real-env';
 import { ensureDefaults, loadSettings, saveSettings } from '../src/lib/settings';
 import { setWebrtcPolicy } from '../src/lib/webrtc-policy';
 
-// （环境：prod 域名固定, 原因/备注：检测页一键修复的合法来源（含 cc 短域名）；preview/localhost 一律忽略）
-const BRIDGE_ORIGINS = new Set(['https://claudecheck.frely.cloud', 'https://cc.frely.cloud']);
+// （环境：prod 域名固定, 原因/备注：检测页一键修复的合法来源见 lib/origins.ts；preview/localhost 一律忽略）
+const BRIDGE_ORIGINS = new Set<string>(CHECKER_ORIGINS);
 
 export default defineBackground(() => {
   chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {

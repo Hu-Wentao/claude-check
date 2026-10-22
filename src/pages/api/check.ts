@@ -25,6 +25,7 @@
  * on a real Vercel deployment (absent locally / on other hosts).
  */
 import type { APIRoute } from 'astro';
+import { CANONICAL_ORIGIN } from '../../config/site';
 import {
   SIGNALS,
   riskBand,
@@ -40,7 +41,7 @@ import { useTranslations, type Lang } from '../../i18n/ui';
 
 export const prerender = false;
 
-const SITE = 'https://claudecheck.frely.cloud';
+const SITE = CANONICAL_ORIGIN;
 
 const CORS: Record<string, string> = {
   'Access-Control-Allow-Origin': '*',

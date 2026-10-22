@@ -5,6 +5,9 @@
  * same-origin assets, so the result never leaves the browser.
  */
 import type { Lang } from '../i18n/ui';
+import { CANONICAL_ORIGIN } from '../config/site';
+
+const CANONICAL_HOST = new URL(CANONICAL_ORIGIN).host;
 import type { RiskBand } from '../config/signals';
 
 export interface CardHit {
@@ -131,7 +134,7 @@ export async function renderResultCard(d: CardData): Promise<Blob | null> {
   ctx.textAlign = 'right';
   ctx.font = `500 24px ${SANS}`;
   ctx.fillStyle = C.muted2;
-  ctx.fillText('claudecheck.frely.cloud', SIZE - 80, headY + 1);
+  ctx.fillText(CANONICAL_HOST, SIZE - 80, headY + 1);
 
   // Title.
   ctx.textAlign = 'center';
@@ -215,7 +218,7 @@ export async function renderResultCard(d: CardData): Promise<Blob | null> {
   ctx.font = `500 26px ${SANS}`;
   ctx.textAlign = 'center';
   ctx.fillText(
-    d.lang === 'zh' ? '在 claudecheck.frely.cloud 测测你的' : 'Measure yours at claudecheck.frely.cloud',
+    d.lang === 'zh' ? `在 ${CANONICAL_HOST} 测测你的` : `Measure yours at ${CANONICAL_HOST}`,
     SIZE / 2,
     SIZE - 68,
   );

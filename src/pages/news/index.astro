@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { CANONICAL_ORIGIN } from '../../config/site';
 import LangToggle from '../../components/LangToggle.astro';
 import SocialLinks from '../../components/SocialLinks.astro';
 import Footer from '../../components/Footer.astro';
@@ -14,7 +15,7 @@ const guidesHub = '/guides/';
 const newsHub = '/news/';
 const extensionPage = '/extension/';
 
-const site = Astro.site ?? new URL('https://claudecheck.frely.cloud');
+const site = Astro.site ?? new URL(CANONICAL_ORIGIN);
 const currentUrl = new URL(newsHub, site).href;
 const homeUrl = new URL(home, site).href;
 

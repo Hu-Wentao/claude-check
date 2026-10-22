@@ -21,15 +21,7 @@ if (hits.length !== 1) throw new Error(`expected one manifest, found ${hits.join
 
 const manifest = JSON.parse(readFileSync(hits[0], 'utf8'));
 const permissions = ['storage', 'scripting', 'declarativeNetRequestWithHostAccess', 'activeTab'];
-const optional = [
-  'https://claude.ai/*',
-  'https://*.claude.ai/*',
-  'https://claude.com/*',
-  'https://*.claude.com/*',
-  'https://claudecheck.frely.cloud/*',
-  'https://cc.frely.cloud/*',
-  'https://*/*',
-];
+
 const icons = {
   16: 'icons/icon-16.png',
   32: 'icons/icon-32.png',
@@ -48,8 +40,26 @@ if (JSON.stringify(manifest.optional_permissions) !== JSON.stringify(['privacy']
 if (mode === 'prod' && (manifest.permissions || []).includes('privacy')) {
   throw new Error('prod manifest grants privacy');
 }
-if (JSON.stringify(manifest.optional_host_permissions) !== JSON.stringify(optional)) {
-  throw new Error(`optional_host_permissions ${JSON.stringify(manifest.optional_host_permissions)}`);
+// （环境：node/Vercel 远程构建, 原因/备注：此处无法 import TS 事实源
+// src/lib/origins.ts，故只做形状与一致性校验；与事实源的等值由
+// tests/origins.test.ts 在 bun/vitest 侧锁定）
+{
+  const ohp = manifest.optional_host_permissions || [];
+  if (ohp.length < 6) throw new Error(`optional_host_permissions too short: ${ohp.length}`);
+  if (new Set(ohp).size !== ohp.length) throw new Error('optional_host_permissions has duplicates');
+  if (ohp[ohp.length - 1] !== 'https://*/*') throw new Error('optional_host_permissions must end with https://*/*');
+  for (const pattern of ohp) {
+    if (pattern === 'https://*/*') continue;
+    if (!/^https:\/\/(\*\.)?[a-z0-9.-]+\/\*$/.test(pattern)) throw new Error(`malformed pattern ${pattern}`);
+  }
+  const ec = manifest.externally_connectable?.matches;
+  if (mode === 'prod') {
+    if (!Array.isArray(ec) || ec.length < 1 || ec.some((m) => !/^https:\/\/[a-z0-9.-]+\/\*$/.test(m))) {
+      throw new Error(`externally_connectable ${JSON.stringify(ec)}`);
+    }
+  } else if (ec !== undefined) {
+    throw new Error('e2e manifest has externally_connectable');
+  }
 }
 if (JSON.stringify(manifest.icons) !== JSON.stringify(icons)) throw new Error(`icons ${JSON.stringify(manifest.icons)}`);
 if (JSON.stringify(manifest.action?.default_icon) !== JSON.stringify({ 16: icons[16], 32: icons[32], 48: icons[48] })) {

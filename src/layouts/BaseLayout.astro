@@ -1,6 +1,6 @@
 ---
 import { useTranslations, type Lang } from '../i18n/ui';
-import { CLARITY_PROJECT_ID, SEO_ALTERNATE_LOCALES } from '../config/site';
+import { CANONICAL_ORIGIN, CLARITY_PROJECT_ID, SEO_ALTERNATE_LOCALES } from '../config/site';
 import LocaleSuggestBanner from '../components/LocaleSuggestBanner.astro';
 
 interface Props {
@@ -32,7 +32,7 @@ const {
 } = Astro.props;
 const t = useTranslations(lang);
 
-const site = Astro.site ?? new URL('https://claudecheck.frely.cloud');
+const site = Astro.site ?? new URL(CANONICAL_ORIGIN);
 const canonical = new URL(path, site).href;
 const enUrl = new URL(enPath, site).href;
 const zhUrl = new URL(zhPath, site).href;

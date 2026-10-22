@@ -1,5 +1,6 @@
 // （环境：background/onboarding 共用, 原因/备注：检测页各打分项 → 扩展设置补丁的
 // 唯一映射；同组联动开启，避免只开一半被 mismatch 识破）
+import { CHECKER_ORIGIN_PATTERNS } from './origins';
 import {
   DEFAULT_LANGUAGE,
   DEFAULT_TIME_ZONE,
@@ -8,10 +9,7 @@ import {
   type Settings,
 } from './settings';
 
-export const CHECKER_ORIGIN_PATTERNS = [
-  'https://claudecheck.frely.cloud/*',
-  'https://cc.frely.cloud/*',
-];
+export { CHECKER_ORIGIN_PATTERNS };
 
 /** The checker-site signal ids this bridge knows how to fix. */
 export const FIXABLE_SIGNALS = [
