@@ -8,7 +8,10 @@ import {
   type Settings,
 } from './settings';
 
-export const CHECKER_ORIGIN_PATTERN = 'https://claudecheck.frely.cloud/*';
+export const CHECKER_ORIGIN_PATTERNS = [
+  'https://claudecheck.frely.cloud/*',
+  'https://cc.frely.cloud/*',
+];
 
 /** The checker-site signal ids this bridge knows how to fix. */
 export const FIXABLE_SIGNALS = [

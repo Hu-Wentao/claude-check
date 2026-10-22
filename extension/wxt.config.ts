@@ -40,6 +40,7 @@ export default defineConfig({
       'https://claude.com/*',
       'https://*.claude.com/*',
       'https://claudecheck.frely.cloud/*',
+      'https://cc.frely.cloud/*',
       'https://*/*',
     ],
     icons: {
@@ -51,7 +52,7 @@ export default defineConfig({
     ...(e2e ? { host_permissions: ['http://localhost/*', 'http://127.0.0.1/*'] } : {}),
     key: PUBLIC_KEY,
     // （环境：prod 域名固定, 原因/备注：检测页一键修复的消息通道；仅此源可发 onMessageExternal）
-    ...(e2e ? {} : { externally_connectable: { matches: ['https://claudecheck.frely.cloud/*'] } }),
+    ...(e2e ? {} : { externally_connectable: { matches: ['https://claudecheck.frely.cloud/*', 'https://cc.frely.cloud/*'] } }),
     action: {
       default_title: '__MSG_extAction__',
       default_popup: 'popup.html',

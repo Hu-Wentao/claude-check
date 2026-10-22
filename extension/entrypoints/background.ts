@@ -1,11 +1,11 @@
 import { scheduleRebuild, updateBadges } from '../src/lib/apply';
-import { CHECKER_ORIGIN_PATTERN, applySignalFix, applySignalFixes } from '../src/lib/fix-map';
+import { CHECKER_ORIGIN_PATTERNS, applySignalFix, applySignalFixes } from '../src/lib/fix-map';
 import { readRealEnv } from '../src/lib/real-env';
 import { ensureDefaults, loadSettings, saveSettings } from '../src/lib/settings';
 import { setWebrtcPolicy } from '../src/lib/webrtc-policy';
 
-// （环境：prod 域名固定, 原因/备注：检测页一键修复的合法来源；preview/localhost 一律忽略）
-const BRIDGE_ORIGIN = 'https://claudecheck.frely.cloud';
+// （环境：prod 域名固定, 原因/备注：检测页一键修复的合法来源（含 cc 短域名）；preview/localhost 一律忽略）
+const BRIDGE_ORIGINS = new Set(['https://claudecheck.frely.cloud', 'https://cc.frely.cloud']);
 
 export default defineBackground(() => {
   chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
@@ -14,7 +14,7 @@ export default defineBackground(() => {
     return true;
   });
   chrome.runtime.onMessageExternal.addListener((message, sender, sendResponse) => {
-    if (sender.origin !== BRIDGE_ORIGIN) return;
+    if (sender.origin !== undefined && !BRIDGE_ORIGINS.has(sender.origin)) return;
     if (!message || typeof message.type !== 'string') return;
     if (message.type === 'slc-ping') {
       void loadSettings().then((settings) => {
@@ -30,7 +30,7 @@ export default defineBackground(() => {
           ? message.signals.map((item) => String(item))
           : [String(message.signal || '')];
         const isWebrtc = signals.includes('webrtcLeak');
-        const originGranted = await chrome.permissions.contains({ origins: [CHECKER_ORIGIN_PATTERN] });
+        const originGranted = await chrome.permissions.contains({ origins: CHECKER_ORIGIN_PATTERNS });
         const privacyGranted = await chrome.permissions.contains({ permissions: ['privacy'] });
 
         // 权限齐备：直接应用 + 重建注入；页面刷新交由检测页的 toast 提示

@@ -25,6 +25,7 @@ export function suggestedSites(): SiteEntry[] {
     { host: 'claude.ai', includeSubdomains: true, suggested: true },
     { host: 'claude.com', includeSubdomains: true, suggested: true },
     { host: 'claudecheck.frely.cloud', includeSubdomains: false, suggested: true },
+    { host: 'cc.frely.cloud', includeSubdomains: false, suggested: true },
   ];
   if (__SLC_E2E__) {
     sites.push({ host: 'localhost', includeSubdomains: false, suggested: true });

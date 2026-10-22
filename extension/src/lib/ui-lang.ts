@@ -5,7 +5,7 @@ export type UiMode = 'auto' | UiLang;
 
 const UI_LANG_KEY = 'slc-ui-lang';
 
-const SITE_ORIGIN = 'https://claudecheck.frely.cloud';
+const SITE_ORIGINS = ['https://claudecheck.frely.cloud', 'https://cc.frely.cloud'];
 const LOCALE_DIR: Record<UiLang, string> = { en: 'en', zh: 'zh_CN' };
 
 interface MessageEntry {
@@ -24,7 +24,7 @@ export type MessageTable = Record<string, MessageEntry>;
 export async function resolveAutoUiLang(): Promise<UiLang> {
   try {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-    if (tab?.id != null && typeof tab.url === 'string' && tab.url.startsWith(`${SITE_ORIGIN}/`)) {
+    if (tab?.id != null && typeof tab.url === 'string' && SITE_ORIGINS.some((o) => tab.url!.startsWith(`${o}/`))) {
       const results = await chrome.scripting.executeScript({
         target: { tabId: tab.id },
         func: () => document.documentElement.lang,

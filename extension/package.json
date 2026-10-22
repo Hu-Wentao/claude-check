@@ -1,7 +1,7 @@
 {
   "name": "site-locale-control",
   "private": true,
-  "version": "0.1.7",
+  "version": "0.1.8",
   "type": "module",
   "description": "Site Locale Control, a Manifest V3 extension that sets the time zone and language selected sites see.",
   "scripts": {

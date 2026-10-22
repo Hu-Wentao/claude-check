@@ -200,7 +200,7 @@ function renderSites(): void {
     });
     sub.append(box, document.createTextNode(t('includeSub')));
     row.append(sub);
-    if (site.host === 'claudecheck.frely.cloud') row.append(el('span', 'tag', t('selfTest')));
+    if (site.host === 'claudecheck.frely.cloud' || site.host === 'cc.frely.cloud') row.append(el('span', 'tag', t('selfTest')));
     else if (site.suggested) row.append(el('span', 'tag', t('suggested')));
     const remove = el('button', undefined, t('remove'));
     remove.type = 'button';

@@ -3,7 +3,7 @@
 // 应用对应设置组并重建注入，页面刷新由检测页的 toast 提示用户自己完成）
 import './style.css';
 import { scheduleRebuild } from '../../src/lib/apply';
-import { CHECKER_ORIGIN_PATTERN, applySignalFix, applySignalFixes } from '../../src/lib/fix-map';
+import { CHECKER_ORIGIN_PATTERNS, applySignalFix, applySignalFixes } from '../../src/lib/fix-map';
 import { loadSettings, saveSettings } from '../../src/lib/settings';
 import { setWebrtcPolicy } from '../../src/lib/webrtc-policy';
 import { formatUiMessage, loadUiMessages, type UiLang } from '../../src/lib/ui-lang';
@@ -60,7 +60,7 @@ async function enable(): Promise<void> {
   let granted = false;
   try {
     granted = await chrome.permissions.request({
-      origins: [CHECKER_ORIGIN_PATTERN],
+      origins: [...CHECKER_ORIGIN_PATTERNS],
       ...(isWebrtc ? { permissions: ['privacy'] } : {}),
     });
   } catch {

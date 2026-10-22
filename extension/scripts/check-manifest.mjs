@@ -27,6 +27,7 @@ const optional = [
   'https://claude.com/*',
   'https://*.claude.com/*',
   'https://claudecheck.frely.cloud/*',
+  'https://cc.frely.cloud/*',
   'https://*/*',
 ];
 const icons = {
